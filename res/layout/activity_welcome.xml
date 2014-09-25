@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <cn.w.song.widget.scroll.SlidePageView
+        android:id="@+id/slidepageviewtest_ui_SlidePageView_test"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/wmain" >
+
+            <com.kdcm.aidongdong.tools.ShimmerTextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="240dp"
+                android:text="“Change begins with movement”"
+                android:textSize="19dip" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/w1" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/w2" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/w3" >
+
+            <Button
+                android:id="@+id/btn_go"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@null" />
+        </LinearLayout>
+
+        <!--
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/whatsnew_03" >
+        </LinearLayout>
+        -->
+    </cn.w.song.widget.scroll.SlidePageView>
+
+</RelativeLayout>
