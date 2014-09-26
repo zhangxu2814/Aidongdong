@@ -36,9 +36,9 @@ public class MyActivity extends Activity {
 		Person person = JsonTools.getPerson("data",
 				Conf.jsonstring);
 		List<String> data = new ArrayList<String>();
-		data.add(person.getNickname());
-		data.add(person.getSex());
-		data.add(person.getPhone());
+		data.add("昵称"+person.getNickname());
+		data.add("性别"+person.getSex());
+		data.add("手机号码"+person.getPhone());
 
 		return data;
 	}
