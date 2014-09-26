@@ -25,14 +25,17 @@ public class Conf {
 	/**
 	 * json包含用户信息
 	 */
-	public static String jsonstring=null;
+	public static String jsonstring = null;
 	/**
 	 * 网络是否连接
 	 */
-	public static boolean NETWORK_ON=false;
+	public static boolean NETWORK_ON = false;
 	/**
 	 * GPS是否打开
 	 */
-	public static boolean GPS_ON=false;
-
+	public static boolean GPS_ON = false;
+	/**
+	 * 运动步
+	 */
+	public static int count = 0;
 }
