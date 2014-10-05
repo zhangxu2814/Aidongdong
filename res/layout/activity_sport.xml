@@ -1,0 +1,86 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.kdcm.aidongdong.UI.ArcProgressbar
+            android:id="@+id/arcProgressbar"
+            android:layout_width="450dp"
+            android:layout_height="180dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="77dp" />
+
+        <Button
+            android:id="@+id/btn_consume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/arcProgressbar"
+            android:layout_marginRight="39dp"
+            android:layout_marginTop="67dp"
+            android:text="Button" />
+
+        <TextView
+            android:id="@+id/tt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/arcProgressbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="72dp"
+            android:text="运动时间" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="25dp"
+            android:text="start" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnStart"
+            android:layout_alignBottom="@+id/btnStart"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="45dp"
+            android:text="btnReset" />
+
+        <TextView
+            android:id="@+id/tt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="96dp"
+            android:layout_toRightOf="@+id/btnStop"
+            android:text="hehe" />
+
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tt_num"
+            android:layout_alignLeft="@+id/btnStart"
+            android:layout_marginBottom="24dp"
+            android:text="btnStop" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:background="@null">
+    </LinearLayout>
+
+</FrameLayout>
