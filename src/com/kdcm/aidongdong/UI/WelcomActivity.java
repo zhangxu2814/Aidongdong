@@ -1,5 +1,13 @@
 package com.kdcm.aidongdong.UI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import cn.smssdk.SMSSDK;
 
 import com.baidu.frontia.Frontia;
@@ -7,48 +15,50 @@ import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-
 public class WelcomActivity extends BaseActivity {
-	/**
-	 * 页面跳转线程
-	 */
-	private Runnable mRunnable;
-
-	private Handler handler = new Handler();
 	private Button btn_go;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 		SMSSDK.initSDK(this, Conf.SMSKEY, Conf.SMSSecret);
 		Frontia.init(this.getApplicationContext(), Conf.APIKEY);
-		
-		btn_go=(Button)findViewById(R.id.btn_go);
-		// 定义WelcomeActivity秒跳转 LoginActivity
-		mRunnable = new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-					Intent intent = new Intent(WelcomActivity.this, LoginActivity.class);
-					startActivity(intent);
-					WelcomActivity.this.finish();
-			}
+		init();
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("有新版本是否更新")
+				.setCancelable(false)
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								Uri uri = Uri.parse("http://baidu.com");
+								Intent it = new Intent(Intent.ACTION_VIEW, uri);
+								startActivity(it);
+								WelcomActivity.this.finish();
+							}
+						})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				}).show();
+		AlertDialog alert = builder.create();
 
-		};
 		btn_go.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				handler.postDelayed(mRunnable,10);
+			public void onClick(View v) {
+				Intent intent = new Intent(WelcomActivity.this,
+						LoginActivity.class);
+				startActivity(intent);
+				WelcomActivity.this.finish();
 			}
 		});
+	}
+
+	private void init() {
+		btn_go = (Button) findViewById(R.id.btn_go);
+
 	}
 
 	@Override
@@ -58,12 +68,10 @@ public class WelcomActivity extends BaseActivity {
 
 	}
 
-	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		handler.removeCallbacks(mRunnable);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.kdcm.aidongdong.UI;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
+
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
@@ -37,7 +43,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	/**
 	 * 忘记密码
 	 */
-	private TextView tt_forger;
+	private TextView tt_forget;
 	/**
 	 * 免费注册
 	 */
@@ -65,7 +71,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private ProgressDialog loadingPDialog = null;
 	private String jsonstring;
 	private Intent mIntent;
-	
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,8 +103,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		et_password = (EditText) findViewById(R.id.et_password);
 		btn_login = (Button) findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
-		tt_forger = (TextView) findViewById(R.id.tt_forget);
-		tt_forger.setOnClickListener(this);
+		tt_forget = (TextView) findViewById(R.id.tt_forget);
+		tt_forget.setOnClickListener(this);
 		btn_reg = (Button) findViewById(R.id.btn_reg);
 		btn_reg.setOnClickListener(this);
 		mRunnable = new Runnable() {
@@ -123,6 +128,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			login();
 			break;
 		case R.id.tt_forget:
+			forget();
+
 			break;
 		case R.id.btn_reg:
 			toReg();
@@ -132,10 +139,34 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	private void forget() {
+		RegisterPage registerPage = new RegisterPage();
+		registerPage.setRegisterCallback(new EventHandler() {
+			public void afterEvent(int event, int result, Object data) { // 解析注册结果
+				if (result == SMSSDK.RESULT_COMPLETE) {
+
+					@SuppressWarnings("unchecked")
+					HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+					String phone = (String) phoneMap.get("phone");
+					Intent intent = new Intent(getApplicationContext(),
+							ForgetActivity.class);
+					intent.putExtra("phone", phone);
+					startActivity(intent);
+					
+
+				}
+			}
+		});
+		registerPage.show(getApplicationContext());
+
+	}
+
+	
+
 	private void toReg() {
-		mIntent=new Intent(LoginActivity.this, CheckPhone.class);
+		mIntent = new Intent(LoginActivity.this, CheckPhone.class);
 		startActivity(mIntent);
-		
+
 	}
 
 	/**
@@ -143,7 +174,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void login() {
 		jsonstring = null;
-		mResult =null;
+		mResult = null;
 		URLpath = Conf.APP_URL + "login&login_name="
 				+ et_username.getText().toString() + "&login_password="
 				+ et_password.getText().toString();
@@ -160,7 +191,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					message.what = Integer.parseInt(mResult);
 					mHandler.sendMessage(message);
 					Log.i(TAG, mResult);
-					message=null;
+					message = null;
 				} else {
 					mHandler.sendEmptyMessage(0);
 				}
@@ -180,7 +211,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onPause();
 		mHandler.removeCallbacks(mRunnable);
-		
 
 	}
 }

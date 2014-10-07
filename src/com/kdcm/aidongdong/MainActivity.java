@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 	String mResult;
 	Handler mHandler = new Handler();
 	private Button btn_reg;
-	private Intent intent;
+	private Intent intent; 
 	String phone;
 	private Button btn_push;
 	private Button btn_share;

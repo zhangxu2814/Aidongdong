@@ -37,7 +37,6 @@
         <activity
             android:name="com.kdcm.aidongdong.MainActivity"
             android:label="@string/app_name" >
-            
         </activity>
         <!-- push service client -->
         <receiver android:name="com.kdcm.aidongdong.UI.PushActivity$PushMessageReceiver" >
@@ -135,10 +134,24 @@
             </intent-filter>
         </activity>
         <!-- login activity -->
-        <activity android:name="com.kdcm.aidongdong.UI.LoginActivity"></activity>
-        <activity android:name="com.kdcm.aidongdong.UI.MyActivity"></activity>
-        <activity android:name="com.kdcm.aidongdong.TextActivity"></activity>
-        <activity android:name="com.kdcm.aidongdong.UI.RegActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.LoginActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.MyActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.TextActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.RegActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.SportActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.SportCheckActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.ChangeActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.ForgetActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.FriendActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.RadarActivity"></activity>
     </application>
 
 </manifest>

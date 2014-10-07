@@ -35,7 +35,15 @@ public class Conf {
 	 */
 	public static boolean GPS_ON = false;
 	/**
-	 * 运动步
+	 * 运动记步
 	 */
 	public static int count = 0;
+	/**
+	 * 金币数量
+	 */
+	public static int intMoney = 0;
+	/**
+	 * 卡路里
+	 */
+	public static int intCal = 0;
 }
