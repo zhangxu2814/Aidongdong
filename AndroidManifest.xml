@@ -150,8 +150,12 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.ForgetActivity" >
         </activity>
-        <activity android:name="com.kdcm.aidongdong.UI.FriendActivity"></activity>
-        <activity android:name="com.kdcm.aidongdong.UI.RadarActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.FriendActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.RadarActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.StatisticsActivity" >
+        </activity>
     </application>
 
 </manifest>

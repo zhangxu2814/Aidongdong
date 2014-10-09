@@ -1,6 +1,8 @@
 package com.kdcm.aidongdong.Date;
 
 public class Conf {
+	public static Boolean isNewVersion=false;
+	public static String TAG="lihuanwang";
 	/**
 	 * http://www.haoapp123.com/app/localuser/aidongdong/api.php?m=user&a=
 	 */
