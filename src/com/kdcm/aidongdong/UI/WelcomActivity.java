@@ -52,38 +52,41 @@ public class WelcomActivity extends BaseActivity {
 		SMSSDK.initSDK(this, Conf.SMSKEY, Conf.SMSSecret);
 		Frontia.init(this.getApplicationContext(), Conf.APIKEY);
 		init();
-		Version();
-
-		 builder = new AlertDialog.Builder(this);
-		
-
+		if (Conf.NETWORK_ON) {
+			Version();
+		}
+		builder = new AlertDialog.Builder(this);
 		// AlertDialog alert = builder.create();
 		mHandler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (!msg.obj.toString().equals("1.0")) {
 					builder.setMessage("有新版本是否更新")
-					.setCancelable(false)
-					.setPositiveButton("Yes",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int id) {
-									Uri uri = Uri.parse("http://baidu.com");
-									Intent it = new Intent(Intent.ACTION_VIEW, uri);
-									startActivity(it);
-									WelcomActivity.this.finish();
-								}
-							})
-					.setNegativeButton("No", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							dialog.cancel();
-						}
-					}).show();
+							.setCancelable(false)
+							.setPositiveButton("Yes",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog, int id) {
+											Uri uri = Uri
+													.parse("http://baidu.com");
+											Intent it = new Intent(
+													Intent.ACTION_VIEW, uri);
+											startActivity(it);
+											WelcomActivity.this.finish();
+										}
+									})
+							.setNegativeButton("No",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog, int id) {
+											dialog.cancel();
+										}
+									}).show();
 				}
 
 			}
 		};
 
 		btn_go.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(WelcomActivity.this,
@@ -96,9 +99,7 @@ public class WelcomActivity extends BaseActivity {
 
 	void Version() {
 		URLpath = Conf.APP_URL + "getAppVersion&platform=android";
-
 		mThread = new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				String jsonstr = HttpUtil.getJsonContent(URLpath);
@@ -125,18 +126,12 @@ public class WelcomActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
-	}
-
-	private void show() {
-
 	}
 }

@@ -48,11 +48,14 @@ public class CheckPhone extends Activity {
 	private Thread mThread;
 	private Handler mHandler;
 	private String phone_registered = "phone_registered";
+	private Intent intent;
+	private String type;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_checkphone);
-
+		intent = this.getIntent();
+		type = intent.getStringExtra("type");
 		init();
 		btn_next.setOnClickListener(new OnClickListener() {
 
@@ -65,7 +68,7 @@ public class CheckPhone extends Activity {
 					Phone_registered();
 
 				} else {
-					Toast.makeText(CheckPhone.this, "您输入的号码不正确", 1000).show();
+					Toast.makeText(CheckPhone.this, "您输入的号码不正确", Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -73,11 +76,19 @@ public class CheckPhone extends Activity {
 		mHandler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg.what == 1) {
-					// 注册过
-					Toast.makeText(getApplicationContext(), "该账号已经注册过",
-							Toast.LENGTH_SHORT).show();
+					if (type.equals("Reg")) {
+						Toast.makeText(getApplicationContext(), "该账号已经注册过",
+								Toast.LENGTH_SHORT).show();
+					}else if(type.equals("Forget")){
+						SMSSDK();
+					}
 				} else {
-					SMSSDK();
+					if (type.equals("Reg")) {
+						SMSSDK();
+					}else if(type.equals("Forget")) {
+						Toast.makeText(getApplicationContext(), "该账号还没有注册",
+								Toast.LENGTH_SHORT).show();
+					}
 				}
 			}
 		};
@@ -109,7 +120,7 @@ public class CheckPhone extends Activity {
 
 	private void init() {
 		btn_next = (Button) findViewById(R.id.btn_next);
-		et_phone = (EditText) findViewById(R.id.et_phone);
+		et_phone = (EditText) findViewById(R.id.et_write_phone);
 
 	}
 
@@ -123,8 +134,12 @@ public class CheckPhone extends Activity {
 					@SuppressWarnings("unchecked")
 					HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
 					String phone = (String) phoneMap.get("phone");
-					Intent intent = new Intent(CheckPhone.this,
-							RegActivity.class);
+					if (type.equals("Reg")) {
+						intent = new Intent(CheckPhone.this, RegActivity.class);
+					}else if(type.equals("Forget")) {
+						intent = new Intent(getApplicationContext(),
+							ForgetActivity.class);
+					}
 					intent.putExtra("phone", phone);
 					startActivity(intent);
 					CheckPhone.this.finish();

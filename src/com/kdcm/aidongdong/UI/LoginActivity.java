@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				if (msg.what == 1) {
 					Toast.makeText(getApplicationContext(), "验证成功",
 							Toast.LENGTH_SHORT).show();
-					postDelayed(mRunnable, 1000);
+					postDelayed(mRunnable, 100);
 				} else {
 					Toast.makeText(getApplicationContext(), "密码错误",
 							Toast.LENGTH_SHORT).show();
@@ -140,24 +140,27 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void forget() {
-		RegisterPage registerPage = new RegisterPage();
-		registerPage.setRegisterCallback(new EventHandler() {
-			public void afterEvent(int event, int result, Object data) { // 解析注册结果
-				if (result == SMSSDK.RESULT_COMPLETE) {
-
-					@SuppressWarnings("unchecked")
-					HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-					String phone = (String) phoneMap.get("phone");
-					Intent intent = new Intent(getApplicationContext(),
-							ForgetActivity.class);
-					intent.putExtra("phone", phone);
-					startActivity(intent);
-					
-
-				}
-			}
-		});
-		registerPage.show(getApplicationContext());
+//		RegisterPage registerPage = new RegisterPage();
+//		registerPage.setRegisterCallback(new EventHandler() {
+//			public void afterEvent(int event, int result, Object data) { // 解析注册结果
+//				if (result == SMSSDK.RESULT_COMPLETE) {
+//
+//					@SuppressWarnings("unchecked")
+//					HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+//					String phone = (String) phoneMap.get("phone");
+//					Intent intent = new Intent(getApplicationContext(),
+//							ForgetActivity.class);
+//					intent.putExtra("phone", phone);
+//					startActivity(intent);
+//					
+//
+//				}
+//			}
+//		});
+//		registerPage.show(getApplicationContext());
+		mIntent = new Intent(LoginActivity.this, CheckPhone.class);
+		mIntent.putExtra("type", "Forget");
+		startActivity(mIntent);
 
 	}
 
@@ -165,6 +168,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private void toReg() {
 		mIntent = new Intent(LoginActivity.this, CheckPhone.class);
+		mIntent.putExtra("type", "Reg");
 		startActivity(mIntent);
 
 	}

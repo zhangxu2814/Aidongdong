@@ -129,7 +129,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -155,6 +154,10 @@
         <activity android:name="com.kdcm.aidongdong.UI.RadarActivity" >
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.StatisticsActivity" >
+        </activity>
+        <activity
+            android:name="com.kdcm.aidongdong.UI.MyDialogActivity"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
     </application>
 

@@ -103,6 +103,7 @@ public class RadarActivity extends Activity implements Runnable {
 		animation.setDuration(2000);
 		animation.setRepeatCount(Animation.INFINITE);
 		im_scan.startAnimation(animation);
+		
 
 		AlphaAnimation animation2 = new AlphaAnimation(0.0f, 1.0f);
 		animation2.setDuration(3000);
