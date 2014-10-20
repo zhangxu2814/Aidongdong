@@ -3,18 +3,30 @@ package com.kdcm.aidongdong.UI;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.kdcm.aidongdong.R;
-import com.kdcm.aidongdong.Date.Conf;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Im;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.baidu.frontia.Frontia;
+import com.baidu.frontia.api.FrontiaAuthorization.MediaType;
+import com.baidu.frontia.api.FrontiaSocialShare;
+import com.baidu.frontia.api.FrontiaSocialShare.FrontiaTheme;
+import com.baidu.frontia.api.FrontiaSocialShareContent;
+import com.baidu.frontia.api.FrontiaSocialShareListener;
+import com.kdcm.aidongdong.R;
+import com.kdcm.aidongdong.Date.Conf;
 
 /**
  * 
@@ -28,14 +40,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	 * 消耗按钮
 	 */
 	private Button btn_consume;
-	/**
-	 * 开始按钮
-	 */
-	private Button btn_Start;
-	/**
-	 * 结束按钮
-	 */
-	private Button btn_Stop;
+
 	/**
 	 * 重置按钮
 	 */
@@ -71,7 +76,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	/**
 	 * 消耗线程
 	 */
-	private Timer timer_cinsume=new Timer();
+	private Timer timer_cinsume = new Timer();
 	/**
 	 * 能量环消耗线程用
 	 */
@@ -87,61 +92,104 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	/**
 	 * 统计时间
 	 */
-	private Timer timeTimer=new Timer();
-	
+	private Timer timeTimer = new Timer();
+	/**
+	 * 图标统计图
+	 */
+	private ImageView iv_chart;
+	/**
+	 * 分享
+	 */
+	private ImageView iv_share;
+	private Intent it;
+	/**
+	 * 百度第三方分享
+	 */
+	private FrontiaSocialShare mSocialShare;
+	/**
+	 * 百度第三方分享
+	 */
+	private FrontiaSocialShareContent mImageContent = new FrontiaSocialShareContent();
+	/**
+	 * 个人中心
+	 */
+	private ImageView iv_user;
+	/**
+	 * 运动检测模块
+	 */
+	private ImageView iv_sport;
+	/**
+	 * 好友模块
+	 */
+	private ImageView iv_contact;
+	private int time_h = 0;
+	private int time_m = 0;
 
 	@Override
 	public void onClick(View v) {
 		msg = "";
 		switch (v.getId()) {
 		case R.id.btn_consume:
-			int_consume=Conf.count*5<=280?Conf.count*5:280;
-			if(int_consume!=0){
-			task_consume = new TimerTask() {
+			int_consume = Conf.count * 5 <= 280 ? Conf.count * 5 : 280;
+			if (int_consume != 0) {
+				btn_consume.setOnClickListener(null);
+				task_consume = new TimerTask() {
 
-				public void run() {
+					public void run() {
 
-					// 修改界面的相关设置只能在UI线程中执行
-					runOnUiThread(new Runnable() {
-						public void run() {
-							int_consume--;
+						// 修改界面的相关设置只能在UI线程中执行
+						runOnUiThread(new Runnable() {
+							public void run() {
+								int_consume--;
 
-							arcProgressbar.setProgress(int_consume);
-							if (int_consume <= 0) {
-								task_consume.cancel();
-								Conf.count = 0;
+								arcProgressbar.setProgress(int_consume);
+								if (int_consume <= 0) {
+									task_consume.cancel();
+									Conf.count = 0;
+									btn_consume
+											.setOnClickListener(SportCheckActivity.this);
+								}
 							}
-						}
 
-					});
-				}
-			};
-			timer_cinsume.schedule(task_consume, 10, 10);
-			msg = "燃烧吧小宇宙.";}
-			else{
+						});
+					}
+				};
+				timer_cinsume.schedule(task_consume, 10, 10);
+				msg = "燃烧吧小宇宙.";
+			} else {
 				msg = "去跑步吧亲.";
 			}
 			break;
-		case R.id.btnStart:
-			mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-			mySensorManager.registerListener(this,
-					SensorManager.SENSOR_ACCELEROMETER,
-					SensorManager.SENSOR_DELAY_UI);
-			msg = "已经开始计步器.";
-			break;
-		case R.id.btnStop:
-			mySensorManager.unregisterListener(this);
-			msg = "已经停止计步器.";
-			break;
+
+		// case R.id.btnStop:
+		// mySensorManager.unregisterListener(this);
+		// msg = "已经停止计步器.";
+		// break;
 		case R.id.btnReset:
 			Conf.count = 0;
 			msg = "已经重置计步器.";
 			break;
-		default:
+		case R.id.iv_share:
+			ShowShare();
 			break;
+		case R.id.iv_chart:
+			it = new Intent(this, StatisticsActivity.class);
+			startActivity(it);
+			break;
+		case R.id.iv_user:
+			it = new Intent(this, MyActivity.class);
+			startActivity(it);
+			break;
+		case R.id.iv_contact:
+			it = new Intent(this, FriendActivity.class);
+			startActivity(it);
+			break;
+
 		}
 		tt_num.setText(String.valueOf(Conf.count));
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+		if (msg.length() > 1) {
+			Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
@@ -159,24 +207,32 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_sport);
 		init();
 	}
 
 	private void init() {
+		iv_sport = (ImageView) this.findViewById(R.id.iv_sport);
+		iv_sport.setImageResource(R.drawable.icon_sport_on);
+		iv_user = (ImageView) findViewById(R.id.iv_user);
+		iv_user.setOnClickListener(this);
+		iv_chart = (ImageView) findViewById(R.id.iv_chart);
+		iv_chart.setOnClickListener(this);
+		iv_share = (ImageView) findViewById(R.id.iv_share);
+		iv_share.setOnClickListener(this);
 		tt_time = (TextView) findViewById(R.id.tt_time);
 		btn_consume = (Button) findViewById(R.id.btn_consume);
 		btn_consume.setOnClickListener(this);
-		btn_Start = (Button) findViewById(R.id.btnStart);
-		btn_Start.setOnClickListener(this);
-		btn_Stop = (Button) findViewById(R.id.btnStop);
-		btn_Stop.setOnClickListener(this);
+		iv_contact = (ImageView) findViewById(R.id.iv_contact);
+		iv_contact.setOnClickListener(this);
 		btn_Reset = (Button) findViewById(R.id.btnReset);
 		btn_Reset.setOnClickListener(this);
 		arcProgressbar = (ArcProgressbar) findViewById(R.id.arcProgressbar);
-		tt_num = (TextView) findViewById(R.id.tt_num);
+		tt_num = (TextView) this.findViewById(R.id.tt_num);
 		mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		
+
 		mySensorManager.registerListener(this,
 				SensorManager.SENSOR_ACCELEROMETER,
 				SensorManager.SENSOR_DELAY_UI);
@@ -190,15 +246,27 @@ public class SportCheckActivity extends Activity implements SensorListener,
 					public void run() {
 						if (count != Conf.count) {
 							count = Conf.count;
-							tt_time.setText("已经运动" + int_time + "秒");
+
+							tt_time.setText("已经运动" + time_h + "小时" + time_m
+									+ "分钟" + int_time + "秒");
 							int_time++;
+							if (int_time == 60) {
+								int_time = 0;
+								time_m++;
+								{
+									if (time_m == 60) {
+										time_m = 0;
+										time_h++;
+									}
+								}
+							}
 						}
 					}
 
 				});
 			}
 		};
-		timeTimer.schedule(timeTask,1000, 1000); 
+		timeTimer.schedule(timeTask, 1000, 1000);
 
 	}
 
@@ -259,8 +327,48 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	public void updateData() {
+		tt_num = (TextView) findViewById(R.id.tt_num);
 		tt_num.setText(String.valueOf(Conf.count));
 		arcProgressbar.setProgress(Conf.count * 5);
 		int_consume = Conf.count * 5;
+	}
+
+	private void ShowShare() {
+		mSocialShare = Frontia.getSocialShare();
+		mSocialShare.setContext(this);
+		mSocialShare.setClientId(MediaType.SINAWEIBO.toString(),
+				Conf.SINA_APP_KEY);
+		mSocialShare.setClientId(MediaType.QZONE.toString(), "100358052");
+		mSocialShare.setClientId(MediaType.QQFRIEND.toString(), "100358052");
+		mSocialShare.setClientName(MediaType.QQFRIEND.toString(), "百度");
+		mSocialShare.setClientId(MediaType.WEIXIN.toString(),
+				"wx329c742cb69b41b8");
+		mImageContent.setTitle("百度开发中心");
+		mImageContent.setContent("欢迎使用百度社会化分享组件，相关问题请邮件dev_support@baidu.com");
+		mImageContent.setLinkUrl("http://developer.baidu.com/");
+		mImageContent
+				.setImageUri(Uri
+						.parse("http://apps.bdimg.com/developer/static/04171450/developer/images/icon/terminal_adapter.png"));
+		mSocialShare.show(this.getWindow().getDecorView(), mImageContent,
+				FrontiaTheme.DARK, new ShareListener());
+	}
+
+	private class ShareListener implements FrontiaSocialShareListener {
+
+		@Override
+		public void onSuccess() {
+			Log.d("Test", "share success");
+		}
+
+		@Override
+		public void onFailure(int errCode, String errMsg) {
+			Log.d("Test", "share errCode " + errCode);
+		}
+
+		@Override
+		public void onCancel() {
+			Log.d("Test", "cancel ");
+		}
+
 	}
 }

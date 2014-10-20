@@ -47,7 +47,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	/**
 	 * 免费注册
 	 */
-	private Button btn_reg;
+	private TextView tv_reg;
 	/**
 	 * 子线程负责联网
 	 */
@@ -71,6 +71,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private ProgressDialog loadingPDialog = null;
 	private String jsonstring;
 	private Intent mIntent;
+	private int NET_ERROR = 404;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,8 +86,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					Toast.makeText(getApplicationContext(), "验证成功",
 							Toast.LENGTH_SHORT).show();
 					postDelayed(mRunnable, 100);
+				} else if (msg.what == NET_ERROR) {
+					Toast.makeText(getApplicationContext(), "连接服务器失败，请检查网络连接",
+							Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(getApplicationContext(), "密码错误",
+					Log.i("kdcm", msg.what + "");
+					Toast.makeText(getApplicationContext(), "请检查您的用户名或密码",
 							Toast.LENGTH_SHORT).show();
 				}
 				loadingPDialog.dismiss();
@@ -105,13 +110,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		btn_login.setOnClickListener(this);
 		tt_forget = (TextView) findViewById(R.id.tt_forget);
 		tt_forget.setOnClickListener(this);
-		btn_reg = (Button) findViewById(R.id.btn_reg);
-		btn_reg.setOnClickListener(this);
+		tv_reg = (TextView) findViewById(R.id.tv_reg);
+		tv_reg.setOnClickListener(this);
 		mRunnable = new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(LoginActivity.this, MyActivity.class);
+//				Intent intent = new Intent(LoginActivity.this, MyActivity.class);
+				Intent intent = new Intent(LoginActivity.this, SportCheckActivity.class);
 				startActivity(intent);
 				LoginActivity.this.finish();
 				mThread.interrupt();
@@ -131,7 +137,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			forget();
 
 			break;
-		case R.id.btn_reg:
+		case R.id.tv_reg:
 			toReg();
 			break;
 		default:
@@ -140,31 +146,30 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void forget() {
-//		RegisterPage registerPage = new RegisterPage();
-//		registerPage.setRegisterCallback(new EventHandler() {
-//			public void afterEvent(int event, int result, Object data) { // 解析注册结果
-//				if (result == SMSSDK.RESULT_COMPLETE) {
-//
-//					@SuppressWarnings("unchecked")
-//					HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-//					String phone = (String) phoneMap.get("phone");
-//					Intent intent = new Intent(getApplicationContext(),
-//							ForgetActivity.class);
-//					intent.putExtra("phone", phone);
-//					startActivity(intent);
-//					
-//
-//				}
-//			}
-//		});
-//		registerPage.show(getApplicationContext());
+		// RegisterPage registerPage = new RegisterPage();
+		// registerPage.setRegisterCallback(new EventHandler() {
+		// public void afterEvent(int event, int result, Object data) { //
+		// 解析注册结果
+		// if (result == SMSSDK.RESULT_COMPLETE) {
+		//
+		// @SuppressWarnings("unchecked")
+		// HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+		// String phone = (String) phoneMap.get("phone");
+		// Intent intent = new Intent(getApplicationContext(),
+		// ForgetActivity.class);
+		// intent.putExtra("phone", phone);
+		// startActivity(intent);
+		//
+		//
+		// }
+		// }
+		// });
+		// registerPage.show(getApplicationContext());
 		mIntent = new Intent(LoginActivity.this, CheckPhone.class);
 		mIntent.putExtra("type", "Forget");
 		startActivity(mIntent);
 
 	}
-
-	
 
 	private void toReg() {
 		mIntent = new Intent(LoginActivity.this, CheckPhone.class);
@@ -197,7 +202,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					Log.i(TAG, mResult);
 					message = null;
 				} else {
-					mHandler.sendEmptyMessage(0);
+					mHandler.sendEmptyMessage(NET_ERROR);
 				}
 				if (!jsonstring.equals("ERROR")) {
 					Person person = JsonTools.getPerson("data", jsonstring);

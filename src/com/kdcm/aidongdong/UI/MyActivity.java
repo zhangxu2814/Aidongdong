@@ -2,6 +2,7 @@ package com.kdcm.aidongdong.UI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
@@ -24,16 +27,49 @@ public class MyActivity extends Activity implements OnClickListener {
 	String sex;
 	String phone;
 	private ListView listview;
-	private Button btn_sport;
-	private Button btn_friend;
 	private Button btn_more;
 	private Button btn_change;
 	private Intent it;
 	// 用户列表userList对应的适配器
 	ArrayAdapter<String> simpleAdapter = null;
 	private Button btn_f5;
-	Person person ;
-
+	Person person;
+	/**
+	 * 运动模块
+	 */
+	private ImageView iv_sport;
+	/**
+	 * 通讯录好友模块
+	 */
+	private ImageView iv_contact;
+	/**
+	 * 个人中心
+	 */
+	private ImageView iv_user;
+	/**
+	 * 个人数据
+	 */
+	private List<Map<String, Object>> data = null;
+	/**
+	 * 手机号
+	 */
+	private TextView tv_phone;
+	/**
+	 * 昵称
+	 */
+	private TextView tv_nikename;
+	/**
+	 * 性别
+	 */
+	private TextView tv_sex;
+	/**
+	 * 金币
+	 */
+	private TextView tv_coins;
+	/**
+	 * 余额
+	 */
+	private TextView tv_balance;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my);
@@ -41,23 +77,48 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		tv_balance=(TextView)findViewById(R.id.tv_balance);
+		tv_coins=(TextView)findViewById(R.id.tv_coins);
+		tv_sex=(TextView)findViewById(R.id.tv_sex);
+		tv_nikename=(TextView)findViewById(R.id.tv_nikename);
+		tv_phone=(TextView)findViewById(R.id.tv_phone);
+		iv_user = (ImageView) findViewById(R.id.iv_user);
+		iv_user.setImageResource(R.drawable.icon_user_on);
 		listview = (ListView) findViewById(R.id.listView1);
 		simpleAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_expandable_list_item_1, getData());
 
 		listview.setAdapter(simpleAdapter);
-		btn_sport = (Button) findViewById(R.id.btn_sport);
-		btn_sport.setOnClickListener(this);
 		btn_change = (Button) findViewById(R.id.btn_change);
 		btn_change.setOnClickListener(this);
-		btn_f5=(Button)findViewById(R.id.btn_f5);
+		btn_f5 = (Button) findViewById(R.id.btn_f5);
 		btn_f5.setOnClickListener(this);
-		btn_friend=(Button)findViewById(R.id.btn_friend);
-		btn_friend.setOnClickListener(this);
+		iv_sport = (ImageView) findViewById(R.id.iv_sport);
+		iv_sport.setOnClickListener(this);
+		iv_contact = (ImageView) findViewById(R.id.iv_contact);
+		iv_contact.setOnClickListener(this);
 	}
 
 	private List<String> getData() {
-		 person = JsonTools.getPerson("data", Conf.jsonstring);
+		person = JsonTools.getPerson("data", Conf.jsonstring);
+	
+		data=JsonTools.getMy(Conf.jsonstring);
+		Log.i(Conf.TAG, data.get(0).get("nickname")+"");
+		tv_phone.setText(data.get(0).get("phone").toString());
+		tv_nikename.setText(data.get(0).get("nickname").toString());
+		String sex=data.get(0).get("sex").toString();
+		Log.i(Conf.TAG, sex);
+		if(sex.equals("0")){
+			tv_sex.setText("未填写");
+		}else if(sex.equals("1")){
+			tv_sex.setText("男");
+		}else{
+			tv_sex.setText("女");
+		}
+		String coins=data.get(0).get("coins").toString();
+		tv_coins.setText(coins);
+		String balance=data.get(0).get("balance").toString();
+		tv_balance.setText(balance);
 		List<String> data = new ArrayList<String>();
 		data.add("昵称" + person.getNickname());
 		data.add("性别" + person.getSex());
@@ -69,28 +130,28 @@ public class MyActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_sport:
-			it = new Intent(getApplicationContext(), SportCheckActivity.class);
-			startActivity(it);
-			break;
+
 		case R.id.btn_change:
 			it = new Intent(getApplicationContext(), ChangeActivity.class);
 			startActivity(it);
 			this.finish();
 			break;
 		case R.id.btn_f5:
-			Log.i("f5	",person.getNickname());
+			Log.i("f5	", person.getNickname());
 			simpleAdapter = new ArrayAdapter<String>(this,
 					android.R.layout.simple_expandable_list_item_1, getData());
 			simpleAdapter.notifyDataSetChanged();
 			listview.setAdapter(simpleAdapter);
 			break;
-		case R.id.btn_friend:
+		case R.id.iv_contact:
 			it = new Intent(getApplicationContext(), FriendActivity.class);
 			startActivity(it);
 			break;
-		default:
+		case R.id.iv_sport:
+			it = new Intent(this, SportCheckActivity.class);
+			startActivity(it);
 			break;
+
 		}
 	}
 
@@ -101,7 +162,7 @@ public class MyActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onRestart() {
-		
+
 		super.onRestart();
 	}
 }

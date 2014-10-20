@@ -2,78 +2,332 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-<Button
-    android:id="@+id/btn_sport"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:text="运动检测" />
-
-<Button
-    android:id="@+id/btn_friend"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_toRightOf="@+id/btn_sport"
-    android:text="朋友" />
-
-<Button
-    android:id="@+id/btn_my"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_toLeftOf="@+id/btn_more"
-    android:layout_toRightOf="@+id/btn_friend"
-    android:text="我的" />
-
-<Button
-    android:id="@+id/btn_more"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:text="更多" />
-
-<TextView
-    android:id="@+id/textView1"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:gravity="center"
-    android:text="个人中心" />
-
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_above="@+id/btn_sport"
-    android:layout_alignParentLeft="true"
-    android:layout_below="@+id/textView1"
-    android:orientation="vertical" >
-
-    <ListView
-        android:id="@+id/listView1"
+    <include
+        android:id="@+id/in"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        android:layout_height="wrap_content"
+        layout="@layout/ll_menu_buttom" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ll_title"
+        android:orientation="vertical" >
 
-<Button
-    android:id="@+id/btn_change"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentTop="true"
-    android:text="编辑" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
 
-<Button
-    android:id="@+id/btn_f5"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:text="刷新" />
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|top"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="    手机号:" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="0539-10000000000" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|top"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="    昵称：" />
+
+            <TextView
+                android:id="@+id/tv_nikename"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="德玛西亚" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|top"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="    性别：" />
+
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="妖怪" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical"
+            android:visibility="gone" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|top"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="    金币：" />
+
+            <TextView
+                android:id="@+id/tv_coins"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="0" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|top"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="    余额：" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="0" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="用户详情"
+                android:textSize="10pt" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="排行榜"
+                android:textSize="10pt" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="我的众筹"
+                android:textSize="10pt" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="购物车"
+                android:textSize="10pt" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="订单详情"
+                android:textSize="10pt" />
+        </GridLayout>
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:background="#f8f8f8"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_f5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刷新"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="个人中心"
+            android:textSize="9pt" />
+
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_above="@+id/vw1"
+        android:layout_marginBottom="10dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="注销"
+            android:textSize="8pt"
+            android:textColor="#FF9A28" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vw1"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

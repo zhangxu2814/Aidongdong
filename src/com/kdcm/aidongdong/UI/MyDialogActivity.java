@@ -33,7 +33,7 @@ public class MyDialogActivity extends Activity implements OnClickListener {
 		btn_cancel = (Button) findViewById(R.id.btn_cancel);
 		btn_cancel.setOnClickListener(this);
 		tv_mess = (TextView) findViewById(R.id.tv_mess);
-		tv_mess.setText("  " + it.getStringExtra("URL"));
+		tv_mess.setText("  " + it.getStringExtra("msg"));
 
 	}
 
@@ -53,6 +53,7 @@ public class MyDialogActivity extends Activity implements OnClickListener {
 			this.finish();
 				break;
 		case R.id.btn_cancel:
+			this.finish();
 			break;
 
 		default:

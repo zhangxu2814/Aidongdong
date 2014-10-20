@@ -9,7 +9,7 @@
         android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/icon_title_login"
+        android:background="@null"
         android:orientation="horizontal" >
     </LinearLayout>
 
@@ -42,7 +42,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="请输入用户名"
-                    android:inputType="phone" >
+                    android:inputType="phone" 
+                    android:text="6666">
 
                     <requestFocus />
                 </EditText>
@@ -59,7 +60,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="请输入密码"
-                    android:inputType="textPassword" >
+                    android:inputType="textPassword" 
+                    android:text="111111">
 
                     <requestFocus />
                 </EditText>
@@ -76,19 +78,21 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="325" />
+                    android:layout_weight="200" />
 
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="17"
-                    android:background="@drawable/icon_btn_login" />
+                    android:layout_weight="50"
+                    android:background="@drawable/smssdk_btn_enable"
+                    android:text="登陆"
+                    android:textColor="#FFF" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="325" />
+                    android:layout_weight="200" />
             </LinearLayout>
         </LinearLayout>
 
@@ -111,23 +115,25 @@
                     android:id="@+id/tt_forget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="忘记密码" />
+                    android:text="忘记密码"
+                    android:textColor="#fff" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    android:layout_weight="40"/>
-
-                <Button
-                    android:id="@+id/btn_reg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="免费注册" />
+                    android:layout_weight="40" />
 
                 <TextView
-                    android:layout_weight="20"
+                    android:id="@+id/tv_reg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="免费注册"
+                    android:textColor="#fff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

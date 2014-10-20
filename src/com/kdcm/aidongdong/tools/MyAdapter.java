@@ -75,6 +75,7 @@ public class MyAdapter extends BaseAdapter {
 				final String URLpath = Conf.APP_URL + "delFriend&friend_id="
 						+ list.get(position).get("id").toString();
 				it.putExtra("URL", URLpath);
+				it.putExtra("msg", "确定删除好友吗");
 				context.startActivity(it);
 
 			}

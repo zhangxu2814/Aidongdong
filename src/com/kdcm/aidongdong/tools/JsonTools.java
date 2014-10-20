@@ -8,6 +8,9 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import android.util.Log;
 
 public class JsonTools {
 	public static Person getPerson(String key, String jsonString) {
@@ -42,10 +45,31 @@ public class JsonTools {
 
 	}
 
+	public static List<Map<String, Object>> getMy(String jsonstring) {
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		try {
+			JSONObject jsonObj = new JSONObject(jsonstring);
+			JSONObject personObj = jsonObj.getJSONObject("data");
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("nickname", personObj.get("nickname").toString());
+			map.put("phone", personObj.get("phone"));
+			map.put("id", personObj.get("id"));
+			map.put("coins", personObj.get("coins"));
+			map.put("sex", personObj.get("sex"));
+			map.put("balance", personObj.get("balance"));
+			data.add(map);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data;
+
+	}
+
 	public static List<Map<String, Object>> getFriends(String jsonstring) {
 
-		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();;
-		
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
@@ -56,7 +80,7 @@ public class JsonTools {
 				map.put("phone", jo.get("phone"));
 				map.put("id", jo.get("id"));
 				data.add(map);
-				
+
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
