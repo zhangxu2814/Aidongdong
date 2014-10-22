@@ -29,7 +29,7 @@ public class HttpUtil {
 		HttpGet httpRequest = new HttpGet(urlStr);
 		httpRequest.setHeader("Cookie", Conf.username);
 		
-		String strResult = "";
+		String strResult = null;
 		try {
 			// HttpClient对象
 			HttpClient httpClient = new DefaultHttpClient();

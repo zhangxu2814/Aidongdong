@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		loadingPDialog.setMessage("正在加载....");
 		loadingPDialog.setCancelable(true);
 		init();
+		
 		mHandler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg.what == 1) {

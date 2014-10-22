@@ -24,7 +24,7 @@ public class ForgetActivity extends Activity implements OnClickListener {
 	 */
 	private Thread mThread;
 	private String URLpath;
-	private boolean isSuccess=false;
+	private boolean isSuccess = false;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,14 +75,14 @@ public class ForgetActivity extends Activity implements OnClickListener {
 			@Override
 			public void run() {
 				HttpUtil.getJsonContent(URLpath);
-				isSuccess=true;
-				
+				isSuccess = true;
 
 			}
 		});
 		mThread.start();
-		if(isSuccess){
-		ForgetActivity.this.finish();}
+		if (isSuccess) {
+			ForgetActivity.this.finish();
+		}
 
 	}
 

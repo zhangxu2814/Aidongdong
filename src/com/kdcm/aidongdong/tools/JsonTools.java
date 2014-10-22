@@ -90,20 +90,20 @@ public class JsonTools {
 
 	}
 
-	public static List<String> getScan(String jsonstring) {
+	public static List<Map<String, Object>> getScan(String jsonstring) {
 
-		List<String> data = new ArrayList<String>();
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jo = (JSONObject) jsonArray.opt(i);
-				data.add("昵称:" + jo.getString("nickname") + ";电话:"
-						+ jo.getString("phone") + "ID" + jo.getString("id"));
-				// data.add(jo.getString("id"));
-				// data.add(jo.getString("nickname"));
-				// data.add(jo.getString("phone"));
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("nickname", jo.get("nickname").toString());
+				map.put("phone", jo.get("phone"));
+				map.put("id", jo.get("id"));
+				data.add(map);
 
 			}
 		} catch (JSONException e) {

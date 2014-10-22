@@ -1,6 +1,9 @@
 package com.kdcm.aidongdong.UI;
 
 
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,6 +22,7 @@ import android.view.View;
  * @author Eric
  * 
  */
+@SuppressLint("Instantiatable")
 public class ArcProgressbar extends View {
 	private float mTxtWidth;
 	// 画字体的画笔
@@ -103,6 +107,7 @@ public class ArcProgressbar extends View {
 //				else{
 //				count=3;	
 //			}
+        	
 			int[] colors = new int[count];
 			System.arraycopy(SECTION_COLORS, 0, colors, 0, count);
 			float[] positions = new float[count];

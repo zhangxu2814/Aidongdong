@@ -161,7 +161,12 @@
             android:name="com.kdcm.aidongdong.UI.MyDialogActivity"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
-        <activity android:name="com.kdcm.aidongdong.UI.MyRequestsActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.MyRequestsActivity" >
+        </activity>
+        <activity
+            android:name="com.kdcm.aidongdong.UI.PhoneAddFriends"
+         >
+        </activity>
     </application>
 
 </manifest>

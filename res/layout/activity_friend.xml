@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:background="#f8f8f8"
+        android:background="#f8f8f8" 
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="  +"
             android:textColor="#FF9A28"
-            android:textSize="20pt" />
+            android:textSize="12pt" />
     </LinearLayout>
 
     <LinearLayout

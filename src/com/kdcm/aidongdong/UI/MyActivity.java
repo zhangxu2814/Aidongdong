@@ -70,6 +70,11 @@ public class MyActivity extends Activity implements OnClickListener {
 	 * 余额
 	 */
 	private TextView tv_balance;
+	/**
+	 * 注销
+	 */
+	private TextView tv_logout;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my);
@@ -77,11 +82,13 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
-		tv_balance=(TextView)findViewById(R.id.tv_balance);
-		tv_coins=(TextView)findViewById(R.id.tv_coins);
-		tv_sex=(TextView)findViewById(R.id.tv_sex);
-		tv_nikename=(TextView)findViewById(R.id.tv_nikename);
-		tv_phone=(TextView)findViewById(R.id.tv_phone);
+		tv_logout = (TextView) findViewById(R.id.tv_logout);
+		tv_logout.setOnClickListener(this);
+		tv_balance = (TextView) findViewById(R.id.tv_balance);
+		tv_coins = (TextView) findViewById(R.id.tv_coins);
+		tv_sex = (TextView) findViewById(R.id.tv_sex);
+		tv_nikename = (TextView) findViewById(R.id.tv_nikename);
+		tv_phone = (TextView) findViewById(R.id.tv_phone);
 		iv_user = (ImageView) findViewById(R.id.iv_user);
 		iv_user.setImageResource(R.drawable.icon_user_on);
 		listview = (ListView) findViewById(R.id.listView1);
@@ -101,23 +108,23 @@ public class MyActivity extends Activity implements OnClickListener {
 
 	private List<String> getData() {
 		person = JsonTools.getPerson("data", Conf.jsonstring);
-	
-		data=JsonTools.getMy(Conf.jsonstring);
-		Log.i(Conf.TAG, data.get(0).get("nickname")+"");
+
+		data = JsonTools.getMy(Conf.jsonstring);
+		Log.i(Conf.TAG, data.get(0).get("nickname") + "");
 		tv_phone.setText(data.get(0).get("phone").toString());
 		tv_nikename.setText(data.get(0).get("nickname").toString());
-		String sex=data.get(0).get("sex").toString();
+		String sex = data.get(0).get("sex").toString();
 		Log.i(Conf.TAG, sex);
-		if(sex.equals("0")){
+		if (sex.equals("0")) {
 			tv_sex.setText("未填写");
-		}else if(sex.equals("1")){
+		} else if (sex.equals("1")) {
 			tv_sex.setText("男");
-		}else{
+		} else {
 			tv_sex.setText("女");
 		}
-		String coins=data.get(0).get("coins").toString();
+		String coins = data.get(0).get("coins").toString();
 		tv_coins.setText(coins);
-		String balance=data.get(0).get("balance").toString();
+		String balance = data.get(0).get("balance").toString();
 		tv_balance.setText(balance);
 		List<String> data = new ArrayList<String>();
 		data.add("昵称" + person.getNickname());
@@ -150,6 +157,14 @@ public class MyActivity extends Activity implements OnClickListener {
 		case R.id.iv_sport:
 			it = new Intent(this, SportCheckActivity.class);
 			startActivity(it);
+			break;
+		case R.id.tv_logout:
+			Conf.username = null;
+			Conf.jsonstring = null;
+			Conf.isLogout=true;
+			it = new Intent(this, LoginActivity.class);
+			startActivity(it);
+			this.finish();
 			break;
 
 		}

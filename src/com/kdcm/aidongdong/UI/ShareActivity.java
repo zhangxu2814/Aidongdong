@@ -50,7 +50,7 @@ public class ShareActivity extends Activity implements OnClickListener{
 		mSocialShare.setClientId(MediaType.QZONE.toString(), "100358052");
 		mSocialShare.setClientId(MediaType.QQFRIEND.toString(), "100358052");
 		mSocialShare.setClientName(MediaType.QQFRIEND.toString(), "百度");
-		mSocialShare.setClientId(MediaType.WEIXIN.toString(), "wx329c742cb69b41b8");
+		mSocialShare.setClientId(MediaType.WEIXIN.toString(), "wxb63a8a59702e5ddb");
 		mImageContent.setTitle("百度开发中心");
 		mImageContent.setContent("欢迎使用百度社会化分享组件，相关问题请邮件dev_support@baidu.com");
 		mImageContent.setLinkUrl("http://developer.baidu.com/");

@@ -48,4 +48,8 @@ public class Conf {
 	 * 卡路里
 	 */
 	public static int intCal = 0;
+	/**
+	 * 是否注销
+	 */
+	public static boolean isLogout=false;
 }

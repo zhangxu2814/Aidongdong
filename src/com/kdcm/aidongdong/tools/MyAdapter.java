@@ -21,16 +21,17 @@ import com.kdcm.aidongdong.UI.MyDialogActivity;
 public class MyAdapter extends BaseAdapter {
 	private Context context;
 	private String btn_name;
-
 	private LayoutInflater layoutInflater;
-
 	private List<Map<String, Object>> list;
 	private Intent it;
+	private String URLpath;
+	private String msg="";
 
-	public MyAdapter(Context context, List<Map<String, Object>> list) {
+	public MyAdapter(Context context, List<Map<String, Object>> list,String msg) {
 		this.context = context;
 		layoutInflater = LayoutInflater.from(context);
 		this.list = list;
+		this.msg=msg;
 	}
 
 	public void refresh(List<Map<String, Object>> list) {
@@ -72,10 +73,9 @@ public class MyAdapter extends BaseAdapter {
 						"验证成功" + list.get(position).get("id").toString(),
 						Toast.LENGTH_SHORT).show();
 
-				final String URLpath = Conf.APP_URL + "delFriend&friend_id="
-						+ list.get(position).get("id").toString();
+				URLpath = URLpath + list.get(position).get("id").toString();
 				it.putExtra("URL", URLpath);
-				it.putExtra("msg", "确定删除好友吗");
+				it.putExtra("msg", msg);
 				context.startActivity(it);
 
 			}
@@ -91,4 +91,7 @@ public class MyAdapter extends BaseAdapter {
 		this.btn_name = btn_name;
 	}
 
+	public void setURL(String URLpath) {
+		this.URLpath = URLpath;
+	}
 }

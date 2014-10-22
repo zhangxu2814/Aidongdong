@@ -3,6 +3,7 @@ package com.kdcm.aidongdong.UI;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import android.app.Activity;
@@ -28,6 +29,7 @@ import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
+import com.kdcm.aidongdong.tools.MyAdapter;
 
 public class RadarActivity extends Activity implements Runnable {
 	protected static final int SCAN_LODING = 1;
@@ -36,7 +38,7 @@ public class RadarActivity extends Activity implements Runnable {
 	private ImageView im_dian;
 	private TextView tv_count;
 	MediaPlayer mpMediaPlayer = new MediaPlayer();
-	
+
 	/**
 	 * 子线程负责联网
 	 */
@@ -45,15 +47,16 @@ public class RadarActivity extends Activity implements Runnable {
 	private String URLpath;
 	private boolean isRun = true;
 	private ListView listview;
-	ArrayAdapter<String> simpleAdapter = null;
-	List<String> data = new ArrayList<String>();
+	ArrayAdapter<Map<String, Object>> simpleAdapter = null;
+	List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 	int dataSize = 0;
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg != null) {
 				tv_count.setText(data.size() + "");
 				if (dataSize != data.size()) {
-					listview.setAdapter(simpleAdapter);
+					showFriends();
+					
 					dataSize = data.size();
 				}
 			} else {
@@ -69,8 +72,25 @@ public class RadarActivity extends Activity implements Runnable {
 		setContentView(R.layout.activity_radar);
 		init();
 		Media();
-		// openScan();
+		
 
+	}
+
+	private void showFriends() {
+		if (data == null) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			showFriends();
+		} else {
+			MyAdapter my = new MyAdapter(this, data, "添加好友？");
+			my.setBtn_name("添加");
+			my.setURL(Conf.APP_URL + "delFriend&friend_id=");
+			listview.setAdapter(my);
+		}
 	}
 
 	private void Media() {
@@ -103,7 +123,6 @@ public class RadarActivity extends Activity implements Runnable {
 		animation.setDuration(2000);
 		animation.setRepeatCount(Animation.INFINITE);
 		im_scan.startAnimation(animation);
-		
 
 		AlphaAnimation animation2 = new AlphaAnimation(0.0f, 1.0f);
 		animation2.setDuration(3000);
@@ -112,28 +131,7 @@ public class RadarActivity extends Activity implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 		listview = (ListView) findViewById(R.id.listView1);
-		listview.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				
-				String str=data.get(arg2);
-				String s1 = str.substring(str.lastIndexOf("ID")+2);
-				Toast.makeText(getApplicationContext(), "验证成功" +s1,
-						Toast.LENGTH_SHORT).show();
-				final String addURL=Conf.APP_URL+"addFriend&friend_id="+s1;
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						HttpUtil.getJsonContent(addURL);
-					}
-				}).start();
-
-			}
-		});
+		
 	}
 
 	@Override
@@ -156,8 +154,7 @@ public class RadarActivity extends Activity implements Runnable {
 				String jsonstring = HttpUtil.getJsonContent(URLpath);
 				Log.i("lihuanwang", "run" + jsonstring);
 				data = JsonTools.getScan(jsonstring);
-				simpleAdapter = new ArrayAdapter<String>(this,
-						android.R.layout.simple_expandable_list_item_1, data);
+		
 				if (data != null) {
 					Message msg = Message.obtain();
 					msg.obj = data;

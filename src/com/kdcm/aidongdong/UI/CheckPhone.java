@@ -104,7 +104,6 @@ public class CheckPhone extends Activity {
 			@Override
 			public void run() {
 				jsonstring = HttpUtil.getJsonContent(str_url);
-				Log.i(TAG, jsonstring);
 				if (!(jsonstring == null)) {
 					phone_registered = JsonTools.getPhone_registered(
 							"phone_registered", jsonstring);
