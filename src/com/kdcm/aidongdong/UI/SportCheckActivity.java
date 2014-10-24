@@ -27,6 +27,10 @@ import com.baidu.frontia.api.FrontiaSocialShareContent;
 import com.baidu.frontia.api.FrontiaSocialShareListener;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 /**
  * 
@@ -334,23 +338,38 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	private void ShowShare() {
-		mSocialShare = Frontia.getSocialShare();
-		mSocialShare.setContext(this);
-		mSocialShare.setClientId(MediaType.SINAWEIBO.toString(),
-				Conf.SINA_APP_KEY);
-		mSocialShare.setClientId(MediaType.QZONE.toString(), "100358052");
-		mSocialShare.setClientId(MediaType.QQFRIEND.toString(), "100358052");
-		mSocialShare.setClientName(MediaType.QQFRIEND.toString(), "百度");
-		mSocialShare.setClientId(MediaType.WEIXIN.toString(),
-				"wx329c742cb69b41b8");
-		mImageContent.setTitle("百度开发中心");
-		mImageContent.setContent("欢迎使用百度社会化分享组件，相关问题请邮件dev_support@baidu.com");
-		mImageContent.setLinkUrl("http://developer.baidu.com/");
-		mImageContent
-				.setImageUri(Uri
-						.parse("http://apps.bdimg.com/developer/static/04171450/developer/images/icon/terminal_adapter.png"));
-		mSocialShare.show(this.getWindow().getDecorView(), mImageContent,
-				FrontiaTheme.DARK, new ShareListener());
+//		mSocialShare = Frontia.getSocialShare();
+//		mSocialShare.setContext(this);
+//		mSocialShare.setClientId(MediaType.SINAWEIBO.toString(),
+//				Conf.SINA_APP_KEY);
+//		mSocialShare.setClientId(MediaType.QZONE.toString(), "100358052");
+//		mSocialShare.setClientId(MediaType.QQFRIEND.toString(), "100358052");
+//		mSocialShare.setClientName(MediaType.QQFRIEND.toString(), "百度");
+//		mSocialShare.setClientId(MediaType.WEIXIN.toString(),
+//				"wx329c742cb69b41b8");
+//		mImageContent.setTitle("百度开发中心");
+//		mImageContent.setContent("欢迎使用百度社会化分享组件，相关问题请邮件dev_support@baidu.com");
+//		mImageContent.setLinkUrl("http://developer.baidu.com/");
+//		mImageContent
+//				.setImageUri(Uri
+//						.parse("http://apps.bdimg.com/developer/static/04171450/developer/images/icon/terminal_adapter.png"));
+//		mSocialShare.show(this.getWindow().getDecorView(), mImageContent,
+//				FrontiaTheme.DARK, new ShareListener());
+		final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+		// 设置分享内容
+		mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
+		// 设置分享图片, 参数2为图片的url地址
+		mController.setShareMedia(new UMImage(SportCheckActivity.this, 
+		                                      "http://www.umeng.com/images/pic/banner_module_social.png"));
+		String appID = "wxb63a8a59702e5ddb";
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(SportCheckActivity.this,appID);
+		wxHandler.addToSocialSDK();
+		// 支持微信朋友圈
+		UMWXHandler wxCircleHandler = new UMWXHandler(SportCheckActivity.this,appID);
+		wxCircleHandler.setToCircle(true);
+		wxCircleHandler.addToSocialSDK();
+		mController.openShare(SportCheckActivity.this, false);
 	}
 
 	private class ShareListener implements FrontiaSocialShareListener {

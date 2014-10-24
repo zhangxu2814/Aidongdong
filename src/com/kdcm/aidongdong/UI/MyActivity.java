@@ -161,7 +161,7 @@ public class MyActivity extends Activity implements OnClickListener {
 		case R.id.tv_logout:
 			Conf.username = null;
 			Conf.jsonstring = null;
-			Conf.isLogout=true;
+			Conf.isLogout = true;
 			it = new Intent(this, LoginActivity.class);
 			startActivity(it);
 			this.finish();
@@ -171,13 +171,19 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	protected void onResume() {
-
+		if (Conf.isLogout == true) {
+			Intent mIt = new Intent(this, LoginActivity.class);
+			startActivity(mIt);
+		}
 		super.onResume();
 	}
 
 	@Override
 	protected void onRestart() {
-
+		if (Conf.isLogout == true) {
+			Intent mIt = new Intent(this, LoginActivity.class);
+			startActivity(mIt);
+		}
 		super.onRestart();
 	}
 }

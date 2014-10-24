@@ -51,5 +51,5 @@ public class Conf {
 	/**
 	 * 是否注销
 	 */
-	public static boolean isLogout=false;
+	public static boolean isLogout=true;
 }

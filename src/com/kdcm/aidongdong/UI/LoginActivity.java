@@ -1,8 +1,5 @@
 package com.kdcm.aidongdong.UI;
 
-import java.util.HashMap;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
@@ -25,6 +19,8 @@ import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 	String TAG = "LoginActivity";
@@ -80,12 +76,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		loadingPDialog.setMessage("正在加载....");
 		loadingPDialog.setCancelable(true);
 		init();
-		
+		PushAgent mPushAgent = PushAgent.getInstance(this);
+		mPushAgent.enable();
+		String device_token = UmengRegistrar.getRegistrationId(this);
+		Log.i("kdcm", device_token);
 		mHandler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg.what == 1) {
 					Toast.makeText(getApplicationContext(), "验证成功",
 							Toast.LENGTH_SHORT).show();
+					Conf.isLogout = false;
 					postDelayed(mRunnable, 100);
 				} else if (msg.what == NET_ERROR) {
 					Toast.makeText(getApplicationContext(), "连接服务器失败，请检查网络连接",
