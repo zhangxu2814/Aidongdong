@@ -143,7 +143,9 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.RegActivity" >
         </activity>
-        <activity android:name="com.kdcm.aidongdong.UI.SportActivity" >
+        <activity
+            android:name="com.kdcm.aidongdong.UI.SportActivity"
+            android:theme="@style/Transparent" >
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.SportCheckActivity" >
         </activity>
@@ -163,9 +165,7 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.MyRequestsActivity" >
         </activity>
-        <activity
-            android:name="com.kdcm.aidongdong.UI.PhoneAddFriends"
-         >
+        <activity android:name="com.kdcm.aidongdong.UI.PhoneAddFriends" >
         </activity>
     </application>
 

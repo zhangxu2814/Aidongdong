@@ -1,12 +1,12 @@
-package com.kdcm.aidongdong;
+package com.kdcm.aidongdong.UI;
 
 import java.util.HashMap;
 
 import com.baidu.frontia.Frontia;
+import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
-import com.kdcm.aidongdong.UI.PushActivity;
-import com.kdcm.aidongdong.UI.CheckPhone;
-import com.kdcm.aidongdong.UI.ShareActivity;
+import com.kdcm.aidongdong.R.id;
+import com.kdcm.aidongdong.R.layout;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
@@ -93,28 +93,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				new Thread() {
-					public void run() {
-						String path = Conf.APP_URL + "login&login_name="
-								+ et_username.getText().toString()
-								+ "&login_password="
-								+ et_psd.getText().toString();
-						String jsonstring = HttpUtil.getJsonContent(path);
-						mResult = HttpUtil.getResult(jsonstring);
-						Log.i(TAG, jsonstring);
-						if (!jsonstring.equals("ERROR")) {
-							Person person = JsonTools.getPerson("data",
-									jsonstring);
-							Log.i(TAG, "name"+person.getUsername());
-						}
-						if (mResult != null) {
-							
-							Message message = new Message();
-							message.what = Integer.parseInt(mResult);
-							mHandler.sendMessage(message);
-						}
-					}
-				}.start();
+				ToDo();
 			}
 		});
 		btn_reg.setOnClickListener(new OnClickListener() {
@@ -143,4 +122,33 @@ public class MainActivity extends Activity {
 		});
 	}
 
-}
+	protected void ToDo() {
+		new Thread() {
+			public void run() {
+				SaveData();
+			}
+		}.start();
+	}
+
+	protected void SaveData() {
+		String path = Conf.APP_URL + "login&login_name="
+				+ et_username.getText().toString()
+				+ "&login_password="
+				+ et_psd.getText().toString();
+		String jsonstring = HttpUtil.getJsonContent(this,path);
+		mResult = HttpUtil.getResult(jsonstring);
+		Log.i(TAG, jsonstring);
+		if (!jsonstring.equals("ERROR")) {
+			Person person = JsonTools.getPerson("data",
+					jsonstring);
+			Log.i(TAG, "name"+person.getUsername());
+		}
+		if (mResult != null) {
+			
+			Message message = new Message();
+			message.what = Integer.parseInt(mResult);
+			mHandler.sendMessage(message);
+		}		
+	}		
+	}
+

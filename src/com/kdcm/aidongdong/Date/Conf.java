@@ -1,5 +1,7 @@
 package com.kdcm.aidongdong.Date;
 
+import android.content.SharedPreferences;
+
 public class Conf {
 	public static Boolean isNewVersion=false;
 	public static String TAG="lihuanwang";
@@ -52,4 +54,5 @@ public class Conf {
 	 * 是否注销
 	 */
 	public static boolean isLogout=true;
+	
 }

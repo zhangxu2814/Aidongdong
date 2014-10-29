@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.UI.DialogGiveMoney;
 import com.kdcm.aidongdong.UI.MyDialogActivity;
 
 public class MyAdapter extends BaseAdapter {
@@ -26,6 +27,11 @@ public class MyAdapter extends BaseAdapter {
 	private Intent it;
 	private String URLpath;
 	private String msg="";
+	private Button btn_give;
+	/**
+	 * 赠送按钮，只有在好友界面能用到，默认隐藏。
+	 */
+	private int isGone=View.GONE;
 
 	public MyAdapter(Context context, List<Map<String, Object>> list,String msg) {
 		this.context = context;
@@ -61,6 +67,8 @@ public class MyAdapter extends BaseAdapter {
 		}
 		TextView tv1 = (TextView) convertView.findViewById(R.id.tv1);
 		Button btn1 = (Button) convertView.findViewById(R.id.btn1);
+		btn_give=(Button)convertView.findViewById(R.id.btn_give);
+		btn_give.setVisibility(isGone);
 		tv1.setText(list.get(position).get("nickname").toString());
 		btn1.setText(btn_name);
 		btn1.setOnClickListener(new OnClickListener() {
@@ -80,6 +88,17 @@ public class MyAdapter extends BaseAdapter {
 
 			}
 		});
+		btn_give.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				it=new Intent(context, DialogGiveMoney.class);
+				it.putExtra("mID", list.get(position).get("id").toString());
+				context.startActivity(it);
+				
+			}
+		});
+		
 		return convertView;
 	}
 
@@ -93,5 +112,13 @@ public class MyAdapter extends BaseAdapter {
 
 	public void setURL(String URLpath) {
 		this.URLpath = URLpath;
+	}
+
+	public int getIsGone() {
+		return isGone;
+	}
+
+	public void setIsGone(int isGone) {
+		this.isGone = isGone;
 	}
 }

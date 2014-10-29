@@ -39,7 +39,7 @@ public class JsonTools {
 			phone_registered = jsonObj.getString(key);
 
 		} catch (Exception e) {
-
+			phone_registered=null;
 		}
 		return phone_registered;
 
@@ -89,7 +89,30 @@ public class JsonTools {
 		return data;
 
 	}
+	public static List<Map<String, Object>> getGivedcoins(String jsonstring) {
 
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
+		try {
+			JSONObject jsonObject = new JSONObject(jsonstring);
+			JSONArray jsonArray = jsonObject.getJSONArray("list");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jo = (JSONObject) jsonArray.opt(i);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("nickname", jo.get("nickname").toString());
+				map.put("phone", jo.get("phone"));
+				map.put("coins_paid", jo.get("coins_paid"));
+				map.put("paid_time", jo.get("paid_time"));
+				data.add(map);
+
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+
+	}
 	public static List<Map<String, Object>> getScan(String jsonstring) {
 
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();

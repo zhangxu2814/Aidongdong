@@ -4,12 +4,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract.CommonDataKinds.Im;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,14 +21,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.frontia.Frontia;
-import com.baidu.frontia.api.FrontiaAuthorization.MediaType;
 import com.baidu.frontia.api.FrontiaSocialShare;
-import com.baidu.frontia.api.FrontiaSocialShare.FrontiaTheme;
 import com.baidu.frontia.api.FrontiaSocialShareContent;
 import com.baidu.frontia.api.FrontiaSocialShareListener;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.UI.Money.DropBallActivity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
@@ -128,6 +128,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	private ImageView iv_contact;
 	private int time_h = 0;
 	private int time_m = 0;
+	private ProgressDialog loadingPDialog = null;
+	private Handler mHandler;
+	String isMoney = "null";
 
 	@Override
 	public void onClick(View v) {
@@ -159,8 +162,12 @@ public class SportCheckActivity extends Activity implements SensorListener,
 					}
 				};
 				timer_cinsume.schedule(task_consume, 10, 10);
+				Intent mIt = new Intent(this, DropBallActivity.class);
+				startActivity(mIt);
 				msg = "燃烧吧小宇宙.";
 			} else {
+				Intent mIt = new Intent(this, DropBallActivity.class);
+				startActivity(mIt);
 				msg = "去跑步吧亲.";
 			}
 			break;
@@ -214,7 +221,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_sport);
+
 		init();
+
 	}
 
 	private void init() {
@@ -338,35 +347,38 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	private void ShowShare() {
-//		mSocialShare = Frontia.getSocialShare();
-//		mSocialShare.setContext(this);
-//		mSocialShare.setClientId(MediaType.SINAWEIBO.toString(),
-//				Conf.SINA_APP_KEY);
-//		mSocialShare.setClientId(MediaType.QZONE.toString(), "100358052");
-//		mSocialShare.setClientId(MediaType.QQFRIEND.toString(), "100358052");
-//		mSocialShare.setClientName(MediaType.QQFRIEND.toString(), "百度");
-//		mSocialShare.setClientId(MediaType.WEIXIN.toString(),
-//				"wx329c742cb69b41b8");
-//		mImageContent.setTitle("百度开发中心");
-//		mImageContent.setContent("欢迎使用百度社会化分享组件，相关问题请邮件dev_support@baidu.com");
-//		mImageContent.setLinkUrl("http://developer.baidu.com/");
-//		mImageContent
-//				.setImageUri(Uri
-//						.parse("http://apps.bdimg.com/developer/static/04171450/developer/images/icon/terminal_adapter.png"));
-//		mSocialShare.show(this.getWindow().getDecorView(), mImageContent,
-//				FrontiaTheme.DARK, new ShareListener());
-		final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+		// mSocialShare = Frontia.getSocialShare();
+		// mSocialShare.setContext(this);
+		// mSocialShare.setClientId(MediaType.SINAWEIBO.toString(),
+		// Conf.SINA_APP_KEY);
+		// mSocialShare.setClientId(MediaType.QZONE.toString(), "100358052");
+		// mSocialShare.setClientId(MediaType.QQFRIEND.toString(), "100358052");
+		// mSocialShare.setClientName(MediaType.QQFRIEND.toString(), "百度");
+		// mSocialShare.setClientId(MediaType.WEIXIN.toString(),
+		// "wx329c742cb69b41b8");
+		// mImageContent.setTitle("百度开发中心");
+		// mImageContent.setContent("欢迎使用百度社会化分享组件，相关问题请邮件dev_support@baidu.com");
+		// mImageContent.setLinkUrl("http://developer.baidu.com/");
+		// mImageContent
+		// .setImageUri(Uri
+		// .parse("http://apps.bdimg.com/developer/static/04171450/developer/images/icon/terminal_adapter.png"));
+		// mSocialShare.show(this.getWindow().getDecorView(), mImageContent,
+		// FrontiaTheme.DARK, new ShareListener());
+		final UMSocialService mController = UMServiceFactory
+				.getUMSocialService("com.umeng.share");
 		// 设置分享内容
-		mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
+		mController
+				.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
 		// 设置分享图片, 参数2为图片的url地址
-		mController.setShareMedia(new UMImage(SportCheckActivity.this, 
-		                                      "http://www.umeng.com/images/pic/banner_module_social.png"));
+		mController.setShareMedia(new UMImage(SportCheckActivity.this,
+				"http://www.umeng.com/images/pic/banner_module_social.png"));
 		String appID = "wxb63a8a59702e5ddb";
 		// 添加微信平台
-		UMWXHandler wxHandler = new UMWXHandler(SportCheckActivity.this,appID);
+		UMWXHandler wxHandler = new UMWXHandler(SportCheckActivity.this, appID);
 		wxHandler.addToSocialSDK();
 		// 支持微信朋友圈
-		UMWXHandler wxCircleHandler = new UMWXHandler(SportCheckActivity.this,appID);
+		UMWXHandler wxCircleHandler = new UMWXHandler(SportCheckActivity.this,
+				appID);
 		wxCircleHandler.setToCircle(true);
 		wxCircleHandler.addToSocialSDK();
 		mController.openShare(SportCheckActivity.this, false);
@@ -388,6 +400,21 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		public void onCancel() {
 			Log.d("Test", "cancel ");
 		}
+
+	}
+
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		super.onBackPressed();
+	}
+
+	@Override
+	protected void onResume() {
+		Intent intenet = getIntent();
+		isMoney = intenet.getStringExtra("mMoney");
+		Log.i("kdcm", isMoney+"");
+		super.onResume();
 
 	}
 }

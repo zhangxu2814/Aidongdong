@@ -20,14 +20,15 @@ import org.json.JSONTokener;
 
 import com.kdcm.aidongdong.Date.Conf;
 
+import android.content.Context;
 import android.util.Log;
 
 public class HttpUtil {
 	static String mResult = null;
 
-	public static String getJsonContent(String urlStr) {
+	public static String getJsonContent(Context context,String urlStr) {
 		HttpGet httpRequest = new HttpGet(urlStr);
-		httpRequest.setHeader("Cookie", Conf.username);
+		httpRequest.setHeader("Cookie", DataTools.readData(context,"username"));
 		
 		String strResult = null;
 		try {

@@ -69,12 +69,17 @@ public class ChangeActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void run() {
-				Conf.jsonstring = HttpUtil.getJsonContent(URLpath);
+				savdData();
 
 			}
 		});
 		mThread.start();
 
+	}
+
+	protected void savdData() {
+		Conf.jsonstring = HttpUtil.getJsonContent(this,URLpath);
+		
 	}
 
 }

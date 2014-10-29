@@ -103,18 +103,22 @@ public class CheckPhone extends Activity {
 
 			@Override
 			public void run() {
-				jsonstring = HttpUtil.getJsonContent(str_url);
-				if (!(jsonstring == null)) {
-					phone_registered = JsonTools.getPhone_registered(
-							"phone_registered", jsonstring);
-					Message message = new Message();
-					message.what = Integer.parseInt(phone_registered);
-					mHandler.sendMessage(message);
-					Log.i(TAG, phone_registered);
-				}
+				saveData();
 			}
 		});
 		mThread.start();
+	}
+
+	protected void saveData() {
+		jsonstring = HttpUtil.getJsonContent(this,str_url);
+		if (!(jsonstring == null)) {
+			phone_registered = JsonTools.getPhone_registered(
+					"phone_registered", jsonstring);
+			Message message = new Message();
+			message.what = Integer.parseInt(phone_registered);
+			mHandler.sendMessage(message);
+			Log.i(TAG, phone_registered);
+		}		
 	}
 
 	private void init() {

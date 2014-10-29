@@ -46,7 +46,7 @@ public class MyDialogActivity extends Activity implements OnClickListener {
 
 					@Override
 					public void run() {
-						HttpUtil.getJsonContent(URL);
+						toDo();
 					}
 				}).start();
 			}
@@ -59,5 +59,9 @@ public class MyDialogActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	protected void toDo() {
+		HttpUtil.getJsonContent(this,URL);		
 	}
 }

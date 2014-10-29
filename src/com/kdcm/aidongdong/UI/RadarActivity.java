@@ -20,6 +20,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class RadarActivity extends Activity implements Runnable {
 	private ImageView im_scan;
 	private ImageView im_dian;
 	private TextView tv_count;
+	private Button btn_give;
 	MediaPlayer mpMediaPlayer = new MediaPlayer();
 
 	/**
@@ -149,23 +151,27 @@ public class RadarActivity extends Activity implements Runnable {
 		while (isRun) {
 			try {
 				Thread.sleep(1000);
-				URLpath = Conf.APP_URL
-						+ "scan&longitude=118.350838&latitude=35.06763";
-				String jsonstring = HttpUtil.getJsonContent(URLpath);
-				Log.i("lihuanwang", "run" + jsonstring);
-				data = JsonTools.getScan(jsonstring);
-		
-				if (data != null) {
-					Message msg = Message.obtain();
-					msg.obj = data;
-					handler.sendMessage(msg);
-				} else {
-					handler.sendMessage(null);
-				}
+				toDo();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void toDo() {
+		URLpath = Conf.APP_URL
+				+ "scan&longitude=118.350838&latitude=35.06763";
+		String jsonstring = HttpUtil.getJsonContent(this,URLpath);
+		Log.i("lihuanwang", "run" + jsonstring);
+		data = JsonTools.getScan(jsonstring);
+
+		if (data != null) {
+			Message msg = Message.obtain();
+			msg.obj = data;
+			handler.sendMessage(msg);
+		} else {
+			handler.sendMessage(null);
+		}		
 	}
 }

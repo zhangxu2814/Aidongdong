@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
 
@@ -78,6 +79,7 @@ public class MyActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my);
+	
 		init();
 	}
 
@@ -107,9 +109,10 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private List<String> getData() {
-		person = JsonTools.getPerson("data", Conf.jsonstring);
+		person = JsonTools.getPerson("data",
+				DataTools.readData(this,"login_message"));
 
-		data = JsonTools.getMy(Conf.jsonstring);
+		data = JsonTools.getMy(DataTools.readData(this,"login_message"));
 		Log.i(Conf.TAG, data.get(0).get("nickname") + "");
 		tv_phone.setText(data.get(0).get("phone").toString());
 		tv_nikename.setText(data.get(0).get("nickname").toString());
@@ -159,8 +162,8 @@ public class MyActivity extends Activity implements OnClickListener {
 			startActivity(it);
 			break;
 		case R.id.tv_logout:
-			Conf.username = null;
-			Conf.jsonstring = null;
+			// Conf.username = null;
+			// Conf.jsonstring = null;
 			Conf.isLogout = true;
 			it = new Intent(this, LoginActivity.class);
 			startActivity(it);
@@ -169,21 +172,21 @@ public class MyActivity extends Activity implements OnClickListener {
 
 		}
 	}
-
-	protected void onResume() {
-		if (Conf.isLogout == true) {
-			Intent mIt = new Intent(this, LoginActivity.class);
-			startActivity(mIt);
-		}
-		super.onResume();
-	}
-
-	@Override
-	protected void onRestart() {
-		if (Conf.isLogout == true) {
-			Intent mIt = new Intent(this, LoginActivity.class);
-			startActivity(mIt);
-		}
-		super.onRestart();
-	}
+	// @Override
+	// protected void onResume() {
+	// if (Conf.isLogout == true) {
+	// Intent mIt = new Intent(this, LoginActivity.class);
+	// startActivity(mIt);
+	// }
+	// super.onResume();
+	// }
+	//
+	// @Override
+	// protected void onRestart() {
+	// if (Conf.isLogout == true) {
+	// Intent mIt = new Intent(this, LoginActivity.class);
+	// startActivity(mIt);
+	// }
+	// super.onRestart();
+	// }
 }

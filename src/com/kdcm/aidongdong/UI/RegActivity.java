@@ -87,24 +87,32 @@ public class RegActivity extends Activity {
 							+ tt_phone.getText().toString() + "&password="
 							+ et_psd.getText().toString() + "&user_type=4";
 					Log.i(TAG, path);
-					new Thread() {
-						public void run() {
-							String jsonstring = HttpUtil.getJsonContent(path);
-							String mResult = HttpUtil.getResult(jsonstring);
-							if (mResult != null) {
-								Log.i(TAG, mResult);
-								Message message = new Message();
-								message.what = Integer.parseInt(mResult);
-								mHandler.sendMessage(message);
-							}
-						}
-					}.start();
+					toDo();
 				}
 
 			}
 
 		});
 
+	}
+
+	protected void toDo() {
+		new Thread() {
+			public void run() {
+				saveData();
+			}
+		}.start();		
+	}
+
+	protected void saveData() {
+		String jsonstring = HttpUtil.getJsonContent(this,path);
+		String mResult = HttpUtil.getResult(jsonstring);
+		if (mResult != null) {
+			Log.i(TAG, mResult);
+			Message message = new Message();
+			message.what = Integer.parseInt(mResult);
+			mHandler.sendMessage(message);
+		}		
 	}
 
 }

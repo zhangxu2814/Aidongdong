@@ -49,15 +49,19 @@ public class MyRequestsActivity extends BaseActivity {
 
 			@Override
 			public void run() {
-				json_MyRequests = HttpUtil.getJsonContent(URL_MyRequests);
-				if (json_MyRequests != null) {
-					data = JsonTools.getFriends(json_MyRequests);
-				}
+				saveData();
 
 			}
 		}).start();
 
 		showFriend();
+	}
+
+	protected void saveData() {
+		json_MyRequests = HttpUtil.getJsonContent(this,URL_MyRequests);
+		if (json_MyRequests != null) {
+			data = JsonTools.getFriends(json_MyRequests);
+		}		
 	}
 
 	private void showFriend() {

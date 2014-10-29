@@ -38,20 +38,29 @@ public class PhoneAddFriends extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				if(phone.length()>3){
-				new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						HttpUtil.getJsonContent(URL_addFri);
-
-					}
-				}).start();}else{
+					toDo();
+				}else{
 					System.exit(0);
 				}
 
 			}
 		});
 
+	}
+
+	protected void toDo() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				saveData();
+
+			}
+		}).start();		
+	}
+
+	protected void saveData() {
+		HttpUtil.getJsonContent(this,URL_addFri);		
 	}
 
 }

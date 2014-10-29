@@ -102,21 +102,25 @@ public class WelcomActivity extends BaseActivity {
 		mThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String jsonstr = HttpUtil.getJsonContent(URLpath);
-				String data = JsonTools.getPhone_registered("data", jsonstr);
-				version = JsonTools.getPhone_registered("version_name", data);
-
-				Log.i(Conf.TAG, version);
-				if (version.equals("1.0")) {
-					Conf.isNewVersion = true;
-				}
-				Message message = new Message();
-				message.obj = version;
-				mHandler.sendMessage(message);
+				saveData();
 			}
 		});
 		mThread.start();
 
+	}
+
+	protected void saveData() {
+		String jsonstr = HttpUtil.getJsonContent(this,URLpath);
+		String data = JsonTools.getPhone_registered("data", jsonstr);
+		version = JsonTools.getPhone_registered("version_name", data);
+
+		Log.i(Conf.TAG, version);
+		if (version.equals("1.0")) {
+			Conf.isNewVersion = true;
+		}
+		Message message = new Message();
+		message.obj = version;
+		mHandler.sendMessage(message);		
 	}
 
 	private void init() {

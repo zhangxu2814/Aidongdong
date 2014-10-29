@@ -89,10 +89,11 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			}
 
 		} else {
-			Toast.makeText(getApplicationContext(), "" + data,
-					Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), "" + data,
+//					Toast.LENGTH_SHORT).show();
 			MyAdapter my = new MyAdapter(this, data, msg);
 			my.setBtn_name("删除");
+			my.setIsGone(View.VISIBLE);
 			my.setURL(Conf.APP_URL + "delFriend&friend_id=");
 			listview.setAdapter(my);
 		}
@@ -105,13 +106,16 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void run() {
-				jsonstring = HttpUtil.getJsonContent(URLpath);
-				data = JsonTools.getFriends(jsonstring);
-
+			saveData();
 			}
 		});
 		mThread.start();
 
+	}
+
+	protected void saveData() {
+		jsonstring = HttpUtil.getJsonContent(this,URLpath);
+		data = JsonTools.getFriends(jsonstring);		
 	}
 
 	private void init() {

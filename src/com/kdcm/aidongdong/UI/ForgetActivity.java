@@ -74,8 +74,7 @@ public class ForgetActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void run() {
-				HttpUtil.getJsonContent(URLpath);
-				isSuccess = true;
+				saveData();
 
 			}
 		});
@@ -84,6 +83,11 @@ public class ForgetActivity extends Activity implements OnClickListener {
 			ForgetActivity.this.finish();
 		}
 
+	}
+
+	protected void saveData() {
+		HttpUtil.getJsonContent(this, URLpath);
+		isSuccess = true;
 	}
 
 }

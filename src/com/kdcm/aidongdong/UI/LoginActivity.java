@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
@@ -23,6 +24,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
+	Person person;
 	String TAG = "LoginActivity";
 	/**
 	 * 用户名
@@ -74,18 +76,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		loadingPDialog = new ProgressDialog(this);
 		loadingPDialog.setMessage("正在加载....");
-		loadingPDialog.setCancelable(true);
+		loadingPDialog.setCancelable(false);
 		init();
 		PushAgent mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.enable();
 		String device_token = UmengRegistrar.getRegistrationId(this);
-		Log.i("kdcm", device_token);
 		mHandler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg.what == 1) {
 					Toast.makeText(getApplicationContext(), "验证成功",
 							Toast.LENGTH_SHORT).show();
 					Conf.isLogout = false;
+
 					postDelayed(mRunnable, 100);
 				} else if (msg.what == NET_ERROR) {
 					Toast.makeText(getApplicationContext(), "连接服务器失败，请检查网络连接",
@@ -116,9 +118,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		mRunnable = new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-//				Intent intent = new Intent(LoginActivity.this, MyActivity.class);
-				Intent intent = new Intent(LoginActivity.this, SportCheckActivity.class);
+
+				Intent intent = new Intent(LoginActivity.this,
+						SportCheckActivity.class);
 				startActivity(intent);
 				LoginActivity.this.finish();
 				mThread.interrupt();
@@ -193,27 +195,31 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void run() {
-
-				jsonstring = HttpUtil.getJsonContent(URLpath);
-				mResult = HttpUtil.getResult(jsonstring);
-				if (mResult != null) {
-					Message message = new Message();
-					message.what = Integer.parseInt(mResult);
-					mHandler.sendMessage(message);
-					Log.i(TAG, mResult);
-					message = null;
-				} else {
-					mHandler.sendEmptyMessage(NET_ERROR);
-				}
-				if (!jsonstring.equals("ERROR")) {
-					Person person = JsonTools.getPerson("data", jsonstring);
-					Conf.jsonstring = jsonstring;
-					Conf.username = "login_name=" + person.getUsername();
-				}
+				saveData();
+				
 
 			}
 		});
 		mThread.start();
+	}
+
+	protected void saveData() {
+		jsonstring = HttpUtil.getJsonContent(this,URLpath);
+		mResult = HttpUtil.getResult(jsonstring);
+		if (mResult != null) {
+			Message message = new Message();
+			message.what = Integer.parseInt(mResult);
+			mHandler.sendMessage(message);
+			Log.i(TAG, mResult);
+			message = null;
+		} else {
+			mHandler.sendEmptyMessage(NET_ERROR);
+		}
+		if (!jsonstring.equals("ERROR")) {
+			person = JsonTools.getPerson("data", jsonstring);
+			DataTools.saveDaTa(this, "login_message", jsonstring);
+			DataTools.saveDaTa(this, "username",
+					"login_name=" + person.getUsername());				}
 	}
 
 	@Override
@@ -222,5 +228,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		super.onPause();
 		mHandler.removeCallbacks(mRunnable);
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 }
