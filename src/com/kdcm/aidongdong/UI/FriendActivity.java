@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -115,6 +116,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 
 	protected void saveData() {
 		jsonstring = HttpUtil.getJsonContent(this,URLpath);
+		
 		data = JsonTools.getFriends(jsonstring);		
 	}
 

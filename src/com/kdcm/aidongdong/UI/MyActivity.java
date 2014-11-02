@@ -75,6 +75,10 @@ public class MyActivity extends Activity implements OnClickListener {
 	 * 注销
 	 */
 	private TextView tv_logout;
+	/**
+	 * 用户详情
+	 */
+	private TextView tv_detail;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,6 +88,9 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		tv_detail=(TextView)findViewById(R.id.tv_detail);
+		tv_detail.setOnClickListener(this);
+		tv_detail.setOnClickListener(this);
 		tv_logout = (TextView) findViewById(R.id.tv_logout);
 		tv_logout.setOnClickListener(this);
 		tv_balance = (TextView) findViewById(R.id.tv_balance);
@@ -168,6 +175,10 @@ public class MyActivity extends Activity implements OnClickListener {
 			it = new Intent(this, LoginActivity.class);
 			startActivity(it);
 			this.finish();
+			break;
+		case R.id.tv_detail:
+			it=new Intent(this,GivedCoinsActivity.class);
+			startActivity(it);
 			break;
 
 		}

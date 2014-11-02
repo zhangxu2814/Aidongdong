@@ -1,18 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <com.kdcm.aidongdong.UI.ArcProgressbar
-            android:id="@+id/arcProgressbar"
-            android:layout_width="450dp"
-            android:layout_height="180dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="77dp" />
 
         <TextView
             android:id="@+id/tt_time"
@@ -20,11 +8,20 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/arcProgressbar"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="52dp"
             android:text="运动时间" />
-    </RelativeLayout>
 
-    <RelativeLayout
+        <com.kdcm.aidongdong.UI.ArcProgressbar
+            android:id="@+id/arcProgressbar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp" />
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+             <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center" >
@@ -75,17 +72,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="45dp"
-            android:text="btnReset" />
-
-        <Button
-            android:id="@+id/btn_consume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="44dp"
-            android:text="燃烧" />
+            android:text="btnReset" 
+            android:visibility="gone"/>
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:layout_alignParentLeft="true"
@@ -110,7 +101,7 @@
             android:layout_alignParentLeft="true" />
 
         <LinearLayout
-            android:id="@+id/ll_"
+            android:id="@+id/ll_ad"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_above="@+id/vw1"
@@ -124,14 +115,13 @@
                 android:id="@+id/tv_jiankang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="健康快乐每一天"
-                 />
+                android:text="健康快乐每一天" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="80dp"
-            android:layout_above="@+id/ll_"
+            android:layout_above="@+id/ll_ad"
             android:layout_alignParentLeft="true" >
 
             <LinearLayout
@@ -207,6 +197,23 @@
                     android:text="0cal" />
             </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_consume"
+            android:layout_width="450dp"
+            android:layout_height="180dp"
+           android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@null"/>
+    </RelativeLayout>
+        </FrameLayout>
+   <ImageView
+                android:id="@+id/scrshot_imgview"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="直接截图" />
     </RelativeLayout>
 
-</FrameLayout>
+   
+

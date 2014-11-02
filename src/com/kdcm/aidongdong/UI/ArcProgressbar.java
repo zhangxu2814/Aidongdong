@@ -59,7 +59,11 @@ public class ArcProgressbar extends View {
     private void init(Canvas canvas) {
         // 画弧形的矩阵区域。
     	
-        rectBg = new RectF(100,25, diameter+75, diameter);
+//      rectBg = new RectF(100,25, diameter+175, diameter);
+      rectBg = new RectF(100,30, getWidth()-100,getWidth()-175);
+      Log.i("test", getWidth()+"");
+     
+    	
 
  
 
@@ -193,11 +197,11 @@ public class ArcProgressbar extends View {
 /**
  * 外径宽度
  */
-    private int bgStrokeWidth = 34;
+    private int bgStrokeWidth = 36;
     /**
      * 内径宽度
      */
-    private int barStrokeWidth =28;
+    private int barStrokeWidth =34;
     private int bgColor = Color.GRAY;
     private int barColor = Color.RED;
     private int smallBgColor = Color.WHITE;//小背景颜色

@@ -4,10 +4,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +27,8 @@ import com.baidu.frontia.api.FrontiaSocialShareListener;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.UI.Money.DropBallActivity;
+import com.umeng.scrshot.UMScrShotController.OnScreenshotListener;
+import com.umeng.scrshot.adapter.UMAppAdapter;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
@@ -40,6 +42,7 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class SportCheckActivity extends Activity implements SensorListener,
 		OnClickListener {
+	 private ImageView mImageView = null;
 	/**
 	 * 消耗按钮
 	 */
@@ -131,15 +134,19 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	private ProgressDialog loadingPDialog = null;
 	private Handler mHandler;
 	String isMoney = "null";
-
+	private LinearLayout ll_ad;
+	
 	@Override
 	public void onClick(View v) {
 		msg = "";
 		switch (v.getId()) {
+		case R.id.ll_ad:
+			it=new Intent(this,AD_Activity.class);
+			startActivity(it);
+			break;
 		case R.id.btn_consume:
 			int_consume = Conf.count * 5 <= 280 ? Conf.count * 5 : 280;
 			if (int_consume != 0) {
-				btn_consume.setOnClickListener(null);
 				task_consume = new TimerTask() {
 
 					public void run() {
@@ -227,6 +234,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	private void init() {
+		mImageView=(ImageView)findViewById(R.id.scrshot_imgview);
+		ll_ad=(LinearLayout)findViewById(R.id.ll_ad);
+		ll_ad.setOnClickListener(this);
 		iv_sport = (ImageView) this.findViewById(R.id.iv_sport);
 		iv_sport.setImageResource(R.drawable.icon_sport_on);
 		iv_user = (ImageView) findViewById(R.id.iv_user);
@@ -366,12 +376,14 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		// FrontiaTheme.DARK, new ShareListener());
 		final UMSocialService mController = UMServiceFactory
 				.getUMSocialService("com.umeng.share");
-		// 设置分享内容
-		mController
-				.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
+//		// 设置分享内容
+//		mController
+//				.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
 		// 设置分享图片, 参数2为图片的url地址
+		UMAppAdapter mp=new UMAppAdapter(this);
 		mController.setShareMedia(new UMImage(SportCheckActivity.this,
-				"http://www.umeng.com/images/pic/banner_module_social.png"));
+				mp.getBitmap()));
+		
 		String appID = "wxb63a8a59702e5ddb";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(SportCheckActivity.this, appID);
@@ -417,4 +429,13 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		super.onResume();
 
 	}
+	private OnScreenshotListener mScreenshotListener = new OnScreenshotListener() {
+
+        @Override
+        public void onComplete(Bitmap bmp) {
+            if (bmp != null && mImageView != null) {
+                mImageView.setImageBitmap(bmp);
+            }
+        }
+    };
 }

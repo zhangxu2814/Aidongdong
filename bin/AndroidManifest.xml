@@ -272,6 +272,8 @@
 
         <activity android:name="com.kdcm.aidongdong.UI.Money.DropBallActivity" >
         </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GivedCoinsActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.AD_Activity"></activity>
     </application>
 
 </manifest>

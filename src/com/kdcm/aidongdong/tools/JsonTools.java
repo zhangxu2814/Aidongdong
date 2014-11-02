@@ -39,7 +39,7 @@ public class JsonTools {
 			phone_registered = jsonObj.getString(key);
 
 		} catch (Exception e) {
-			phone_registered=null;
+			phone_registered = null;
 		}
 		return phone_registered;
 
@@ -83,12 +83,12 @@ public class JsonTools {
 
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;
 
 	}
+
 	public static List<Map<String, Object>> getGivedcoins(String jsonstring) {
 
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
@@ -96,7 +96,7 @@ public class JsonTools {
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
-			for (int i = 0; i < jsonArray.length(); i++) {
+			for (int i = jsonArray.length() - 1; i >= 0; i--) {
 				JSONObject jo = (JSONObject) jsonArray.opt(i);
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("nickname", jo.get("nickname").toString());
@@ -107,16 +107,14 @@ public class JsonTools {
 
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;
 
 	}
+
 	public static List<Map<String, Object>> getScan(String jsonstring) {
-
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
@@ -127,10 +125,30 @@ public class JsonTools {
 				map.put("phone", jo.get("phone"));
 				map.put("id", jo.get("id"));
 				data.add(map);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data;
+
+	}
+
+	public static List<Map<String, Object>> getProducts(String jsonstring) {
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		try {
+			JSONObject jsonObject = new JSONObject(jsonstring);
+			JSONArray jsonArray = jsonObject.getJSONArray("list");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jo = (JSONObject) jsonArray.opt(i);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("name", jo.get("name").toString());
+				map.put("id", jo.get("id"));
+				map.put("category_id", jo.get("category_id"));
+				map.put("roll_pics", jo.get("roll_pics"));
+				data.add(map);
 
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;
