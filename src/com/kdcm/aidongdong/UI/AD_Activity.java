@@ -1,11 +1,15 @@
 package com.kdcm.aidongdong.UI;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -16,38 +20,57 @@ import android.widget.ListView;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
-import com.kdcm.aidongdong.ImageTool.ImageFileCache;
-import com.kdcm.aidongdong.ImageTool.ImageGetFromHttp;
-import com.kdcm.aidongdong.ImageTool.ImageMemoryCache;
+import com.kdcm.aidongdong.ImageTool.FileCache;
+import com.kdcm.aidongdong.ImageTool.LazyAdapter;
+import com.kdcm.aidongdong.ImageTool.MemoryCache;
+import com.kdcm.aidongdong.tools.GetProductsAdapter;
+import com.kdcm.aidongdong.tools.GivedCoinsAdapter;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
+import com.umeng.message.proguard.O;
 
 public class AD_Activity extends Activity {
-	private ImageMemoryCache memoryCache;
-	private ImageFileCache fileCache;
-	private ImageView[] img_ad1 = new ImageView[5];
-	private Bitmap b;
-	private Button btn_ad;
+	private static MemoryCache memoryCache;
+	private static FileCache fileCache;
 	private String URL_Products;
-	private ListView listview;
+	private ListView lv_getproducts;
 	/**
 	 * 子线程负责联网
 	 */
 	private Thread mThread;
 	private String str_json;
-	private List<Map<String, Object>> data = null;
+	private Handler mHandler;
+	ArrayList<HashMap<String, Object>> data = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ad);
-		init();
-		getData();
+
+		lv_getproducts = (ListView) findViewById(R.id.lv_getproducts);
+		showData();
+
+	}
+
+	private void showData() {
+		if (data == null) {
+
+			try {
+				getData();
+				Thread.sleep(100);
+				showData();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			LazyAdapter adapter = new LazyAdapter(this, data);
+			lv_getproducts.setAdapter(adapter);
+		}
 	}
 
 	private void getData() {
-		URL_Products = Conf.APP_URL + "getProducts";
 		mThread = new Thread(new Runnable() {
 
 			@Override
@@ -55,53 +78,16 @@ public class AD_Activity extends Activity {
 				saveData();
 			}
 		});
-		mThread.start();
 
+		mThread.start();
 	}
 
 	protected void saveData() {
-		str_json = HttpUtil.getJsonContent(this, URL_Products);
-		String result = JsonTools.getPhone_registered("result", str_json);
-		if (result.equals("1")) {
-			data = JsonTools.getProducts(str_json);
-			Log.i("kdcm", data+"");
-		}
-	}
-
-	private void init() {
-		memoryCache = new ImageMemoryCache(this);
-		fileCache = new ImageFileCache();
-		img_ad1[0] = (ImageView) findViewById(R.id.img_ad1);
-		b = getBitmap("http://d.hiphotos.baidu.com/image/pic/item/8435e5dde71190ef9db93a12cc1b9d16fcfa60b9.jpg");
-		btn_ad = (Button) findViewById(R.id.btn_ad);
-
-		btn_ad.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				img_ad1[0].setImageBitmap(b);
-			}
-		});
-	}
-
-	public Bitmap getBitmap(String url) {
-		// 从内存缓存中获取图片
-		Bitmap result = memoryCache.getBitmapFromCache(url);
-		if (result == null) {
-			// 文件缓存中获取
-			result = fileCache.getImage(url);
-			if (result == null) {
-				// 从网络获取
-				result = ImageGetFromHttp.downloadBitmap(url);
-				if (result != null) {
-					fileCache.saveBitmap(result, url);
-					memoryCache.addBitmapToCache(url, result);
-				}
-			} else {
-				// 添加到内存缓存
-				memoryCache.addBitmapToCache(url, result);
-			}
-		}
-		return result;
+		str_json = HttpUtil
+				.getJsonContent(
+						this,
+						"http://www.haoapp123.com/app/localuser/aidongdong/api.php?m=user&a=getProducts");
+		data = JsonTools.getProducts(str_json);
+		Log.i("kdcmad", data + "");
 	}
 }

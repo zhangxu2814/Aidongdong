@@ -133,18 +133,26 @@ public class JsonTools {
 
 	}
 
-	public static List<Map<String, Object>> getProducts(String jsonstring) {
-		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+	public static ArrayList<HashMap<String, Object>> getProducts(
+			String jsonstring) {
+		ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jo = (JSONObject) jsonArray.opt(i);
-				Map<String, Object> map = new HashMap<String, Object>();
+				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("name", jo.get("name").toString());
 				map.put("id", jo.get("id"));
 				map.put("category_id", jo.get("category_id"));
 				map.put("roll_pics", jo.get("roll_pics"));
+				map.put("price", jo.get("price"));
+				// roll_pics
+				map.put("sold_num", jo.get("sold_num"));
+				JSONArray pics_Array = new JSONArray(jo.get("roll_pics")
+						.toString());
+				JSONObject item = pics_Array.getJSONObject(0);
+				map.put("URL", item.get("pic"));
 				data.add(map);
 
 			}

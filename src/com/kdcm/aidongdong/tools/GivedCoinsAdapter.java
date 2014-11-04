@@ -51,7 +51,6 @@ public class GivedCoinsAdapter extends BaseAdapter {
 		mItem.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 		mItem.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
 		mItem.tv_name.setText(list.get(position).get("nickname").toString());
-		int i = list.size() - position;
 		mItem.tv_time.setText(list.get(position).get("paid_time").toString());
 		mItem.tv_num.setText(list.get(position).get("coins_paid").toString());
 		return convertView;

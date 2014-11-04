@@ -15,6 +15,7 @@ import android.widget.Toast;
 import cn.smssdk.SMSSDK;
 
 import com.baidu.frontia.Frontia;
+import com.baidu.frontia.api.FrontiaPush;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
@@ -51,6 +52,8 @@ public class WelcomActivity extends BaseActivity {
 		setContentView(R.layout.activity_welcome);
 		SMSSDK.initSDK(this, Conf.SMSKEY, Conf.SMSSecret);
 		Frontia.init(this.getApplicationContext(), Conf.APIKEY);
+		FrontiaPush mPush=Frontia.getPush();
+		mPush.start();
 		init();
 		if (Conf.NETWORK_ON) {
 			Version();

@@ -5,6 +5,9 @@ import java.util.Map;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.listviewTool.DiffAdapter;
+import com.kdcm.aidongdong.listviewTool.TitleFlowIndicator;
+import com.kdcm.aidongdong.listviewTool.ViewFlow;
 import com.kdcm.aidongdong.tools.GivedCoinsAdapter;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
@@ -15,11 +18,10 @@ import android.util.Log;
 import android.widget.ListView;
 
 public class GivedCoinsActivity extends Activity {
-	/**
-	 * listview
-	 */
-	private ListView lv_context;
+	private ViewFlow viewFlow;
+	private ListView lv_zengsong, lv_jieshou;
 	private List<Map<String, Object>> data = null;
+	private List<Map<String,Object>>data_zengsong=null;
 	private String URL_Givedcoins;
 	private String jsonstring;
 	/**
@@ -32,7 +34,6 @@ public class GivedCoinsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_givedcoins);
 		init();
-
 		showData();
 	}
 
@@ -49,12 +50,13 @@ public class GivedCoinsActivity extends Activity {
 			}
 		} else {
 			GivedCoinsAdapter mAdapter = new GivedCoinsAdapter(this, data);
-			lv_context.setAdapter(mAdapter);
+			lv_zengsong.setAdapter(mAdapter);
+			lv_jieshou.setAdapter(mAdapter);
 		}
 	}
 
 	private void getData() {
-		mThread=new Thread(new Runnable() {
+		mThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -73,7 +75,14 @@ public class GivedCoinsActivity extends Activity {
 	}
 
 	private void init() {
-		lv_context = (ListView) findViewById(R.id.lv_context);
+		viewFlow = (ViewFlow) findViewById(R.id.viewflow);
+		DiffAdapter adapter = new DiffAdapter(this);
+		viewFlow.setAdapter(adapter);
+		TitleFlowIndicator indicator = (TitleFlowIndicator) findViewById(R.id.viewflowindic);
+		indicator.setTitleProvider(adapter);
+		viewFlow.setFlowIndicator(indicator);
+		lv_zengsong = (ListView) findViewById(R.id.lv_zengsong);
+		lv_jieshou = (ListView) findViewById(R.id.lv_jieshou);
 		URL_Givedcoins = Conf.APP_URL + "getGivedCoins";
 	}
 

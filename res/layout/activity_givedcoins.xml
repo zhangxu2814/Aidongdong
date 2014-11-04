@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.kdcm.aidongdong"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/header_layout"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal" >
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tt_title"
+       
+        <com.kdcm.aidongdong.listviewTool.TitleFlowIndicator
+            android:id="@+id/viewflowindic"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="金币赠送记录" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            app:clipPadding="5dp"
+            app:customTypeface="fonts/Antic.ttf"
+            app:footerColor="#FFFFC445"
+            app:footerLineHeight="2dp"
+            app:footerTriangleHeight="10dp"
+            app:selectedColor="#FFFFC445"
+            app:selectedSize="12dp"
+            app:textColor="#FFFFFFFF"
+            app:textSize="11dp"
+            app:titlePadding="10dp" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lv_context"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" >
-    </ListView>
+    <com.kdcm.aidongdong.listviewTool.ViewFlow
+        android:id="@+id/viewflow"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:duplicateParentState="true" />
 
-</RelativeLayout>
+</LinearLayout>
