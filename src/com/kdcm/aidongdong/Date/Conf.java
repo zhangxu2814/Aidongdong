@@ -17,7 +17,7 @@ public class Conf {
 	/**
 	 * 百度apikey
 	 */
-	public final static String APIKEY = "i1unMXPwWG2SL4dTSrTTGVa1";
+	public final static String APIKEY = "WDBM4c56Ud7GwbQhY4fXcKK2";
 	/**
 	 * 新浪key
 	 */

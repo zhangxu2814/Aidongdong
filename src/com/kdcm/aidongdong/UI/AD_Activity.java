@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,9 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
@@ -41,6 +45,7 @@ public class AD_Activity extends Activity {
 	private String str_json;
 	private Handler mHandler;
 	ArrayList<HashMap<String, Object>> data = null;
+	LazyAdapter adapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,22 @@ public class AD_Activity extends Activity {
 		setContentView(R.layout.activity_ad);
 
 		lv_getproducts = (ListView) findViewById(R.id.lv_getproducts);
+
 		showData();
+		lv_getproducts.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int i,
+					long id) {
+
+				Log.i("kdcmad", data.get(i).get("id") + "");
+
+				Intent it = new Intent(getApplicationContext(),
+						GoodsActivity.class);
+				startActivity(it);
+
+			}
+		});
 
 	}
 
@@ -65,7 +85,7 @@ public class AD_Activity extends Activity {
 				e.printStackTrace();
 			}
 		} else {
-			LazyAdapter adapter = new LazyAdapter(this, data);
+			adapter = new LazyAdapter(this, data);
 			lv_getproducts.setAdapter(adapter);
 		}
 	}
@@ -90,4 +110,5 @@ public class AD_Activity extends Activity {
 		data = JsonTools.getProducts(str_json);
 		Log.i("kdcmad", data + "");
 	}
+
 }

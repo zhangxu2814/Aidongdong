@@ -21,7 +21,7 @@ public class GivedCoinsActivity extends Activity {
 	private ViewFlow viewFlow;
 	private ListView lv_zengsong, lv_jieshou;
 	private List<Map<String, Object>> data = null;
-	private List<Map<String,Object>>data_zengsong=null;
+	private List<Map<String, Object>> data_zengsong = null;
 	private String URL_Givedcoins;
 	private String jsonstring;
 	/**
@@ -85,5 +85,4 @@ public class GivedCoinsActivity extends Activity {
 		lv_jieshou = (ListView) findViewById(R.id.lv_jieshou);
 		URL_Givedcoins = Conf.APP_URL + "getGivedCoins";
 	}
-
 }

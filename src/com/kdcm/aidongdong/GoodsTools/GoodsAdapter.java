@@ -1,6 +1,4 @@
-package com.kdcm.aidongdong.listviewTool;
-
-import com.kdcm.aidongdong.R;
+package com.kdcm.aidongdong.GoodsTools;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class DiffAdapter extends BaseAdapter implements TitleProvider {
+import com.kdcm.aidongdong.R;
+import com.kdcm.aidongdong.listviewTool.TitleProvider;
+
+public class GoodsAdapter extends BaseAdapter implements TitleProvider {
 
 	private static final int VIEW1 = 0;
 	private static final int VIEW2 = 1;
-	private static final int VIEW_MAX_COUNT = VIEW2 + 1;
-	private final String[] names = { "赠送的金币", "接收的金币" };
+	private static final int VIEW3=2;
+	private final String[] names = { "宝贝详情", "图文详情","评价" };
 
 	private LayoutInflater mInflater;
 
-	public DiffAdapter(Context context) {
+	public GoodsAdapter(Context context) {
 		mInflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -53,13 +54,18 @@ public class DiffAdapter extends BaseAdapter implements TitleProvider {
 		if (convertView == null) {
 			switch (view) {
 			case VIEW1:
-				convertView = mInflater.inflate(R.layout.activity_tab_zengsong,
+				convertView = mInflater.inflate(R.layout.view_baobeixiangqing,
 						null);
 				break;
 			case VIEW2:
 				convertView = mInflater.inflate(R.layout.activity_tab_jieshou,
 						null);
 				break;
+			case VIEW3:
+				convertView = mInflater.inflate(R.layout.activity_tab_jieshou,
+						null);
+				break;
+				
 			}
 		}
 		return convertView;

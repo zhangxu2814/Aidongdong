@@ -29,6 +29,7 @@ public class LazyAdapter extends BaseAdapter {
 	private ArrayList<HashMap<String, Object>> list;
 	public ImageLoader imageLoader;
 	private String URL;
+	private String mID;
 
 	public LazyAdapter(Context context,
 			ArrayList<HashMap<String, Object>> songsList) {
@@ -52,7 +53,7 @@ public class LazyAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-
+ 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
@@ -90,7 +91,11 @@ public class LazyAdapter extends BaseAdapter {
 		return vi;
 
 	}
+	public String getmID(int position) {
+		return list.get(position).get("id").toString();
+	}
 
+	
 	class Item {
 		TextView tv_title;
 		TextView tv_num;
