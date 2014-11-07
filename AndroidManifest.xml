@@ -39,11 +39,12 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="8" />
+        android:targetSdkVersion="15" />
 
-    	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="com.baidu.frontia.FrontiaApplication"
         android:allowBackup="true"
@@ -51,7 +52,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.kdcm.aidongdong.UI.MainActivity"
+            android:name="com.kdcm.aidongdong.TestAvtivity"
             android:label="@string/app_name" >
         </activity>
         <!-- push service client -->
@@ -281,7 +282,11 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.AD_Activity" >
         </activity>
-        <activity android:name="com.kdcm.aidongdong.UI.GoodsActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsMainActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsIMGActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsReviewActivity"></activity>
     </application>
 
 </manifest>

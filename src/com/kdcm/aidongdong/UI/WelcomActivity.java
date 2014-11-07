@@ -52,8 +52,7 @@ public class WelcomActivity extends BaseActivity {
 		setContentView(R.layout.activity_welcome);
 		SMSSDK.initSDK(this, Conf.SMSKEY, Conf.SMSSecret);
 		Frontia.init(this.getApplicationContext(), Conf.APIKEY);
-		FrontiaPush mPush=Frontia.getPush();
-		mPush.start();
+		
 		init();
 		if (Conf.NETWORK_ON) {
 			Version();

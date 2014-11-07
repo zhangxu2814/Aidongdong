@@ -74,13 +74,13 @@ public class LazyAdapter extends BaseAdapter {
 
 		try {
 			JSONArray pics_Array = new JSONArray(roll_pics);
-			for (int i = 0; i < pics_Array.length(); i++) {
+			for (int i = pics_Array.length()-1; i >=0 ; i--) {
 				JSONObject item = pics_Array.getJSONObject(i);
 				URL = "http://www.haoapp123.com/app/localuser/aidongdong/"
 						+ item.get("pic");
-				Log.i("URL", URL);
+				
 			}
-
+			Log.i("URL", URL);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,9 +8,13 @@ import android.widget.BaseAdapter;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.listviewTool.TitleProvider;
-
+/**
+ * 
+ * @author zhangxu
+ * 物品详情里面无法用这个
+ *
+ */
 public class GoodsAdapter extends BaseAdapter implements TitleProvider {
-
 	private static final int VIEW1 = 0;
 	private static final int VIEW2 = 1;
 	private static final int VIEW3=2;

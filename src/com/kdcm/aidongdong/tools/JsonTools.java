@@ -147,8 +147,10 @@ public class JsonTools {
 				map.put("category_id", jo.get("category_id"));
 				map.put("roll_pics", jo.get("roll_pics"));
 				map.put("price", jo.get("price"));
-				// roll_pics
 				map.put("sold_num", jo.get("sold_num"));
+				map.put("size", jo.get("size"));
+				map.put("color", jo.get("color"));
+				map.put("desc", jo.get("desc"));
 				JSONArray pics_Array = new JSONArray(jo.get("roll_pics")
 						.toString());
 				JSONObject item = pics_Array.getJSONObject(0);

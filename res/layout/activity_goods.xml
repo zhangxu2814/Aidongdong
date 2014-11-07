@@ -1,39 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.kdcm.aidongdong"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:id="@+id/header_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
-
-       
-        <com.kdcm.aidongdong.listviewTool.TitleFlowIndicator
-            android:id="@+id/viewflowindic"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            app:clipPadding="5dp"
-            app:customTypeface="fonts/Antic.ttf"
-            app:footerColor="#FFFFC445"
-            app:footerLineHeight="2dp"
-            app:footerTriangleHeight="10dp"
-            app:selectedColor="#FFFFC445"
-            app:selectedSize="12dp"
-            app:textColor="#FFFFFFFF"
-            app:textSize="11dp"
-            app:titlePadding="10dp" />
-    </LinearLayout>
-
-    <com.kdcm.aidongdong.listviewTool.ViewFlow
-        android:id="@+id/viewflow"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:duplicateParentState="true" />
-
-</LinearLayout>
+    android:id="@android:id/tabhost"
+    >
+    <LinearLayout 
+        android:orientation="vertical" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent">
+         <TabWidget 
+        android:id="@android:id/tabs" 
+        android:visibility="visible" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        />
+    <FrameLayout 
+        android:id="@android:id/tabcontent" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_weight="1.0"/>
+   
+ </LinearLayout>
+</TabHost>
