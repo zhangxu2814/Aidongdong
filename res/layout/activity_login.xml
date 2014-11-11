@@ -43,7 +43,7 @@
                     android:ems="10"
                     android:hint="请输入用户名"
                     android:inputType="phone" 
-                    android:text="6666">
+                    android:text="18369534564">
 
                     <requestFocus />
                 </EditText>
@@ -61,7 +61,7 @@
                     android:ems="10"
                     android:hint="请输入密码"
                     android:inputType="textPassword" 
-                    android:text="111111">
+                    android:text="123321">
 
                     <requestFocus />
                 </EditText>

@@ -425,7 +425,6 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	protected void onResume() {
 		Intent intenet = getIntent();
 		isMoney = intenet.getStringExtra("mMoney");
-		Log.i("kdcm", isMoney+"");
 		super.onResume();
 
 	}

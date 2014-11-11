@@ -4,12 +4,21 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tv_null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="17dp"
-        android:text="暂时没有数据" />
+        android:text="暂时没有评论" />
+
+    <ListView
+        android:id="@+id/lv_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_null"
+         >
+    </ListView>
 
 </RelativeLayout>

@@ -237,6 +237,8 @@
             android:columnCount="1" >
 
             <TextView
+                android:id="@+id/tv_spcar"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_column="0"
                 android:layout_gravity="center"
@@ -320,8 +322,8 @@
             android:layout_height="fill_parent"
             android:gravity="center"
             android:text="注销"
-            android:textSize="8pt"
-            android:textColor="#FF9A28" />
+            android:textColor="#FF9A28"
+            android:textSize="8pt" />
     </LinearLayout>
 
     <View

@@ -165,4 +165,69 @@ public class JsonTools {
 
 	}
 
+	public static List<Map<String, Object>> getReview(String jsonstring) {
+
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
+		try {
+			JSONObject jsonObject = new JSONObject(jsonstring);
+			JSONArray jsonArray = jsonObject.getJSONArray("list");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jo = (JSONObject) jsonArray.opt(i);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("nickname", jo.get("nickname").toString());
+				map.put("create_time", jo.get("create_time"));
+				map.put("desc", jo.get("desc"));
+				data.add(map);
+
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data;
+
+	}
+
+	public static List<Map<String, Object>> getSPCar(String jsonstring) {
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		float zongjia = 0;
+		int dikou = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			JSONObject jsonObject = new JSONObject(jsonstring);
+			JSONArray jsonArray = jsonObject.getJSONArray("list");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jo = (JSONObject) jsonArray.opt(i);
+				map = new HashMap<String, Object>();
+				map.put("number", jo.get("number").toString());
+				double price = jo.getDouble("price"); // 价格价格
+				map.put("price", price + "");
+				map.put("name", jo.getString("name"));
+				zongjia+= price * jo.getInt("number");
+				dikou+=jo.getInt("number")*jo.getInt("max_deduction");
+				map.put("shopping_id", jo.get("shopping_id").toString());
+				map.put("zongjia", zongjia);
+				map.put("dikou", dikou+"");
+				JSONArray pics_Array = null;
+				try {
+					pics_Array = new JSONArray(jo.getString("roll_pics"));
+					JSONObject item = pics_Array.getJSONObject(1);
+					Log.i("URL", item.get("pic") + "");
+					map.put("URL_img",
+							"http://www.haoapp123.com/app/localuser/aidongdong/"
+									+ item.getString("pic"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				data.add(map);
+			}
+			
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+
 }

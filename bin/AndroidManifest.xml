@@ -38,7 +38,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="14"
         android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -284,9 +284,18 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.GoodsActivity" >
         </activity>
-        <activity android:name="com.kdcm.aidongdong.UI.GoodsMainActivity"></activity>
-        <activity android:name="com.kdcm.aidongdong.UI.GoodsIMGActivity"></activity>
-        <activity android:name="com.kdcm.aidongdong.UI.GoodsReviewActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsMainActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsIMGActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.GoodsReviewActivity" >
+        </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.SPCarActivity" >
+        </activity>
+        <activity
+            android:name="com.kdcm.aidongdong.tools.SPCarDialog"
+            android:theme="@style/Transparent" >
+        </activity>
     </application>
 
 </manifest>

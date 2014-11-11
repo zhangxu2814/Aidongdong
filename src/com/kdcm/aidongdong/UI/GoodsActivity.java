@@ -156,11 +156,8 @@ public class GoodsActivity extends Activity implements OnClickListener {
 		public void handleMessage(Message msg) {
 			adViewPager.setCurrentItem(msg.what);
 			super.handleMessage(msg);
-			if (msg.what == 0x11) {
-				Toast.makeText(getApplicationContext(), "加入购物车成功",
-						Toast.LENGTH_SHORT).show();
-				loadingPDialog.dismiss();
-			}
+			loadingPDialog.dismiss();
+		
 		}
 
 	};
@@ -337,6 +334,8 @@ public class GoodsActivity extends Activity implements OnClickListener {
 		case R.id.btn_SPcart:
 			if (goods_color != null && goods_size != null) {
 				loadingPDialog.show();
+				Toast.makeText(getApplicationContext(), "加入购物车成功",
+						Toast.LENGTH_SHORT).show();
 				addShoppingCart();
 			} else {
 				Toast.makeText(this,

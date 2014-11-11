@@ -79,6 +79,10 @@ public class MyActivity extends Activity implements OnClickListener {
 	 * 用户详情
 	 */
 	private TextView tv_detail;
+	/**
+	 * 购物车
+	 */
+	private TextView tv_spcar;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,6 +92,8 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		tv_spcar=(TextView)findViewById(R.id.tv_spcar);
+		tv_spcar.setOnClickListener(this);
 		tv_detail=(TextView)findViewById(R.id.tv_detail);
 		tv_detail.setOnClickListener(this);
 		tv_detail.setOnClickListener(this);
@@ -178,6 +184,10 @@ public class MyActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.tv_detail:
 			it=new Intent(this,GivedCoinsActivity.class);
+			startActivity(it);
+			break;
+		case R.id.tv_spcar:
+			it=new Intent(this, SPCarActivity.class);
 			startActivity(it);
 			break;
 

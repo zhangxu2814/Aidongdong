@@ -80,7 +80,6 @@ public class LazyAdapter extends BaseAdapter {
 						+ item.get("pic");
 				
 			}
-			Log.i("URL", URL);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
