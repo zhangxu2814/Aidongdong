@@ -203,11 +203,11 @@ public class JsonTools {
 				double price = jo.getDouble("price"); // 价格价格
 				map.put("price", price + "");
 				map.put("name", jo.getString("name"));
-				zongjia+= price * jo.getInt("number");
-				dikou+=jo.getInt("number")*jo.getInt("max_deduction");
+				zongjia += price * jo.getInt("number");
+				dikou += jo.getInt("number") * jo.getInt("max_deduction");
 				map.put("shopping_id", jo.get("shopping_id").toString());
 				map.put("zongjia", zongjia);
-				map.put("dikou", dikou+"");
+				map.put("dikou", dikou + "");
 				JSONArray pics_Array = null;
 				try {
 					pics_Array = new JSONArray(jo.getString("roll_pics"));
@@ -222,7 +222,6 @@ public class JsonTools {
 				}
 				data.add(map);
 			}
-			
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -230,4 +229,36 @@ public class JsonTools {
 		return data;
 	}
 
+	public static List<Map<String, Object>> getOrders(String jsonstring,
+			String status) {
+
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
+		try {
+			JSONObject jsonObject = new JSONObject(jsonstring);
+			JSONArray jsonArray = jsonObject.getJSONArray("list");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jo = (JSONObject) jsonArray.opt(i);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("need_cash", jo.get("need_cash").toString());
+				map.put("create_time", jo.get("create_time"));
+				map.put("order_no", jo.get("order_no".toString()));
+				if (!jo.getString("shopping_carts").equals("null")) {
+					JSONArray carts_Array = new JSONArray(
+							jo.getString("shopping_carts"));
+					map.put("shopping_carts", carts_Array.length() + "");
+				}else{
+					map.put("shopping_carts", "1");
+				}
+				if (jo.getString("status").equals(status)) {
+					data.add(map);
+				}
+
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data;
+
+	}
 }

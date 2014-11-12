@@ -83,18 +83,24 @@ public class MyActivity extends Activity implements OnClickListener {
 	 * 购物车
 	 */
 	private TextView tv_spcar;
+	/**
+	 * 订单
+	 */
+	private TextView tv_orders;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my);
-	
+
 		init();
 	}
 
 	private void init() {
-		tv_spcar=(TextView)findViewById(R.id.tv_spcar);
+		tv_orders=(TextView)findViewById(R.id.tv_orders);
+		tv_orders.setOnClickListener(this);
+		tv_spcar = (TextView) findViewById(R.id.tv_spcar);
 		tv_spcar.setOnClickListener(this);
-		tv_detail=(TextView)findViewById(R.id.tv_detail);
+		tv_detail = (TextView) findViewById(R.id.tv_detail);
 		tv_detail.setOnClickListener(this);
 		tv_detail.setOnClickListener(this);
 		tv_logout = (TextView) findViewById(R.id.tv_logout);
@@ -123,9 +129,9 @@ public class MyActivity extends Activity implements OnClickListener {
 
 	private List<String> getData() {
 		person = JsonTools.getPerson("data",
-				DataTools.readData(this,"login_message"));
+				DataTools.readData(this, "login_message"));
 
-		data = JsonTools.getMy(DataTools.readData(this,"login_message"));
+		data = JsonTools.getMy(DataTools.readData(this, "login_message"));
 		Log.i(Conf.TAG, data.get(0).get("nickname") + "");
 		tv_phone.setText(data.get(0).get("phone").toString());
 		tv_nikename.setText(data.get(0).get("nickname").toString());
@@ -183,14 +189,17 @@ public class MyActivity extends Activity implements OnClickListener {
 			this.finish();
 			break;
 		case R.id.tv_detail:
-			it=new Intent(this,GivedCoinsActivity.class);
+			it = new Intent(this, GivedCoinsActivity.class);
 			startActivity(it);
 			break;
 		case R.id.tv_spcar:
-			it=new Intent(this, SPCarActivity.class);
+			it = new Intent(this, SPCarActivity.class);
 			startActivity(it);
 			break;
-
+		case R.id.tv_orders:
+			it=new Intent(this, Activity_Orders.class);
+			startActivity(it);
+			break;
 		}
 	}
 	// @Override

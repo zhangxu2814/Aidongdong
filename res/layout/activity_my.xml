@@ -261,6 +261,8 @@
             android:columnCount="1" >
 
             <TextView
+                android:id="@+id/tv_orders"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_column="0"
                 android:layout_gravity="center"

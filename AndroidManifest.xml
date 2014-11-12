@@ -296,6 +296,8 @@
             android:name="com.kdcm.aidongdong.tools.SPCarDialog"
             android:theme="@style/Transparent" >
         </activity>
+        <activity android:name="com.kdcm.aidongdong.UI.Activity_Orders"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.My_Orders"></activity>
     </application>
 
 </manifest>
