@@ -16,9 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.alipay.Fiap;
 import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
@@ -201,10 +203,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Toast.makeText(getApplicationContext(), "登陆成功",
 						Toast.LENGTH_SHORT).show();
 				loadingPDialog.dismiss();
-				Intent intent = new Intent(LoginActivity.this,
-						SportCheckActivity.class);
-				startActivity(intent);
-				LoginActivity.this.finish();
+//				Intent intent = new Intent(LoginActivity.this,
+//						SportCheckActivity.class);
+//				startActivity(intent);
+//				LoginActivity.this.finish();
+				Fiap fiap = new Fiap(LoginActivity.this);  
+			      // 调用支付方法，并传入支付金额  
+			      fiap.android_pay(0.01); 
 			} else {
 				Toast.makeText(getApplicationContext(), "请检查您的账号或者密码是否正确",
 						Toast.LENGTH_SHORT).show();
