@@ -2,9 +2,10 @@ package com.kdcm.aidongdong.UI;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.SensorListener;
@@ -12,6 +13,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -20,13 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.baidu.frontia.api.FrontiaSocialShare;
 import com.baidu.frontia.api.FrontiaSocialShareContent;
 import com.baidu.frontia.api.FrontiaSocialShareListener;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.UI.Money.DropBallActivity;
+import com.kdcm.aidongdong.tools.DataTools;
 import com.umeng.scrshot.UMScrShotController.OnScreenshotListener;
 import com.umeng.scrshot.adapter.UMAppAdapter;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -42,7 +44,10 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class SportCheckActivity extends Activity implements SensorListener,
 		OnClickListener {
-	 private ImageView mImageView = null;
+	private int end_time = 0;
+	private int star_time = 0;
+	private ImageView mImageView = null;
+	private TextView tv_coins;
 	/**
 	 * 消耗按钮
 	 */
@@ -135,13 +140,13 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	private Handler mHandler;
 	String isMoney = "null";
 	private LinearLayout ll_ad;
-	
+
 	@Override
 	public void onClick(View v) {
 		msg = "";
 		switch (v.getId()) {
 		case R.id.ll_ad:
-			it=new Intent(this,AD_Activity.class);
+			it = new Intent(this, AD_Activity.class);
 			startActivity(it);
 			break;
 		case R.id.btn_consume:
@@ -228,14 +233,16 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_sport);
-
+		Log.i("mType", LoginActivity.coins);
 		init();
 
 	}
 
 	private void init() {
-		mImageView=(ImageView)findViewById(R.id.scrshot_imgview);
-		ll_ad=(LinearLayout)findViewById(R.id.ll_ad);
+		tv_coins=(TextView)findViewById(R.id.tv_coins);
+		tv_coins.setText(LoginActivity.coins);
+		mImageView = (ImageView) findViewById(R.id.scrshot_imgview);
+		ll_ad = (LinearLayout) findViewById(R.id.ll_ad);
 		ll_ad.setOnClickListener(this);
 		iv_sport = (ImageView) this.findViewById(R.id.iv_sport);
 		iv_sport.setImageResource(R.drawable.icon_sport_on);
@@ -245,7 +252,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		iv_chart.setOnClickListener(this);
 		iv_share = (ImageView) findViewById(R.id.iv_share);
 		iv_share.setOnClickListener(this);
-		tt_time = (TextView) findViewById(R.id.tt_time);
+		tt_time = (TextView) findViewById(R.id.tv_time);
 		btn_consume = (Button) findViewById(R.id.btn_consume);
 		btn_consume.setOnClickListener(this);
 		iv_contact = (ImageView) findViewById(R.id.iv_contact);
@@ -267,9 +274,13 @@ public class SportCheckActivity extends Activity implements SensorListener,
 
 					@Override
 					public void run() {
+						if (end_time - star_time > 180) {
+							// System.exit(0);
+						}
 						if (count != Conf.count) {
 							count = Conf.count;
 
+							star_time = end_time;
 							tt_time.setText("已经运动" + time_h + "小时" + time_m
 									+ "分钟" + int_time + "秒");
 							int_time++;
@@ -283,6 +294,8 @@ public class SportCheckActivity extends Activity implements SensorListener,
 									}
 								}
 							}
+						} else {
+							end_time++;
 						}
 					}
 
@@ -376,14 +389,14 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		// FrontiaTheme.DARK, new ShareListener());
 		final UMSocialService mController = UMServiceFactory
 				.getUMSocialService("com.umeng.share");
-//		// 设置分享内容
-//		mController
-//				.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
+		// // 设置分享内容
+		// mController
+		// .setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
 		// 设置分享图片, 参数2为图片的url地址
-		UMAppAdapter mp=new UMAppAdapter(this);
-		mController.setShareMedia(new UMImage(SportCheckActivity.this,
-				mp.getBitmap()));
-		
+		UMAppAdapter mp = new UMAppAdapter(this);
+		mController.setShareMedia(new UMImage(SportCheckActivity.this, mp
+				.getBitmap()));
+
 		String appID = "wxb63a8a59702e5ddb";
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(SportCheckActivity.this, appID);
@@ -416,25 +429,53 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	@Override
-	public void onBackPressed() {
-		this.finish();
-		super.onBackPressed();
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			new AlertDialog.Builder(this)
+					.setTitle("确认退出？")
+					.setMessage("缺认要退出吗？")
+					.setNegativeButton("确定",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface arg0,
+										int arg1) {
+									System.exit(0);
+								}
+							}).setPositiveButton("否", null).show();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+
 	}
 
 	@Override
 	protected void onResume() {
-		Intent intenet = getIntent();
-		isMoney = intenet.getStringExtra("mMoney");
+		String str_time = DataTools.readData(this, "time_sport");
+		if (str_time != null) {
+			tt_time.setText(str_time);
+			int_time = Integer.valueOf(str_time);
+
+		}
+		Log.i("mType", "返回" + str_time);
+		DataTools.readData(this, "time_sport");
 		super.onResume();
 
 	}
+
+	@Override
+	protected void onPause() {
+		Log.i("mType", "暂停");
+		DataTools.saveDaTa(this, "time_sport", int_time + "");
+		super.onPause();
+	}
+
 	private OnScreenshotListener mScreenshotListener = new OnScreenshotListener() {
 
-        @Override
-        public void onComplete(Bitmap bmp) {
-            if (bmp != null && mImageView != null) {
-                mImageView.setImageBitmap(bmp);
-            }
-        }
-    };
+		@Override
+		public void onComplete(Bitmap bmp) {
+			if (bmp != null && mImageView != null) {
+				mImageView.setImageBitmap(bmp);
+			}
+		}
+	};
 }

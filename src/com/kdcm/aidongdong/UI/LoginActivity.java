@@ -1,5 +1,9 @@
 package com.kdcm.aidongdong.UI;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
@@ -20,10 +23,17 @@ import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
+import com.kdcm.aidongdong.web.HttpUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
+	public String json;
+	public static String coins="1";
+	private String login_name="login_name=";
 	Person person;
 	String TAG = "LoginActivity";
 	/**
@@ -77,6 +87,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		loadingPDialog = new ProgressDialog(this);
 		loadingPDialog.setMessage("正在加载....");
 		loadingPDialog.setCancelable(false);
+		AsyncHttpClient request = HttpUtils.getClient();
+		PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+		request.setCookieStore(myCookieStore);
 		init();
 		PushAgent mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.enable();
@@ -134,7 +147,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btn_login:
 			loadingPDialog.show();
-			login();
+			myLogin();
+			// login();写的太乱 废除了。
 			break;
 		case R.id.tt_forget:
 			forget();
@@ -147,6 +161,58 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 	}
+
+	private void myLogin() {
+		HttpUtils.login(et_username.getText().toString(), et_password.getText().toString(), res);
+
+	}
+	JsonHttpResponseHandler res = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			Log.i("response",response+"");
+			json=response+"";
+			super.onSuccess(statusCode, headers, response);
+			try {
+				
+				String data=response.getString("data");
+				JSONObject jsonObj = new JSONObject(data);
+				coins=jsonObj.get("coins").toString();
+				login_name+=jsonObj.get("username").toString();
+				Log.i("login_name", login_name);
+				
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			int result = 0;
+			try {
+				data();
+				result = Integer.valueOf(response.getString("result"));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+			
+				Toast.makeText(getApplicationContext(), "登陆成功",
+						Toast.LENGTH_SHORT).show();
+				loadingPDialog.dismiss();
+				Intent intent = new Intent(LoginActivity.this,
+						SportCheckActivity.class);
+				startActivity(intent);
+				LoginActivity.this.finish();
+			} else {
+				Toast.makeText(getApplicationContext(), "请检查您的账号或者密码是否正确",
+						Toast.LENGTH_SHORT).show();
+				loadingPDialog.dismiss();
+			}
+		}
+	};
+		
 
 	private void forget() {
 		// RegisterPage registerPage = new RegisterPage();
@@ -174,6 +240,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	protected void data() {
+		DataTools.saveDaTa(this, "login_message", json);	
+		DataTools.saveDaTa(this, "username", login_name);
+	}
+
 	private void toReg() {
 		mIntent = new Intent(LoginActivity.this, CheckPhone.class);
 		mIntent.putExtra("type", "Reg");
@@ -196,7 +267,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void run() {
 				saveData();
-				
 
 			}
 		});
@@ -204,7 +274,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	protected void saveData() {
-		jsonstring = HttpUtil.getJsonContent(this,URLpath);
+		jsonstring = HttpUtil.getJsonContent(this, URLpath);
 		mResult = HttpUtil.getResult(jsonstring);
 		if (mResult != null) {
 			Message message = new Message();
@@ -219,7 +289,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			person = JsonTools.getPerson("data", jsonstring);
 			DataTools.saveDaTa(this, "login_message", jsonstring);
 			DataTools.saveDaTa(this, "username",
-					"login_name=" + person.getUsername());				}
+					"login_name=" + person.getUsername());
+		}
 	}
 
 	@Override

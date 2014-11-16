@@ -77,6 +77,7 @@ public class BallThread extends Thread {
 				}
 
 				// 判断小球是否撞地
+				
 				if (movable.currentVY > 0
 						&& movable.currentY + movable.radius * 2 >= BallView.BOTTOM_LINE) {
 					// 衰减水平方向的速度

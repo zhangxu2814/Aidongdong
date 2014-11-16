@@ -202,21 +202,5 @@ public class MyActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
-	// @Override
-	// protected void onResume() {
-	// if (Conf.isLogout == true) {
-	// Intent mIt = new Intent(this, LoginActivity.class);
-	// startActivity(mIt);
-	// }
-	// super.onResume();
-	// }
-	//
-	// @Override
-	// protected void onRestart() {
-	// if (Conf.isLogout == true) {
-	// Intent mIt = new Intent(this, LoginActivity.class);
-	// startActivity(mIt);
-	// }
-	// super.onRestart();
-	// }
+	
 }

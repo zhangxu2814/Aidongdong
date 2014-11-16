@@ -2,218 +2,271 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-        <TextView
+    <!--
+            <TextView
             android:id="@+id/tt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/arcProgressbar"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="52dp"
+            android:layout_marginBottom="0dp"
             android:text="运动时间" />
+    -->
 
-        <com.kdcm.aidongdong.UI.ArcProgressbar
-            android:id="@+id/arcProgressbar"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="100dp" />
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-             <RelativeLayout
+    <com.kdcm.aidongdong.UI.ArcProgressbar
+        android:id="@+id/arcProgressbar"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center" >
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout1"
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/iv_chart"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="5"
-                android:src="@drawable/icon_chart" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="40" />
-
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="5"
-                android:src="@drawable/icon_share" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="45dp"
-            android:text="btnReset" 
-            android:visibility="gone"/>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/linearLayout1"
-            android:layout_marginTop="10dp"
-            android:background="#D9D9D9"
-            android:orientation="vertical" >
-        </LinearLayout>
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            layout="@layout/ll_menu_buttom" />
-
-        <View
-            android:id="@+id/vw1"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true" />
-
-        <LinearLayout
-            android:id="@+id/ll_ad"
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_above="@+id/vw1"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="10dp"
-            android:background="#FF9A28"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <com.kdcm.aidongdong.tools.ShimmerTextView
-                android:id="@+id/tv_jiankang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="健康快乐每一天" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="80dp"
-            android:layout_above="@+id/ll_ad"
-            android:layout_alignParentLeft="true" >
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" >
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/iv_steps"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/icon_steps" />
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/tt_num"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/iv_calendar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/icon_calendar" />
-
-                <TextView
-                    android:id="@+id/tv_day"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0天" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/iv_fire"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/icon_fire" />
-
-                <TextView
-                    android:id="@+id/tv_cal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="0cal" />
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/iv_chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5"
+                    android:src="@drawable/icon_chart" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="40" />
+
+                <ImageView
+                    android:id="@+id/iv_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5"
+                    android:src="@drawable/icon_share" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_consume"
-            android:layout_width="450dp"
-            android:layout_height="180dp"
-           android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@null"/>
-    </RelativeLayout>
-        </FrameLayout>
-   <ImageView
-                android:id="@+id/scrshot_imgview"
-                android:layout_width="200dp"
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="直接截图" />
-    </RelativeLayout>
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="45dp"
+                android:text="btnReset"
+                android:visibility="gone" />
 
-   
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/linearLayout1"
+                android:layout_marginTop="10dp"
+                android:background="#D9D9D9"
+                android:orientation="vertical" >
+            </LinearLayout>
 
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                layout="@layout/ll_menu_buttom" />
+
+            <View
+                android:id="@+id/vw1"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true" />
+
+            <LinearLayout
+                android:id="@+id/ll_ad"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_above="@+id/vw1"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="10dp"
+                android:background="#FF9A28"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <com.kdcm.aidongdong.tools.ShimmerTextView
+                    android:id="@+id/tv_jiankang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="健康快乐每一天" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_img"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_above="@+id/ll_ad"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="30dp" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_steps"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_steps" />
+
+                    <TextView
+                        android:id="@+id/tt_num"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_calendar"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_calendar" />
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0天" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_fire"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_fire" />
+
+                    <TextView
+                        android:id="@+id/tv_cal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0cal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_consume"
+                android:layout_width="450dp"
+                android:layout_height="180dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ll_ad"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
+                android:text="时间" />
+
+            <LinearLayout
+                android:id="@+id/ll_coins"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_above="@+id/ll_img"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="30dp" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_coins"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_money" />
+
+                    <TextView
+                        android:id="@+id/tv_coins"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="20金币" /> 
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_consume"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_above="@+id/ll_coins"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/icon_yuan" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/scrshot_imgview"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="直接截图" />
+
+</RelativeLayout>

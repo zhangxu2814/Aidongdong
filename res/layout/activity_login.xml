@@ -36,32 +36,48 @@
                 android:layout_height="wrap_content"
                 android:gravity="center" >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号 ： " />
+
                 <EditText
                     android:id="@+id/et_username"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:background="#fff"
                     android:ems="10"
-                    android:hint="请输入用户名"
-                    android:inputType="phone" 
-                    android:text="18369534564">
+                    android:hint="请输入手机号"
+                    android:inputType="phone"
+                    android:text="18369534564" >
 
                     <requestFocus />
                 </EditText>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="密码   ：  " />
+
                 <EditText
                     android:id="@+id/et_password"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:background="#fff"
                     android:ems="10"
                     android:hint="请输入密码"
-                    android:inputType="textPassword" 
-                    android:text="123321">
+                    android:inputType="textPassword"
+                    android:text="123321" >
 
                     <requestFocus />
                 </EditText>
@@ -82,10 +98,10 @@
 
                 <Button
                     android:id="@+id/btn_login"
-                    android:layout_width="fill_parent"
+                    android:layout_width="180dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="50"
-                    android:background="@drawable/smssdk_btn_enable"
+                    android:background="#1abc9c"
                     android:text="登陆"
                     android:textColor="#FFF" />
 
@@ -113,8 +129,10 @@
 
                 <TextView
                     android:id="@+id/tt_forget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:background="#1abc9c"
+                    android:gravity="center"
                     android:text="忘记密码"
                     android:textColor="#fff" />
 
@@ -125,8 +143,10 @@
 
                 <TextView
                     android:id="@+id/tv_reg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:background="#1abc9c"
+                    android:gravity="center"
                     android:text="免费注册"
                     android:textColor="#fff" />
 

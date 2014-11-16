@@ -52,7 +52,10 @@ public class WelcomActivity extends BaseActivity {
 		setContentView(R.layout.activity_welcome);
 		SMSSDK.initSDK(this, Conf.SMSKEY, Conf.SMSSecret);
 		Frontia.init(this.getApplicationContext(), Conf.APIKEY);
-		
+		Intent intent = new Intent(WelcomActivity.this,
+				LoginActivity.class);
+		startActivity(intent);
+		WelcomActivity.this.finish();
 		init();
 		if (Conf.NETWORK_ON) {
 			Version();

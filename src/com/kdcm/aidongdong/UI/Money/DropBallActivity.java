@@ -26,7 +26,8 @@ public class DropBallActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		display = getWindowManager().getDefaultDisplay();
-		ballView = new BallView(this, display.getWidth());
+		
+		ballView = new BallView(this, display.getWidth(),display.getHeight());
 		final String myPid = Process.myPid() + "";
 		timer = new Timer();
 		TimerTask task = new TimerTask() {
@@ -44,7 +45,7 @@ public class DropBallActivity extends Activity {
 			}
 		};
 		setContentView(ballView);
-		timer.schedule(task, 3500);
+		timer.schedule(task, 5500);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 	public static final int VX_MAX = 200; // 水平速度最大值
 	public static final int VX_MIN = 15; // 水平速度最小值
 	public static final int WOOD_EDGE = 70; // 木板有边沿X坐标
-	public static final int BOTTOM_LINE = 700; // 地面Y坐标，小球下落到此会弹起
+	public static int BOTTOM_LINE = 0; // 地面Y坐标，小球下落到此会弹起
 	public static final int UP_ZERO = 20; // 上升过程中速度小于该值就算为0
 	public static final int DOWN_ZERO = 50; // 撞击地面后速度小于该值就算为0
 
@@ -34,11 +34,12 @@ public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 	ArrayList<Movable> movables = new ArrayList<Movable>();
 	public static DrawThread drawThread;
 
-	public BallView(Context context, int windowWidth) {
+	public BallView(Context context, int windowWidth,int Height) {
 		super(context);
 		getHolder().addCallback(this);
 		initBitmaps(getResources());
 		this.windowWidth = windowWidth;
+		this.BOTTOM_LINE=Height-100;
 		initMovables();
 		drawThread = new DrawThread(this, getHolder());
 		Log.i("kdcm", drawThread + "");
