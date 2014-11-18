@@ -3,6 +3,10 @@ package com.kdcm.aidongdong.UI;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +30,10 @@ import com.kdcm.aidongdong.tools.BadgeView;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.MyAdapter;
+import com.kdcm.aidongdong.web.HttpUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 
 public class FriendActivity extends BaseActivity implements OnClickListener {
 	private Button btn_radar, btn_2, btn_3;
@@ -75,7 +83,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_friend);
 		init();
-		showFriends();
+		// showFriends();
 
 	}
 
@@ -90,13 +98,13 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			}
 
 		} else {
-//			Toast.makeText(getApplicationContext(), "" + data,
-//					Toast.LENGTH_SHORT).show();
-			MyAdapter my = new MyAdapter(this, data, msg);
-			my.setBtn_name("删除");
-			my.setIsGone(View.VISIBLE);
-			my.setURL(Conf.APP_URL + "delFriend&friend_id=");
-			listview.setAdapter(my);
+			// Toast.makeText(getApplicationContext(), "" + data,
+			// Toast.LENGTH_SHORT).show();
+//			MyAdapter my = new MyAdapter(this, data, msg);
+//			my.setBtn_name("删除");
+//			my.setIsGone(View.VISIBLE);
+//			my.setURL(Conf.APP_URL + "delFriend&friend_id=");
+//			listview.setAdapter(my);
 		}
 	}
 
@@ -107,7 +115,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void run() {
-			saveData();
+				saveData();
 			}
 		});
 		mThread.start();
@@ -115,9 +123,9 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	}
 
 	protected void saveData() {
-		jsonstring = HttpUtil.getJsonContent(this,URLpath);
-		
-		data = JsonTools.getFriends(jsonstring);		
+		jsonstring = HttpUtil.getJsonContent(this, URLpath);
+
+		data = JsonTools.getFriends(jsonstring);
 	}
 
 	private void init() {
@@ -141,6 +149,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 		btn_3.setOnClickListener(this);
 		tv_MyRequests = (TextView) findViewById(R.id.tv_MyRequests);
 		tv_MyRequests.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -220,9 +229,55 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		data = null;
-		init();
-		showFriends();
+		AsyncHttpClient request = HttpUtils.getClient();
+		PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+		request.setCookieStore(myCookieStore);
+		HttpUtils.getFriends(res_friends);
 		super.onResume();
 	}
 
+	JsonHttpResponseHandler res_friends = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				Toast.makeText(getApplicationContext(), "获取数据成功",
+						Toast.LENGTH_SHORT).show();
+				String str_json = response.toString();
+				data = JsonTools.getFriends(str_json);
+				show(data);
+
+			} else {
+				Toast.makeText(getApplicationContext(), " 失败Error",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers,
+				Throwable throwable, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+
+		}
+	};
+
+	protected void show(List<Map<String, Object>> data2) {
+		MyAdapter my = new MyAdapter(this, data, msg);
+		my.setBtn_name("删除");
+		my.setIsGone(View.GONE);
+		my.setURL(Conf.APP_URL + "delFriend&friend_id=");
+		listview.setAdapter(my);
+	}
 }

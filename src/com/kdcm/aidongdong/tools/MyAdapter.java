@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
-import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.UI.DialogGiveMoney;
 import com.kdcm.aidongdong.UI.MyDialogActivity;
 
@@ -26,18 +25,18 @@ public class MyAdapter extends BaseAdapter {
 	private List<Map<String, Object>> list;
 	private Intent it;
 	private String URLpath;
-	private String msg="";
+	private String msg = "";
 	private Button btn_give;
 	/**
 	 * 赠送按钮，只有在好友界面能用到，默认隐藏。
 	 */
-	private int isGone=View.GONE;
+	private int isGone = View.GONE;
 
-	public MyAdapter(Context context, List<Map<String, Object>> list,String msg) {
+	public MyAdapter(Context context, List<Map<String, Object>> list, String msg) {
 		this.context = context;
 		layoutInflater = LayoutInflater.from(context);
 		this.list = list;
-		this.msg=msg;
+		this.msg = msg;
 	}
 
 	public void refresh(List<Map<String, Object>> list) {
@@ -65,13 +64,25 @@ public class MyAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.item, null);
 		}
-		TextView tv1 = (TextView) convertView.findViewById(R.id.tv1);
-		Button btn1 = (Button) convertView.findViewById(R.id.btn1);
-		btn_give=(Button)convertView.findViewById(R.id.btn_give);
+		TextView tv_nickname = (TextView) convertView
+				.findViewById(R.id.tv_nickname);
+		TextView tv_duration = (TextView) convertView
+				.findViewById(R.id.tv_duration);
+		TextView tv_coins = (TextView) convertView.findViewById(R.id.tv_coins);
+		Button btn_del = (Button) convertView.findViewById(R.id.btn_del);
+		btn_give = (Button) convertView.findViewById(R.id.btn_give);
 		btn_give.setVisibility(isGone);
-		tv1.setText(list.get(position).get("nickname").toString());
-		btn1.setText(btn_name);
-		btn1.setOnClickListener(new OnClickListener() {
+		
+		tv_nickname.setText(list.get(position).get("nickname").toString());
+		String duration = list.get(position).get("duration").toString();
+		if (!duration.equals("null")) {
+			tv_coins.setText(list.get(position).get("coins").toString());
+			tv_duration.setText(duration);
+		} else {
+			tv_duration.setVisibility(View.INVISIBLE);
+		}
+		btn_del.setText(btn_name);
+		btn_del.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -89,16 +100,16 @@ public class MyAdapter extends BaseAdapter {
 			}
 		});
 		btn_give.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				it=new Intent(context, DialogGiveMoney.class);
+				it = new Intent(context, DialogGiveMoney.class);
 				it.putExtra("mID", list.get(position).get("id").toString());
 				context.startActivity(it);
-				
+
 			}
 		});
-		
+
 		return convertView;
 	}
 

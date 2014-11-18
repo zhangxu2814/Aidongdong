@@ -1,5 +1,9 @@
 package com.kdcm.aidongdong.web;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -15,6 +19,7 @@ public class HttpUtils {
 	public static AsyncHttpClient getClient() {
 		return client;
 	}
+
 	/**
 	 * 进行登录
 	 * 
@@ -31,7 +36,48 @@ public class HttpUtils {
 		System.out.println(url);
 		client.post(url, res);
 	}
-	public static void getMy(){
-		
+
+	public static void getMy() {
+
+	}
+
+	/**
+	 * 添加订单
+	 * 
+	 * @param res
+	 * @param ids
+	 */
+	public static void addOrder(AsyncHttpResponseHandler res, String ids) {
+		String url = base_url + "m=user&a=addOrder&shopping_ids=" + ids;
+		client.post(url, res);
+	}
+
+	/**
+	 * 添加支付订单
+	 * 
+	 * @param res
+	 * @param id
+	 */
+	public static void payOrder(AsyncHttpResponseHandler res, String id) {
+		String url = base_url + "m=user&a=payOrder&order_id=" + id;
+		client.post(url, res);
+	}
+
+	/**
+	 * 获取送出的金币
+	 * @param res
+	 */
+	public static void getReceivedCoins(AsyncHttpResponseHandler res) {
+		String url = base_url + "m=user&a=getReceivedCoins";
+		client.post(url, res);
+	}
+	@SuppressLint("SimpleDateFormat")
+	public static void getFriends(AsyncHttpResponseHandler res){
+		String startTime;
+		Date time = new Date();
+		startTime = (new SimpleDateFormat("yyyy-MM-dd")).format(time);
+		String url = base_url + "m=user&a=getFriendDurations&date="+startTime;
+		Log.i("friend", url);
+		client.post(url, res);	
 	}
 }

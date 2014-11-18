@@ -79,8 +79,13 @@ public class JsonTools {
 				map.put("nickname", jo.get("nickname").toString());
 				map.put("phone", jo.get("phone"));
 				map.put("id", jo.get("id"));
+				map.put("coins", jo.get("coins"));
+				map.put("month_move_days", jo.get("month_move_days").toString());
+				String duration=jo.get("duration").toString();
+				map.put("duration", duration);
+				Log.i("duration", duration);
 				data.add(map);
-
+				
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -124,6 +129,7 @@ public class JsonTools {
 				map.put("nickname", jo.get("nickname").toString());
 				map.put("phone", jo.get("phone"));
 				map.put("id", jo.get("id"));
+				map.put("duration", "null");
 				data.add(map);
 			}
 		} catch (JSONException e) {
@@ -144,6 +150,7 @@ public class JsonTools {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("name", jo.get("name").toString());
 				map.put("id", jo.get("id"));
+				map.put("max_deduction", jo.get("max_deduction"));
 				map.put("category_id", jo.get("category_id"));
 				map.put("roll_pics", jo.get("roll_pics"));
 				map.put("price", jo.get("price"));
@@ -193,6 +200,7 @@ public class JsonTools {
 		float zongjia = 0;
 		int dikou = 0;
 		Map<String, Object> map = new HashMap<String, Object>();
+		String ids="";
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
@@ -208,6 +216,8 @@ public class JsonTools {
 				map.put("shopping_id", jo.get("shopping_id").toString());
 				map.put("zongjia", zongjia);
 				map.put("dikou", dikou + "");
+				ids+=jo.getString("shopping_id")+",";
+				map.put("ids", ids);
 				JSONArray pics_Array = null;
 				try {
 					pics_Array = new JSONArray(jo.getString("roll_pics"));
@@ -240,6 +250,7 @@ public class JsonTools {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jo = (JSONObject) jsonArray.opt(i);
 				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("id", jo.getString("id"));
 				map.put("need_cash", jo.get("need_cash").toString());
 				map.put("create_time", jo.get("create_time"));
 				map.put("order_no", jo.get("order_no".toString()));

@@ -66,6 +66,10 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	private TextView tv_price;
 	RadioButton btn_color[], btn_size[];
 	ImageView[] img;
+	/**
+	 * 抵扣额
+	 */
+	private TextView tv_deduction;
 	private SegmentedRadioGroup group_color, group_size;
 	/**
 	 * 加入购物车按钮
@@ -78,6 +82,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	private Thread Goods_Thread;
 	private String URL_AddSPCar;
 	private ProgressDialog loadingPDialog = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,7 +97,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	}
 
 	private void initViewPager() {
-
+		tv_deduction=(TextView)findViewById(R.id.tv_deduction);
 		btn_SPcart = (Button) findViewById(R.id.btn_SPcart);
 		btn_SPcart.setOnClickListener(this);
 		tv_sold_num = (TextView) findViewById(R.id.tv_sold_num);
@@ -157,7 +162,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 			adViewPager.setCurrentItem(msg.what);
 			super.handleMessage(msg);
 			loadingPDialog.dismiss();
-		
+
 		}
 
 	};
@@ -168,6 +173,9 @@ public class GoodsActivity extends Activity implements OnClickListener {
 		it = getIntent();
 		goods_id = it.getStringExtra("goods_id");
 		String roll_pics = it.getStringExtra("roll_pics");
+		String max_deduction = it.getStringExtra("max_deduction");
+		Log.i("max_deduction", max_deduction);
+		tv_deduction.setText("可抵扣额: "+max_deduction);
 		String name = it.getStringExtra("name");
 		String price = it.getStringExtra("price");
 		String sold_num = it.getStringExtra("sold_num");
@@ -202,7 +210,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 		tv_sold_num.setText("销量：" + sold_num);
 		tv_name.setText(name);
 		String[] URL = new String[3];
-		 img = new ImageView[3];
+		img = new ImageView[3];
 		try {
 			JSONArray pics_Array = new JSONArray(roll_pics);
 			for (int i = pics_Array.length() - 1; i >= 0; i--) {
@@ -215,7 +223,6 @@ public class GoodsActivity extends Activity implements OnClickListener {
 				pageViews.add(img[i]);
 				Log.i("URL", URL[i]);
 			}
-		
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -373,7 +380,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	}
 
 	protected void toGetJson() {
-		
+
 		String str_json = HttpUtil.getJsonContent(this, URL_AddSPCar);
 		String str_Result = HttpUtil.getResult(str_json);
 		Log.i("str_Result", str_Result);

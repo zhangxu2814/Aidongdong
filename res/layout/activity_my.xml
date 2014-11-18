@@ -193,29 +193,9 @@
             android:columnCount="1" >
 
             <TextView
+                android:id="@+id/tv_community"
                 android:layout_height="fill_parent"
-                android:layout_column="0"
-                android:layout_gravity="center"
-                android:layout_row="0"
-                android:gravity="center"
-                android:text="排行榜"
-                android:textSize="10pt" />
-        </GridLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#000"
-            android:orientation="vertical" >
-        </LinearLayout>
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:columnCount="1" >
-
-            <TextView
-                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_row="0"

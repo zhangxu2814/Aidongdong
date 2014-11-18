@@ -28,24 +28,17 @@ public class DropBallActivity extends Activity {
 		display = getWindowManager().getDefaultDisplay();
 		
 		ballView = new BallView(this, display.getWidth(),display.getHeight());
-		final String myPid = Process.myPid() + "";
 		timer = new Timer();
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
 				
 				System.exit(0);
-				// final Intent it = new Intent(DropBallActivity.this,
-				// SportCheckActivity.class);
-				// it.putExtra("mMoney",myPid);
-				//
-				// startActivity(it);
-				// DropBallActivity.this.finish();// 执行
 				
 			}
 		};
 		setContentView(ballView);
-		timer.schedule(task, 5500);
+		timer.schedule(task, 5000);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ public class GoodsMainActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods);
 		it = getIntent();
+		String max_deduction = it.getStringExtra("max_deduction");
 		String goods_id = it.getStringExtra("goods_id");
 		String roll_pics = it.getStringExtra("roll_pics");
 		String name = it.getStringExtra("name");
@@ -27,6 +28,7 @@ public class GoodsMainActivity extends TabActivity {
 		it = new Intent(this, GoodsActivity.class);
 		it.putExtra("roll_pics", roll_pics);
 		it.putExtra("name", name);
+		it.putExtra("max_deduction", max_deduction);
 		it.putExtra("price", price);
 		it.putExtra("sold_num", sold_num);
 		it.putExtra("size", size);
@@ -45,6 +47,7 @@ public class GoodsMainActivity extends TabActivity {
 								.putExtra("size", size)
 								.putExtra("color", color)
 								.putExtra("goods_id", goods_id)
+								.putExtra("max_deduction", max_deduction)
 								.putExtra("desc", desc)));
 		tabHost.addTab(tabHost
 				.newTabSpec("tab2")
@@ -59,7 +62,7 @@ public class GoodsMainActivity extends TabActivity {
 								.putExtra("color", color)
 								.putExtra("goods_id", goods_id)
 								.putExtra("desc", desc)));
-		//Review
+		// Review
 		tabHost.addTab(tabHost
 				.newTabSpec("tab3")
 				.setIndicator("商品评论")

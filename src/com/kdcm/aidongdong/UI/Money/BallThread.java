@@ -7,7 +7,7 @@ public class BallThread extends Thread {
 	Movable movable;
 	boolean flag = false; // 线程执行标志位
 	int sleepSpan = 40; // 线程休眠时间
-	float g = 5000f; // 加速度
+	float g = 7000f; // 加速度
 	double currentTime; // 当前时间
 	int bitmapWidth;
 	int windowWidth;

@@ -34,8 +34,8 @@ import com.umeng.message.UmengRegistrar;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 	public String json;
-	public static String coins="1";
-	private String login_name="login_name=";
+	public static String coins = "1";
+	private String login_name = "login_name=";
 	Person person;
 	String TAG = "LoginActivity";
 	/**
@@ -165,24 +165,27 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void myLogin() {
-		HttpUtils.login(et_username.getText().toString(), et_password.getText().toString(), res);
+		HttpUtils.login(et_username.getText().toString(), et_password.getText()
+				.toString(), res);
 
 	}
+
 	JsonHttpResponseHandler res = new JsonHttpResponseHandler() {
 		@Override
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
-			Log.i("response",response+"");
-			json=response+"";
+			Log.i("response", response + "");
+			json = response + "";
 			super.onSuccess(statusCode, headers, response);
 			try {
-				
-				String data=response.getString("data");
+
+				String data = response.getString("data");
 				JSONObject jsonObj = new JSONObject(data);
-				coins=jsonObj.get("coins").toString();
-				login_name+=jsonObj.get("username").toString();
+				coins = jsonObj.get("coins").toString();
+				sava();
+				login_name += jsonObj.get("username").toString();
 				Log.i("login_name", login_name);
-				
+
 			} catch (JSONException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -199,17 +202,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				e.printStackTrace();
 			}
 			if (statusCode == 200 & result == 1) {
-			
+
 				Toast.makeText(getApplicationContext(), "登陆成功",
 						Toast.LENGTH_SHORT).show();
 				loadingPDialog.dismiss();
-//				Intent intent = new Intent(LoginActivity.this,
-//						SportCheckActivity.class);
-//				startActivity(intent);
-//				LoginActivity.this.finish();
-				Fiap fiap = new Fiap(LoginActivity.this);  
-			      // 调用支付方法，并传入支付金额  
-			      fiap.android_pay(0.01); 
+				Intent intent = new Intent(LoginActivity.this,
+						SportCheckActivity.class);
+				startActivity(intent);
+				LoginActivity.this.finish();
+
 			} else {
 				Toast.makeText(getApplicationContext(), "请检查您的账号或者密码是否正确",
 						Toast.LENGTH_SHORT).show();
@@ -217,7 +218,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 	};
-		
 
 	private void forget() {
 		// RegisterPage registerPage = new RegisterPage();
@@ -245,8 +245,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	protected void sava() {
+		DataTools.saveDaTa(this, "coins", coins);
+	}
+
 	protected void data() {
-		DataTools.saveDaTa(this, "login_message", json);	
+		DataTools.saveDaTa(this, "login_message", json);
 		DataTools.saveDaTa(this, "username", login_name);
 	}
 

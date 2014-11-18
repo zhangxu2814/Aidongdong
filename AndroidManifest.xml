@@ -298,6 +298,7 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.Activity_Orders"></activity>
         <activity android:name="com.kdcm.aidongdong.UI.My_Orders"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.FriendCommunity"></activity>
     </application>
 
 </manifest>

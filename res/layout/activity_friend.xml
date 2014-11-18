@@ -16,9 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="6"
-            android:text="  好友请求"
+            android:text="  新的朋友"
             android:textColor="#FF9A28"
-            android:textSize="12pt" />
+            android:textSize="13pt" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,6 +63,13 @@
             android:text="通讯录好友" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/iv_friendcom"
+        android:layout_below="@+id/ll_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/icon_friendcommunity" />
+
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/vw1"
-        android:layout_below="@+id/ll_title" >
+        android:layout_below="@+id/iv_friendcom" >
 
     </ListView>
 

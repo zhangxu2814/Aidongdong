@@ -24,6 +24,10 @@ import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
 
 public class MyActivity extends Activity implements OnClickListener {
+	/**
+	 * 众筹
+	 */
+	private TextView tv_community;
 	String username;
 	String sex;
 	String phone;
@@ -96,12 +100,13 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		tv_community=(TextView)findViewById(R.id.tv_community);
+		tv_community.setOnClickListener(this);
 		tv_orders=(TextView)findViewById(R.id.tv_orders);
 		tv_orders.setOnClickListener(this);
 		tv_spcar = (TextView) findViewById(R.id.tv_spcar);
 		tv_spcar.setOnClickListener(this);
 		tv_detail = (TextView) findViewById(R.id.tv_detail);
-		tv_detail.setOnClickListener(this);
 		tv_detail.setOnClickListener(this);
 		tv_logout = (TextView) findViewById(R.id.tv_logout);
 		tv_logout.setOnClickListener(this);
@@ -159,7 +164,10 @@ public class MyActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
+		case R.id.tv_community:
+			it = new Intent(this, GivedCoinsActivity.class);
+			startActivity(it);
+			break;
 		case R.id.btn_change:
 			it = new Intent(getApplicationContext(), ChangeActivity.class);
 			startActivity(it);
@@ -173,7 +181,7 @@ public class MyActivity extends Activity implements OnClickListener {
 			listview.setAdapter(simpleAdapter);
 			break;
 		case R.id.iv_contact:
-			it = new Intent(getApplicationContext(), FriendActivity.class);
+			it = new Intent(getApplicationContext(), FriendCommunity.class);
 			startActivity(it);
 			break;
 		case R.id.iv_sport:
@@ -189,7 +197,8 @@ public class MyActivity extends Activity implements OnClickListener {
 			this.finish();
 			break;
 		case R.id.tv_detail:
-			it = new Intent(this, GivedCoinsActivity.class);
+//			it = new Intent(this, GivedCoinsActivity.class);
+			it = new Intent(this, ChangeActivity.class);
 			startActivity(it);
 			break;
 		case R.id.tv_spcar:

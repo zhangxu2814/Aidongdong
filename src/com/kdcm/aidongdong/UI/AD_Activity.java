@@ -64,13 +64,14 @@ public class AD_Activity extends Activity {
 					long id) {
 				String roll_pics = data.get(i).get("roll_pics").toString();
 				String name = data.get(i).get("name").toString();
-				String price=data.get(i).get("price").toString();
-				String sold_num=data.get(i).get("sold_num").toString();
-				String size=data.get(i).get("size").toString();
-				String color=data.get(i).get("color").toString();
-				String goods_id=data.get(i).get("id").toString();
-				String desc=data.get(i).get("desc").toString();
-
+				String price = data.get(i).get("price").toString();
+				String sold_num = data.get(i).get("sold_num").toString();
+				String size = data.get(i).get("size").toString();
+				String color = data.get(i).get("color").toString();
+				String goods_id = data.get(i).get("id").toString();
+				String desc = data.get(i).get("desc").toString();
+				String max_deduction = data.get(i).get("max_deduction")
+						.toString();
 				Intent it = new Intent(getApplicationContext(),
 						GoodsMainActivity.class);
 				it.putExtra("roll_pics", roll_pics);
@@ -78,6 +79,7 @@ public class AD_Activity extends Activity {
 				it.putExtra("price", price);
 				it.putExtra("sold_num", sold_num);
 				it.putExtra("size", size);
+				it.putExtra("max_deduction", max_deduction);
 				it.putExtra("color", color);
 				it.putExtra("goods_id", goods_id);
 				it.putExtra("desc", desc);

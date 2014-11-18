@@ -4,6 +4,10 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +25,8 @@ import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.SPCarAdapter;
+import com.kdcm.aidongdong.web.HttpUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class SPCarActivity extends Activity implements OnClickListener {
 	private String URL_SPCar;
@@ -36,6 +42,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	private String zongjia;
 	private TextView tv_dikou;
 	private String str_dikou;
+	private String ids="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 		tv_dikou = (TextView) findViewById(R.id.tv_dikou);
 		tv_total = (TextView) findViewById(R.id.tv_total);
 		btn_jiesuan = (Button) findViewById(R.id.btn_jiesuan);
+		btn_jiesuan.setOnClickListener(this);
 		lv_spcar = (ListView) findViewById(R.id.lv_spcar);
 		URL_SPCar = Conf.APP_URL + "getShoppingCarts";
 		getData();
@@ -93,6 +101,8 @@ public class SPCarActivity extends Activity implements OnClickListener {
 			if (data.size() > 0) {
 				zongjia = (data.get(data.size() - 1).get("zongjia").toString());
 				str_dikou = (data.get(data.size() - 1).get("dikou").toString());
+				ids=(data.get(data.size() - 1).get("ids").toString());
+				Log.i("ids", ids);
 			}
 			Message msg = new Message();
 			mHandler.sendMessage(msg);
@@ -104,7 +114,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_jiesuan:
-
+			HttpUtils.addOrder(res_order, ids);
 			break;
 
 		default:
@@ -120,4 +130,30 @@ public class SPCarActivity extends Activity implements OnClickListener {
 		mHandler.sendMessage(msg);
 		super.onResume();
 	}
+	JsonHttpResponseHandler res_order = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				Toast.makeText(getApplicationContext(), "添加购物车成功",
+						Toast.LENGTH_SHORT).show();
+				SPCarActivity.this.finish();
+			} else {
+				Toast.makeText(getApplicationContext(), "请到检查库存是否充足",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
 }

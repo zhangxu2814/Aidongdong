@@ -10,7 +10,7 @@ public class Movable {
 	int startY = 0; // 初始Y坐标
 	int currentX; // 实时X坐标
 	int currentY; // 实时Y坐标
-	float startVX = 0f; // 初始水平方向速度
+	float startVX = 20f; // 初始水平方向速度
 	float startVY = 200f; // 初始垂直方向速度
 	float currentVX = 0f; // 实时水平方向速度
 	float currentVY = 0f; // 实时垂直方向速度

@@ -2,6 +2,7 @@ package com.kdcm.aidongdong.UI;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,18 +17,23 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.baidu.frontia.api.FrontiaSocialShare;
 import com.baidu.frontia.api.FrontiaSocialShareContent;
 import com.baidu.frontia.api.FrontiaSocialShareListener;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.UI.Money.DropBallActivity;
+import com.kdcm.aidongdong.tools.CloseActivityClass;
 import com.kdcm.aidongdong.tools.DataTools;
 import com.umeng.scrshot.UMScrShotController.OnScreenshotListener;
 import com.umeng.scrshot.adapter.UMAppAdapter;
@@ -44,6 +50,10 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class SportCheckActivity extends Activity implements SensorListener,
 		OnClickListener {
+	/**
+	 *消耗用的圆点
+	 */
+	private ImageView iv_consume;
 	private int end_time = 0;
 	private int star_time = 0;
 	private ImageView mImageView = null;
@@ -230,6 +240,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		CloseActivityClass.activityList.add(this);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_sport);
@@ -239,7 +250,14 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	private void init() {
-		tv_coins=(TextView)findViewById(R.id.tv_coins);
+		RotateAnimation animation = new RotateAnimation(0, 360,
+				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+				0.5f);
+		animation.setDuration(1000);
+		animation.setRepeatCount(Animation.INFINITE);
+		iv_consume=(ImageView)findViewById(R.id.iv_consume);
+//		iv_consume.startAnimation(animation);
+		tv_coins = (TextView) findViewById(R.id.tv_coins);
 		tv_coins.setText(LoginActivity.coins);
 		mImageView = (ImageView) findViewById(R.id.scrshot_imgview);
 		ll_ad = (LinearLayout) findViewById(R.id.ll_ad);
@@ -281,8 +299,8 @@ public class SportCheckActivity extends Activity implements SensorListener,
 							count = Conf.count;
 
 							star_time = end_time;
-							tt_time.setText("已经运动" + time_h + "小时" + time_m
-									+ "分钟" + int_time + "秒");
+							tt_time.setText(time_h + "h" + time_m
+									+ "m" + int_time + "s");
 							int_time++;
 							if (int_time == 60) {
 								int_time = 0;
@@ -321,7 +339,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		currentTime = System.currentTimeMillis();
 
 		// 每隔400MS 取加速度力和前一个进行比较
-		if (currentTime - lastTime > 400) {
+		if (currentTime - lastTime > 500) {
 			if (preCoordinate == null) {// 还未存过数据
 				preCoordinate = new float[3];
 				for (int i = 0; i < 3; i++) {
@@ -439,6 +457,10 @@ public class SportCheckActivity extends Activity implements SensorListener,
 								@Override
 								public void onClick(DialogInterface arg0,
 										int arg1) {
+									CloseActivityClass.exitClient(SportCheckActivity.this);
+									//再杀
+									SportCheckActivity.this.finish();
+									//杀杀杀
 									System.exit(0);
 								}
 							}).setPositiveButton("否", null).show();
@@ -450,6 +472,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 
 	@Override
 	protected void onResume() {
+		String coins=DataTools.readData(this, "coins");
+		tv_coins.setText(coins);
+		Log.i("coins", LoginActivity.coins);
 		String str_time = DataTools.readData(this, "time_sport");
 		if (str_time != null) {
 			tt_time.setText(str_time);

@@ -19,17 +19,17 @@ import android.view.SurfaceView;
 
 public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 
-	public static final int VX_MAX = 200; // 水平速度最大值
-	public static final int VX_MIN = 15; // 水平速度最小值
-	public static final int WOOD_EDGE = 70; // 木板有边沿X坐标
+	public static final int VX_MAX = 500; // 水平速度最大值
+	public static final int VX_MIN = 100; // 水平速度最小值
+	public static final int WOOD_EDGE = 100; // 木板有边沿X坐标
 	public static int BOTTOM_LINE = 0; // 地面Y坐标，小球下落到此会弹起
-	public static final int UP_ZERO = 20; // 上升过程中速度小于该值就算为0
+	public static final int UP_ZERO = 10; // 上升过程中速度小于该值就算为0
 	public static final int DOWN_ZERO = 50; // 撞击地面后速度小于该值就算为0
 
 	Bitmap[] bitmaps = new Bitmap[6];
 	Bitmap bpBack, bpWood;
 	String fps = "";
-	int ballNum = 20;
+	int ballNum = 7;
 	int windowWidth;
 	ArrayList<Movable> movables = new ArrayList<Movable>();
 	public static DrawThread drawThread;
@@ -39,10 +39,9 @@ public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 		getHolder().addCallback(this);
 		initBitmaps(getResources());
 		this.windowWidth = windowWidth;
-		this.BOTTOM_LINE=Height-100;
+		this.BOTTOM_LINE=Height-10;
 		initMovables();
 		drawThread = new DrawThread(this, getHolder());
-		Log.i("kdcm", drawThread + "");
 
 	}
 
@@ -57,7 +56,7 @@ public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 			} else {
 				bitmap = bitmaps[index % 3];
 			}
-			Movable m = new Movable(50, 100 - bitmap.getHeight(),
+			Movable m = new Movable(120, 200 - bitmap.getHeight(),
 					bitmap.getWidth() / 2, this.windowWidth, bitmap);
 			movables.add(m);
 		}
@@ -72,7 +71,7 @@ public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 
 		Paint paint = new Paint();
 		paint.setColor(Color.BLUE);
-		paint.setTextSize(20);
+		paint.setTextSize(0);
 		paint.setAntiAlias(true);
 		canvas.drawText(fps, 350, 50, paint);
 	}
@@ -86,7 +85,7 @@ public class BallView extends SurfaceView implements SurfaceHolder.Callback {
 		bitmaps[4] = BitmapFactory.decodeResource(res, R.drawable.icon_coin_2);
 		bitmaps[5] = BitmapFactory.decodeResource(res, R.drawable.icon_coin_2);
 
-		bpBack = BitmapFactory.decodeResource(res, R.drawable.icon_bg_money);
+		bpBack = BitmapFactory.decodeResource(res, R.drawable.bg_white);
 		bpWood = BitmapFactory.decodeResource(res, R.drawable.icon_moneyred);
 	}
 

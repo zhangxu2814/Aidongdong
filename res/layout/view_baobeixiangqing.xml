@@ -14,8 +14,8 @@
             android:id="@+id/view_pager_content"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:scaleType="fitXY"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:id="@+id/viewGroup"
@@ -32,7 +32,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="2"
-        android:background="#BBFFBB"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -74,6 +73,25 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="30dp" >
+
+            <TextView
+                android:id="@+id/tv_deduction"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                 android:gravity="center"
+                android:text="可抵扣额" />
+             <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -81,8 +99,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="颜色"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="颜色" />
 
             <com.kdcm.aidongdong.RadioGroupTool.SegmentedRadioGroup
                 android:id="@+id/segment_color"
@@ -94,6 +112,7 @@
                 android:gravity="top|center"
                 android:orientation="horizontal" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -102,8 +121,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="大小"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="大小" />
 
             <com.kdcm.aidongdong.RadioGroupTool.SegmentedRadioGroup
                 android:id="@+id/segment_size"
@@ -122,15 +141,15 @@
 
             <Button
                 android:id="@+id/btn_SPcart"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="18dp"
-                android:text="购物车" />
-
+                android:text="购物车"
+                android:textColor="#fff"
+                android:background="#FF8800" />
         </RelativeLayout>
-
     </LinearLayout>
 
 </LinearLayout>
