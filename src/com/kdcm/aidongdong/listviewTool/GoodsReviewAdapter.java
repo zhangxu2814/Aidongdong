@@ -50,7 +50,7 @@ public class GoodsReviewAdapter extends BaseAdapter {
 		tv_desc=(TextView)convertView.findViewById(R.id.tv_desc);
 		tv_name.setText(list.get(position).get("nickname").toString());
 		tv_time.setText(list.get(position).get("create_time").toString());
-		tv_desc.setText(list.get(position).get("create_time").toString());
+		tv_desc.setText(list.get(position).get("desc").toString());
 		
 		return convertView;
 	}

@@ -43,6 +43,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	private TextView tv_dikou;
 	private String str_dikou;
 	private String ids="";
+	private TextView tv_null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 			public void handleMessage(Message msg) {
 				if (msg != null) {
 					ShowData();
+					tv_null.setVisibility(View.GONE);
 				}
 			}
 		};
@@ -70,6 +72,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		tv_null=(TextView)findViewById(R.id.tv_null);
 		tv_dikou = (TextView) findViewById(R.id.tv_dikou);
 		tv_total = (TextView) findViewById(R.id.tv_total);
 		btn_jiesuan = (Button) findViewById(R.id.btn_jiesuan);

@@ -299,6 +299,9 @@
         <activity android:name="com.kdcm.aidongdong.UI.Activity_Orders"></activity>
         <activity android:name="com.kdcm.aidongdong.UI.My_Orders"></activity>
         <activity android:name="com.kdcm.aidongdong.UI.FriendCommunity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.MapActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.CompanyActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.MoreActivity"></activity>
     </application>
 
 </manifest>

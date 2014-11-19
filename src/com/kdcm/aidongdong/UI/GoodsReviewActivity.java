@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
@@ -34,6 +36,7 @@ public class GoodsReviewActivity extends Activity {
 	List<Map<String, Object>> data = null;
 	private ListView lv_review;
 	private Handler mHandler;
+	private TextView tv_null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class GoodsReviewActivity extends Activity {
 		mHandler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg != null) {
+					tv_null.setVisibility(View.GONE);
 					ShowData();
 				}
 			}
@@ -70,6 +74,7 @@ public class GoodsReviewActivity extends Activity {
 	}
 
 	private void init() {
+		tv_null=(TextView)findViewById(R.id.tv_null);
 		lv_review = (ListView) findViewById(R.id.lv_review);
 		it = getIntent();
 		product_id = it.getStringExtra("goods_id");

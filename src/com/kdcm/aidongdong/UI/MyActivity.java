@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.tools.ActivityTools;
 import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.Person;
@@ -32,7 +33,7 @@ public class MyActivity extends Activity implements OnClickListener {
 	String sex;
 	String phone;
 	private ListView listview;
-	private Button btn_more;
+	private ImageView iv_more;
 	private Button btn_change;
 	private Intent it;
 	// 用户列表userList对应的适配器
@@ -100,6 +101,8 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		iv_more=(ImageView)findViewById(R.id.iv_more);
+		iv_more.setOnClickListener(this);
 		tv_community=(TextView)findViewById(R.id.tv_community);
 		tv_community.setOnClickListener(this);
 		tv_orders=(TextView)findViewById(R.id.tv_orders);
@@ -206,8 +209,10 @@ public class MyActivity extends Activity implements OnClickListener {
 			startActivity(it);
 			break;
 		case R.id.tv_orders:
-			it=new Intent(this, Activity_Orders.class);
-			startActivity(it);
+			ActivityTools.mIntent(this,Activity_Orders.class);
+			break;
+		case R.id.iv_more:
+			ActivityTools.mIntent(this, MoreActivity.class);
 			break;
 		}
 	}

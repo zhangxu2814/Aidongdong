@@ -41,6 +41,18 @@
                 android:layout_gravity="center"
                 android:layout_row="0"
                 android:text="0539-10000000000" />
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="72dp"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center|right"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="注销"
+                android:textColor="#FF9A28" />
+
         </GridLayout>
 
         <LinearLayout
@@ -173,11 +185,16 @@
                 android:id="@+id/tv_detail"
                 android:layout_height="fill_parent"
                 android:layout_column="0"
-                android:layout_gravity="center"
+                android:layout_gravity="left|top"
                 android:layout_row="0"
                 android:gravity="center"
-                android:text="用户详情"
-                android:textSize="10pt" />
+                android:text="   用户详情" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="点击查看用户详情" />
         </GridLayout>
 
         <LinearLayout
@@ -194,14 +211,18 @@
 
             <TextView
                 android:id="@+id/tv_community"
-                android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:gravity="center|left"
+                android:text="   我的众筹" />
+
+            <TextView
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_row="0"
-                android:gravity="center"
-                android:text="我的众筹"
-                android:textSize="10pt" />
+                android:text="点击查看我的众筹" />
         </GridLayout>
 
         <LinearLayout
@@ -223,9 +244,14 @@
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_row="0"
-                android:gravity="center"
-                android:text="购物车"
-                android:textSize="10pt" />
+                android:gravity="center|left"
+                android:text="   购物车" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="点击查看购物车" />
         </GridLayout>
 
         <LinearLayout
@@ -247,10 +273,51 @@
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_row="0"
-                android:gravity="center"
-                android:text="订单详情"
-                android:textSize="10pt" />
+                android:gravity="center|left"
+                android:text="   我的订单" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="点击查看订单" />
         </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:id="@+id/tv_myadd"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center|left"
+                android:text=" 收货地址" />
+
+            <TextView
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:text="管理收货地址" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:orientation="vertical" >
+        </LinearLayout>
 
         <ListView
             android:id="@+id/listView1"
@@ -280,8 +347,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:text="个人中心"
-            android:textSize="9pt" />
+            android:text="个人中心" />
 
         <Button
             android:id="@+id/btn_change"
@@ -297,15 +363,6 @@
         android:layout_above="@+id/vw1"
         android:layout_marginBottom="10dp"
         android:gravity="center" >
-
-        <TextView
-            android:id="@+id/tv_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="注销"
-            android:textColor="#FF9A28"
-            android:textSize="8pt" />
     </LinearLayout>
 
     <View

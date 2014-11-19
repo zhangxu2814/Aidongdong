@@ -34,7 +34,7 @@ import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.umeng.message.proguard.O;
 
-public class AD_Activity extends Activity {
+public class AD_Activity extends Activity implements OnClickListener {
 	private static MemoryCache memoryCache;
 	private static FileCache fileCache;
 	private String URL_Products;
@@ -47,13 +47,19 @@ public class AD_Activity extends Activity {
 	private Handler mHandler;
 	ArrayList<HashMap<String, Object>> data = null;
 	LazyAdapter adapter = null;
+	private ImageView iv_map;
+	private ImageView iv_qyjs;
+	Intent it;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ad);
-
+		iv_map = (ImageView) findViewById(R.id.iv_map);
+		iv_map.setOnClickListener(this);
+		iv_qyjs = (ImageView) findViewById(R.id.iv_qyjs);
+		iv_qyjs.setOnClickListener(this);
 		lv_getproducts = (ListView) findViewById(R.id.lv_getproducts);
 
 		showData();
@@ -72,7 +78,7 @@ public class AD_Activity extends Activity {
 				String desc = data.get(i).get("desc").toString();
 				String max_deduction = data.get(i).get("max_deduction")
 						.toString();
-				Intent it = new Intent(getApplicationContext(),
+				it = new Intent(getApplicationContext(),
 						GoodsMainActivity.class);
 				it.putExtra("roll_pics", roll_pics);
 				it.putExtra("name", name);
@@ -126,6 +132,21 @@ public class AD_Activity extends Activity {
 						"http://www.haoapp123.com/app/localuser/aidongdong/api.php?m=user&a=getProducts");
 		data = JsonTools.getProducts(str_json);
 		Log.i("kdcmad", data + "");
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_map:
+			it = new Intent(this, MapActivity.class);
+			startActivity(it);
+			break;
+		case R.id.iv_qyjs:
+			it=new Intent(this, CompanyActivity.class);
+			startActivity(it);
+		default:
+			break;
+		}
 	}
 
 }

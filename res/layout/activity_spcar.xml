@@ -20,29 +20,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1" >
-                 <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="最多可抵扣金额：" />
 
-                 <TextView
-                     android:id="@+id/tv_dikou"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:text="TextView" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="最多可抵扣金额：" />
 
+                <TextView
+                    android:id="@+id/tv_dikou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView" />
             </LinearLayout>
-           
-              <TextView
-                  android:id="@+id/tv_total"
-                android:layout_width="fill_parent"
-                android:layout_weight="1"
-                android:layout_height="fill_parent"
-                android:text="金额：50元" />
 
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="金额：0元" />
         </LinearLayout>
 
         <Button
@@ -50,18 +49,26 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:text="结算" />
-
+            android:text="结算"
+            android:background="@null"
+            android:textColor="#FF8800" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/lv_spcar"
-        android:layout_above="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-         >
+        android:layout_alignParentTop="true" >
     </ListView>
+
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="您购物车中还没有商品哦！" />
 
 </RelativeLayout>

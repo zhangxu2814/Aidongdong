@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我是采果果。成立于2013年，以青春的名义创新，以青春的名义创意，以青春的名义颠覆。“屌丝型，文艺心，追求简单舒适的生活”的青春水果品牌——“我是采果果”，希望大家喜欢我，我会好好努力，把大自然的恩赐带到大家的身边。" />
+
+</LinearLayout>
