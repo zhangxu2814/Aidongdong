@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -92,6 +93,14 @@ public class MyActivity extends Activity implements OnClickListener {
 	 * 订单
 	 */
 	private TextView tv_orders;
+	/**
+	 * 用户详情
+	 */
+	private GridLayout gl_aboutuser;
+	/**
+	 * user id
+	 */
+	private String uID;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,6 +110,8 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		gl_aboutuser=(GridLayout)findViewById(R.id.gl_aboutuser);
+		gl_aboutuser.setOnClickListener(this);
 		iv_more=(ImageView)findViewById(R.id.iv_more);
 		iv_more.setOnClickListener(this);
 		tv_community=(TextView)findViewById(R.id.tv_community);
@@ -141,6 +152,7 @@ public class MyActivity extends Activity implements OnClickListener {
 
 		data = JsonTools.getMy(DataTools.readData(this, "login_message"));
 		Log.i(Conf.TAG, data.get(0).get("nickname") + "");
+		uID=data.get(0).get("id").toString();
 		tv_phone.setText(data.get(0).get("phone").toString());
 		tv_nikename.setText(data.get(0).get("nickname").toString());
 		String sex = data.get(0).get("sex").toString();
@@ -213,6 +225,11 @@ public class MyActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.iv_more:
 			ActivityTools.mIntent(this, MoreActivity.class);
+			break;
+		case R.id.gl_aboutuser:
+			it=new Intent(this, AboutUserActivity.class);
+			it.putExtra("uID", uID);
+			startActivity(it);
 			break;
 		}
 	}

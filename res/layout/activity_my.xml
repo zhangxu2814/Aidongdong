@@ -177,6 +177,7 @@
         </LinearLayout>
 
         <GridLayout
+            android:id="@+id/gl_aboutuser"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:columnCount="1" >

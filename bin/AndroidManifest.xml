@@ -238,6 +238,8 @@
         <activity android:name="com.kdcm.aidongdong.UI.MoreActivity"/>
         <activity android:name="com.kdcm.aidongdong.UI.Orders_Goods"></activity>
         <activity android:name="com.kdcm.aidongdong.UI.BalanceActivity"></activity>
+        <!-- 用户详情 -->
+        <activity android:name="com.kdcm.aidongdong.UI.AboutUserActivity"></activity>
     </application>
 
 </manifest>

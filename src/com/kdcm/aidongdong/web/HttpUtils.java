@@ -47,8 +47,10 @@ public class HttpUtils {
 	 * @param res
 	 * @param ids
 	 */
-	public static void addOrder(AsyncHttpResponseHandler res, String ids,int coins) {
-		String url = base_url + "m=user&a=addOrder&shopping_ids=" + ids+"&coins="+coins;
+	public static void addOrder(AsyncHttpResponseHandler res, String ids,
+			int coins) {
+		String url = base_url + "m=user&a=addOrder&shopping_ids=" + ids
+				+ "&coins=" + coins;
 		client.post(url, res);
 	}
 
@@ -90,7 +92,13 @@ public class HttpUtils {
 
 	public static void addProductComment(AsyncHttpResponseHandler res,
 			String id, String desc) {
-		String url = base_url + "m=user&a=addProductComment"+"&product_id="+id+"&desc="+desc;
+		String url = base_url + "m=user&a=addProductComment" + "&product_id="
+				+ id + "&desc=" + desc;
 		client.post(url, res);
+	}
+	public static void searchUser(AsyncHttpResponseHandler res,String uID){
+		String url=base_url+"m=user&a=search&id="+uID;
+		client.post(url, res);
+		
 	}
 }
