@@ -51,7 +51,7 @@ public class OrderAdapter extends BaseAdapter {
 		tv_time.setText(list.get(position).get("create_time").toString());
 		tv_money.setText(list.get(position).get("need_cash").toString());
 		String shopping_carts=list.get(position).get("shopping_carts").toString();
-		tv_num.setText(shopping_carts);
+		tv_num.setText("数量:"+shopping_carts);
 		tv_no.setText(list.get(position).get("order_no").toString());
 		return convertView;
 	}

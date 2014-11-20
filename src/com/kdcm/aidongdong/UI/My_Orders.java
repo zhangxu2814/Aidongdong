@@ -9,21 +9,25 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.alipay.Fiap;
+import com.kdcm.aidongdong.tools.ActivityTools;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.OrderAdapter;
@@ -39,6 +43,14 @@ public class My_Orders extends Activity {
 	private ListView lv_order;
 	private Intent it;
 	private String status = "1";
+	/**
+	 * 数据读取进度条
+	 */
+	private ProgressDialog loadingPDialog = null;
+	/**
+	 * 订单id
+	 */
+	String id = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +60,7 @@ public class My_Orders extends Activity {
 			public void handleMessage(Message msg) {
 				if (msg != null) {
 					ShowData();
+					loadingPDialog.dismiss();
 				}
 			}
 		};
@@ -60,6 +73,9 @@ public class My_Orders extends Activity {
 	}
 
 	private void init() {
+		loadingPDialog = new ProgressDialog(this);
+		loadingPDialog.setMessage("正在加载....");
+		loadingPDialog.setCancelable(false);
 		it = getIntent();
 		status = it.getStringExtra("status");
 		lv_order = (ListView) findViewById(R.id.lv_order);
@@ -69,17 +85,31 @@ public class My_Orders extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int i,
 					long arg3) {
 
-				String id = data.get(i).get("id").toString();
+				id = data.get(i).get("id").toString();
+				final String shopping_carts = data.get(i).get("shopping_carts")
+						.toString();
 				Log.i("orderid", id);
 				double cash = Double.valueOf(data.get(i).get("need_cash")
 						.toString());
 				if (status.equals("1")) {
 					toPay(cash, id);
+				} else if (status.equals("4")) {
+					toOrderGoods(shopping_carts);
 				}
 			}
 		});
 		URL_Orders = Conf.APP_URL + "getOrders";
 		getData();
+	}
+
+	protected void toOrderGoods(String shopping_carts) {
+		if (!shopping_carts.equals("0")) {
+			Intent it = new Intent(this, Orders_Goods.class);
+			it.putExtra("id", id);
+		} else {
+			Toast.makeText(getApplicationContext(), "这是充值订单,没办法评论哟",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	protected void toPay(final double cash, final String id) {
@@ -91,6 +121,7 @@ public class My_Orders extends Activity {
 							@Override
 							public void onClick(DialogInterface arg0, int arg1) {
 								HttpUtils.payOrder(res_pay, id);
+								loadingPDialog.show();
 							}
 						})
 				.setPositiveButton("支付宝付费",
@@ -163,8 +194,36 @@ public class My_Orders extends Activity {
 			} else {
 				Toast.makeText(getApplicationContext(), "扣费失败，请检查您的余额",
 						Toast.LENGTH_SHORT).show();
+				loadingPDialog.dismiss();
 			}
 
+		}
+	};
+	JsonHttpResponseHandler res_add = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				Toast.makeText(getApplicationContext(), "数据添加成功",
+						Toast.LENGTH_SHORT).show();
+				data = null;
+				getData();
+			} else {
+				Toast.makeText(getApplicationContext(), "错误！请刷新订单",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 }

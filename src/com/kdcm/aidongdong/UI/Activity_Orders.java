@@ -24,7 +24,7 @@ public class Activity_Orders extends TabActivity {
 		tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("待收货")
 				.setContent(new Intent(this, My_Orders.class).putExtra("status",
 						"3")));
-		tabHost.addTab(tabHost.newTabSpec("tab4").setIndicator("待评价")
+		tabHost.addTab(tabHost.newTabSpec("tab4").setIndicator("已收货")
 				.setContent(new Intent(this, My_Orders.class).putExtra("status",
 						"4")));
 

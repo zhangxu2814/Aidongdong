@@ -81,11 +81,11 @@ public class JsonTools {
 				map.put("id", jo.get("id"));
 				map.put("coins", jo.get("coins"));
 				map.put("month_move_days", jo.get("month_move_days").toString());
-				String duration=jo.get("duration").toString();
+				String duration = jo.get("duration").toString();
 				map.put("duration", duration);
 				Log.i("duration", duration);
 				data.add(map);
-				
+
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -197,10 +197,10 @@ public class JsonTools {
 
 	public static List<Map<String, Object>> getSPCar(String jsonstring) {
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-		float zongjia = 0;
-		int dikou = 0;
+		double zongjia = 0;
+		double dikou = 0;
 		Map<String, Object> map = new HashMap<String, Object>();
-		String ids="";
+		String ids = "";
 		try {
 			JSONObject jsonObject = new JSONObject(jsonstring);
 			JSONArray jsonArray = jsonObject.getJSONArray("list");
@@ -211,12 +211,12 @@ public class JsonTools {
 				double price = jo.getDouble("price"); // 价格价格
 				map.put("price", price + "");
 				map.put("name", jo.getString("name"));
-				zongjia += price * jo.getInt("number");
+				zongjia += price * jo.getDouble("number");
 				dikou += jo.getInt("number") * jo.getInt("max_deduction");
 				map.put("shopping_id", jo.get("shopping_id").toString());
-				map.put("zongjia", zongjia);
-				map.put("dikou", dikou + "");
-				ids+=jo.getString("shopping_id")+",";
+				map.put("zongjia", String.format("%.2f", zongjia));
+				map.put("dikou", String.format("%.2f", dikou));
+				ids += jo.getString("shopping_id") + ",";
 				map.put("ids", ids);
 				JSONArray pics_Array = null;
 				try {
@@ -258,8 +258,8 @@ public class JsonTools {
 					JSONArray carts_Array = new JSONArray(
 							jo.getString("shopping_carts"));
 					map.put("shopping_carts", carts_Array.length() + "");
-				}else{
-					map.put("shopping_carts", "1");
+				} else {
+					map.put("shopping_carts", "0");
 				}
 				if (jo.getString("status").equals(status)) {
 					data.add(map);

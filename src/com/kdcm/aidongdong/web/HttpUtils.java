@@ -47,8 +47,8 @@ public class HttpUtils {
 	 * @param res
 	 * @param ids
 	 */
-	public static void addOrder(AsyncHttpResponseHandler res, String ids) {
-		String url = base_url + "m=user&a=addOrder&shopping_ids=" + ids;
+	public static void addOrder(AsyncHttpResponseHandler res, String ids,int coins) {
+		String url = base_url + "m=user&a=addOrder&shopping_ids=" + ids+"&coins="+coins;
 		client.post(url, res);
 	}
 
@@ -65,19 +65,32 @@ public class HttpUtils {
 
 	/**
 	 * 获取送出的金币
+	 * 
 	 * @param res
 	 */
 	public static void getReceivedCoins(AsyncHttpResponseHandler res) {
 		String url = base_url + "m=user&a=getReceivedCoins";
 		client.post(url, res);
 	}
+
+	/**
+	 * 好友排行
+	 * 
+	 * @param res
+	 */
 	@SuppressLint("SimpleDateFormat")
-	public static void getFriends(AsyncHttpResponseHandler res){
+	public static void getFriends(AsyncHttpResponseHandler res) {
 		String startTime;
 		Date time = new Date();
 		startTime = (new SimpleDateFormat("yyyy-MM-dd")).format(time);
-		String url = base_url + "m=user&a=getFriendDurations&date="+startTime;
+		String url = base_url + "m=user&a=getFriendDurations&date=" + startTime;
 		Log.i("friend", url);
-		client.post(url, res);	
+		client.post(url, res);
+	}
+
+	public static void addProductComment(AsyncHttpResponseHandler res,
+			String id, String desc) {
+		String url = base_url + "m=user&a=addProductComment"+"&product_id="+id+"&desc="+desc;
+		client.post(url, res);
 	}
 }

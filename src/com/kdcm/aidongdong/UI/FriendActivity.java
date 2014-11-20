@@ -26,6 +26,7 @@ import cn.smssdk.gui.ContactsPage;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
+import com.kdcm.aidongdong.tools.ActivityTools;
 import com.kdcm.aidongdong.tools.BadgeView;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
@@ -49,6 +50,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	private String jsonstring;
 	// List<String> data = null;
 	private List<Map<String, Object>> data = null;
+	private ImageView iv_more;
 
 	/**
 	 * 好友模块
@@ -129,6 +131,8 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void init() {
+		iv_more=(ImageView)findViewById(R.id.iv_more);
+		iv_more.setOnClickListener(this);
 		tv_add = (TextView) findViewById(R.id.tv_add);
 		tv_add.setOnClickListener(this);
 		iv_sport = (ImageView) findViewById(R.id.iv_sport);
@@ -165,7 +169,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.btn_3:
 			ContactsPage contactsPage = new ContactsPage();
-			contactsPage.setUsername(Conf.username);
+//			contactsPage.setUsername(Conf.username);
 			contactsPage.show(this);
 			break;
 		case R.id.iv_user:
@@ -182,6 +186,9 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.tv_add:
 			toAddFriends();
+			break;
+		case R.id.iv_more:
+			ActivityTools.mIntent(this, MoreActivity.class);
 			break;
 
 		}
@@ -209,8 +216,8 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onClick(View arg0) {
 				ContactsPage contactsPage = new ContactsPage();
-				contactsPage.setUsername(Conf.username);
-				contactsPage.show(getApplicationContext());
+//				contactsPage.setUsername(Conf.username);
+				contactsPage.show(FriendActivity.this);
 				dlg_add.dismiss();
 			}
 		});

@@ -1,0 +1,270 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <GridLayout
+        android:id="@+id/gridLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:columnCount="1" >
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_height="30dp"
+            android:layout_column="0"
+            android:layout_gravity="right|top"
+            android:layout_row="0"
+            android:background="@null"
+            android:text="确认付款"
+            android:textColor="#FF8800" />
+
+        <LinearLayout
+            android:layout_height="fill_parent"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_back" />
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:text="返回"
+                android:textColor="#FF8800" />
+        </LinearLayout>
+    </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/gridLayout1"
+        android:background="#FF8800"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:text="收货地址设置"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView2"
+        android:text="收货方式默认自提，临沂城区购物满39元可选择收货地址享受送货上门服务" />
+
+    <Button
+        android:id="@+id/btn_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="17dp"
+        android:background="@null"
+        android:text="收货地址" />
+
+    <include
+        android:id="@+id/inc_add"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btn_address"
+        layout="@layout/item_add" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/inc_add"
+        android:text="订单详情" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView3"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="总价：" />
+
+            <TextView
+                android:id="@+id/tv_zongjia"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥：00元" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="可抵扣金额：" />
+
+            <TextView
+                android:id="@+id/tv_dikou"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥：00元" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="30dp" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="使用金币数：" />
+
+            <EditText
+                android:id="@+id/et_dikou"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="phone" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="金币抵扣额：" />
+
+            <TextView
+                android:id="@+id/tv_dikoued"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥：00元" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="可使用金币数" />
+
+            <TextView
+                android:id="@+id/tv_coins"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="000000个" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="应付金额：" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="￥：00元" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

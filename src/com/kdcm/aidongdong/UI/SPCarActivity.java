@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +43,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	private String zongjia;
 	private TextView tv_dikou;
 	private String str_dikou;
-	private String ids="";
+	private String ids = "";
 	private TextView tv_null;
 
 	@Override
@@ -72,7 +73,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
-		tv_null=(TextView)findViewById(R.id.tv_null);
+		tv_null = (TextView) findViewById(R.id.tv_null);
 		tv_dikou = (TextView) findViewById(R.id.tv_dikou);
 		tv_total = (TextView) findViewById(R.id.tv_total);
 		btn_jiesuan = (Button) findViewById(R.id.btn_jiesuan);
@@ -100,11 +101,11 @@ public class SPCarActivity extends Activity implements OnClickListener {
 		str_result = HttpUtil.getResult(str_json);
 		if (str_result.equals("1")) {
 			data = JsonTools.getSPCar(str_json);
-
 			if (data.size() > 0) {
 				zongjia = (data.get(data.size() - 1).get("zongjia").toString());
+				
 				str_dikou = (data.get(data.size() - 1).get("dikou").toString());
-				ids=(data.get(data.size() - 1).get("ids").toString());
+				ids = (data.get(data.size() - 1).get("ids").toString());
 				Log.i("ids", ids);
 			}
 			Message msg = new Message();
@@ -117,7 +118,13 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_jiesuan:
-			HttpUtils.addOrder(res_order, ids);
+			Intent it = new Intent(getApplicationContext(),
+					BalanceActivity.class);
+			it.putExtra("zongjia", zongjia);
+			it.putExtra("str_dikou", str_dikou);
+			it.putExtra("ids", ids);
+			startActivity(it);
+			// HttpUtils.addOrder(res_order, ids);
 			break;
 
 		default:
@@ -129,34 +136,8 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	protected void onResume() {
 		data = null;
 		getData();
-		Message msg = new Message();
-		mHandler.sendMessage(msg);
 		super.onResume();
 	}
-	JsonHttpResponseHandler res_order = new JsonHttpResponseHandler() {
-		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				JSONObject response) {
-			super.onSuccess(statusCode, headers, response);
-			int result = 0;
-			try {
-				result = Integer.valueOf(response.getString("result"));
 
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (statusCode == 200 & result == 1) {
-				Toast.makeText(getApplicationContext(), "添加购物车成功",
-						Toast.LENGTH_SHORT).show();
-				SPCarActivity.this.finish();
-			} else {
-				Toast.makeText(getApplicationContext(), "请到检查库存是否充足",
-						Toast.LENGTH_SHORT).show();
-			}
-		}
-	};
+	
 }

@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,13 +35,16 @@ import com.baidu.frontia.api.FrontiaSocialShareListener;
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.UI.Money.DropBallActivity;
+import com.kdcm.aidongdong.tools.ActivityTools;
 import com.kdcm.aidongdong.tools.CloseActivityClass;
 import com.kdcm.aidongdong.tools.DataTools;
 import com.umeng.scrshot.UMScrShotController.OnScreenshotListener;
 import com.umeng.scrshot.adapter.UMAppAdapter;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 /**
@@ -51,7 +56,7 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 public class SportCheckActivity extends Activity implements SensorListener,
 		OnClickListener {
 	/**
-	 *消耗用的圆点
+	 * 消耗用的圆点
 	 */
 	private ImageView iv_consume;
 	private int end_time = 0;
@@ -144,6 +149,10 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	 * 好友模块
 	 */
 	private ImageView iv_contact;
+	/**
+	 * 更多
+	 */
+	private ImageView iv_more;
 	private int time_h = 0;
 	private int time_m = 0;
 	private ProgressDialog loadingPDialog = null;
@@ -217,7 +226,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 			it = new Intent(this, FriendActivity.class);
 			startActivity(it);
 			break;
-
+		case R.id.iv_more:
+			ActivityTools.mIntent(this, MoreActivity.class);
+			break;
 		}
 		tt_num.setText(String.valueOf(Conf.count));
 		if (msg.length() > 1) {
@@ -240,6 +251,10 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
+		wl.acquire();
+		wl.release();
 		CloseActivityClass.activityList.add(this);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -255,8 +270,10 @@ public class SportCheckActivity extends Activity implements SensorListener,
 				0.5f);
 		animation.setDuration(1000);
 		animation.setRepeatCount(Animation.INFINITE);
-		iv_consume=(ImageView)findViewById(R.id.iv_consume);
-//		iv_consume.startAnimation(animation);
+		iv_consume = (ImageView) findViewById(R.id.iv_consume);
+		iv_more=(ImageView)findViewById(R.id.iv_more);
+		iv_more.setOnClickListener(this);
+		// iv_consume.startAnimation(animation);
 		tv_coins = (TextView) findViewById(R.id.tv_coins);
 		tv_coins.setText(LoginActivity.coins);
 		mImageView = (ImageView) findViewById(R.id.scrshot_imgview);
@@ -299,8 +316,8 @@ public class SportCheckActivity extends Activity implements SensorListener,
 							count = Conf.count;
 
 							star_time = end_time;
-							tt_time.setText(time_h + "h" + time_m
-									+ "m" + int_time + "s");
+							tt_time.setText(time_h + "h" + time_m + "m"
+									+ int_time + "s");
 							int_time++;
 							if (int_time == 60) {
 								int_time = 0;
@@ -416,6 +433,10 @@ public class SportCheckActivity extends Activity implements SensorListener,
 				.getBitmap()));
 
 		String appID = "wxb63a8a59702e5ddb";
+		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(
+				SportCheckActivity.this, "1103374241", "ODe0qJKSqfWItJph");
+		qqSsoHandler.addToSocialSDK();
+
 		// 添加微信平台
 		UMWXHandler wxHandler = new UMWXHandler(SportCheckActivity.this, appID);
 		wxHandler.addToSocialSDK();
@@ -424,6 +445,8 @@ public class SportCheckActivity extends Activity implements SensorListener,
 				appID);
 		wxCircleHandler.setToCircle(true);
 		wxCircleHandler.addToSocialSDK();
+		mController.getConfig().removePlatform(SHARE_MEDIA.TENCENT);
+		mController.getConfig().removePlatform(SHARE_MEDIA.QZONE);
 		mController.openShare(SportCheckActivity.this, false);
 	}
 
@@ -457,10 +480,11 @@ public class SportCheckActivity extends Activity implements SensorListener,
 								@Override
 								public void onClick(DialogInterface arg0,
 										int arg1) {
-									CloseActivityClass.exitClient(SportCheckActivity.this);
-									//再杀
+									CloseActivityClass
+											.exitClient(SportCheckActivity.this);
+									// 再杀
 									SportCheckActivity.this.finish();
-									//杀杀杀
+									// 杀杀杀
 									System.exit(0);
 								}
 							}).setPositiveButton("否", null).show();
@@ -472,7 +496,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 
 	@Override
 	protected void onResume() {
-		String coins=DataTools.readData(this, "coins");
+		String coins = DataTools.readData(this, "coins");
 		tv_coins.setText(coins);
 		Log.i("coins", LoginActivity.coins);
 		String str_time = DataTools.readData(this, "time_sport");

@@ -6,24 +6,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_weight="1" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+             android:layout_weight="1"
             android:text="订单编号: " />
 
         <TextView
             android:id="@+id/tv_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+             android:layout_weight="3"
             android:text="2014111116103800000011856689" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 金额: " />
+             android:layout_weight="2"
+            android:text="金额: " />
 
         <TextView
             android:id="@+id/tv_money"

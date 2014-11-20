@@ -94,6 +94,7 @@ public class SPCarAdapter extends BaseAdapter {
 				context.startActivity(it);
 
 				break;
+				
 			case R.id.btn_minus:
 				int num = Integer.parseInt(list.get(position).get("number")
 						.toString());
