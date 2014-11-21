@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,10 @@ public class SPCarActivity extends Activity implements OnClickListener {
 	private String str_dikou;
 	private String ids = "";
 	private TextView tv_null;
+	/**
+	 * 如果为空 隐藏
+	 */
+	private LinearLayout ll_null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 			public void handleMessage(Message msg) {
 				if (msg != null) {
 					ShowData();
-					tv_null.setVisibility(View.GONE);
+					
 				}
 			}
 		};
@@ -67,12 +72,18 @@ public class SPCarActivity extends Activity implements OnClickListener {
 
 	protected void ShowData() {
 		tv_total.setText("金额：" + zongjia);
+		if(zongjia!=null){
+			tv_null.setVisibility(View.GONE);	
+		}else{
+			ll_null.setVisibility(View.GONE);
+		}
 		tv_dikou.setText(str_dikou);
 		adapter = new SPCarAdapter(this, data);
 		lv_spcar.setAdapter(adapter);
 	}
 
 	private void init() {
+		ll_null=(LinearLayout)findViewById(R.id.ll_null);
 		tv_null = (TextView) findViewById(R.id.tv_null);
 		tv_dikou = (TextView) findViewById(R.id.tv_dikou);
 		tv_total = (TextView) findViewById(R.id.tv_total);
@@ -124,6 +135,7 @@ public class SPCarActivity extends Activity implements OnClickListener {
 			it.putExtra("str_dikou", str_dikou);
 			it.putExtra("ids", ids);
 			startActivity(it);
+			this.finish();
 			// HttpUtils.addOrder(res_order, ids);
 			break;
 

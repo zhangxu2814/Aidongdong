@@ -270,6 +270,5 @@ public class JsonTools {
 			e.printStackTrace();
 		}
 		return data;
-
 	}
 }

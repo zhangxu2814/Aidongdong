@@ -69,15 +69,20 @@ public class MyAdapter extends BaseAdapter {
 		TextView tv_duration = (TextView) convertView
 				.findViewById(R.id.tv_duration);
 		TextView tv_coins = (TextView) convertView.findViewById(R.id.tv_coins);
+		TextView tv_day=(TextView)convertView.findViewById(R.id.tv_day);
 		Button btn_del = (Button) convertView.findViewById(R.id.btn_del);
 		btn_give = (Button) convertView.findViewById(R.id.btn_give);
 		btn_give.setVisibility(isGone);
+		TextView tv_num=(TextView)convertView.findViewById(R.id.tv_num);
+		tv_num.setText(position+1+"");
 		
 		tv_nickname.setText(list.get(position).get("nickname").toString());
 		String duration = list.get(position).get("duration").toString();
 		if (!duration.equals("null")) {
+			tv_day.setText(list.get(position).get("month_move_days").toString());
 			tv_coins.setText(list.get(position).get("coins").toString());
-			tv_duration.setText(duration);
+			int time=Integer.valueOf(duration);
+			tv_duration.setText("运动时间："+time/60+"h"+time%60+"s");
 		} else {
 			tv_duration.setVisibility(View.INVISIBLE);
 		}

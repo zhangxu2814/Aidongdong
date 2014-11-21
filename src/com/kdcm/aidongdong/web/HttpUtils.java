@@ -1,6 +1,7 @@
 package com.kdcm.aidongdong.web;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
@@ -48,9 +49,10 @@ public class HttpUtils {
 	 * @param ids
 	 */
 	public static void addOrder(AsyncHttpResponseHandler res, String ids,
-			int coins) {
+			int coins, String receiver_id, String shiping_method) {
 		String url = base_url + "m=user&a=addOrder&shopping_ids=" + ids
-				+ "&coins=" + coins;
+				+ "&receiver_id=" + receiver_id + "&shiping_method="
+				+ shiping_method + "&coins=" + coins;
 		client.post(url, res);
 	}
 
@@ -96,9 +98,82 @@ public class HttpUtils {
 				+ id + "&desc=" + desc;
 		client.post(url, res);
 	}
-	public static void searchUser(AsyncHttpResponseHandler res,String uID){
-		String url=base_url+"m=user&a=search&id="+uID;
+
+	/**
+	 * 查找用户
+	 * 
+	 * @param res
+	 * @param uID
+	 */
+	public static void searchUser(AsyncHttpResponseHandler res, String uID) {
+		String url = base_url + "m=user&a=search&id=" + uID;
 		client.post(url, res);
-		
+	}
+
+	/**
+	 * 查询用户收货地址
+	 * 
+	 * @param res
+	 */
+	public static void getReceivers(AsyncHttpResponseHandler res) {
+
+		String url = base_url + "m=user&a=getReceivers";
+		client.post(url, res);
+	}
+
+	/**
+	 * 删除收货地址
+	 * 
+	 * @param res
+	 * @param id
+	 */
+	public static void delReceiver(AsyncHttpResponseHandler res, String id) {
+		String url = base_url + "m=user&a=delReceiver&receiver_id=" + id;
+		client.post(url, res);
+	}
+
+	/**
+	 * 添加收货地址
+	 * 
+	 * @param res
+	 * @param phone
+	 * @param receiver
+	 * @param address
+	 */
+	public static void addReceiver(AsyncHttpResponseHandler res, String phone,
+			String receiver, String address) {
+
+		String url = base_url + "m=user&a=addReceiver" + "&phone=" + phone
+				+ "&reciver=" + receiver + "&address=" + address;
+		client.post(url, res);
+	}
+	/**
+	 * 测试
+	 * @param res
+	 */
+	public static void test(AsyncHttpResponseHandler res){
+		String url="http://www.haoapp123.com/app/localuser/aidongdong/api.php?m=user&a=addOrder&shopping_ids=30";
+		client.post(url, res);
+	}
+	/**
+	 * 获取订单详情
+	 * @param res
+	 * @param id
+	 */
+	public static void getOrders(AsyncHttpResponseHandler res,String id){
+		String url = base_url+"m=user&a=getOrders&order_id="+id;
+		client.post(url, res);
+	}
+	/**
+	 * 查询运动天数
+	 * @param res
+	 */
+	public static void getMonthMoveDays(AsyncHttpResponseHandler res,int day){
+		String startTime;
+		Calendar calendar = Calendar.getInstance(); // 得到日历
+		calendar.add(Calendar.DAY_OF_MONTH, -day);
+		startTime = (new SimpleDateFormat("yyyy-MM-dd")).format(calendar.getTime());
+		String url = base_url+"m=user&a=getMonthMoveDays&start_time="+startTime;
+		client.post(url, res);
 	}
 }

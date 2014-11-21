@@ -1,6 +1,7 @@
 package com.kdcm.aidongdong.UI;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
+import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.web.HttpUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -46,16 +48,24 @@ public class BalanceActivity extends Activity implements OnClickListener {
 	 * 金币数量
 	 */
 	private double coins = 0;
+	private Button btn_address;
+	private TextView tv_name, tv_phone, tv_add, tv_coins;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance);
 		init();
 	}
 
 	private void init() {
+		tv_coins = (TextView) findViewById(R.id.tv_coins);
+		tv_coins.setText(DataTools.readData(this, "coins")+"个");
+		tv_name = (TextView) findViewById(R.id.tv_name);
+		tv_phone = (TextView) findViewById(R.id.tv_phone);
+		tv_add = (TextView) findViewById(R.id.tv_add);
+		btn_address = (Button) findViewById(R.id.btn_address);
+		btn_address.setOnClickListener(this);
 		btn_submit = (Button) findViewById(R.id.btn_submit);
 		btn_submit.setOnClickListener(this);
 		tv_money = (TextView) findViewById(R.id.tv_money);
@@ -109,7 +119,6 @@ public class BalanceActivity extends Activity implements OnClickListener {
 		dikou = Double.valueOf(it.getStringExtra("str_dikou").toString())
 				.doubleValue();
 		et_dikou.setText(String.format("%.0f", dikou * 100));
-		Log.i("zongjia", zongjia + "下一个" + dikou + "'" + LoginActivity.coins);
 		d_money = Double.valueOf(zongjia.toString()) - Double.valueOf(dikou);
 		tv_money.setText("￥：" + String.format("%.2f", d_money));
 		Log.i("d_money", d_money + "");
@@ -126,11 +135,32 @@ public class BalanceActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btn_submit:
 			if (!isSuccess) {
-				HttpUtils.addOrder(res_order, ids, (int) coins);
+				if (Double.valueOf(zongjia.toString()) > 39) {
+					String receiver_id = DataTools
+							.readData(this, "receiver_id");
+					String shiping_method = DataTools.readData(this,
+							"shiping_method");
+					HttpUtils.addOrder(res_order, ids, (int) coins,
+							receiver_id, shiping_method);
+				} else {
+					HttpUtils.addOrder(res_order, ids, (int) coins, null, null);
+				}
+
 			} else {
 				Toast.makeText(this, "已经成功添加到订单了，请到未付款订单查看", Toast.LENGTH_SHORT)
 						.show();
 			}
+			break;
+		case R.id.btn_address:
+			if (Double.valueOf(zongjia.toString()) > 39) {
+				it = new Intent(this, MyAddressActivity.class);
+				it.putExtra("come", "balance");
+				startActivity(it);
+			} else {
+				Toast.makeText(this, "购买数额没有超过39元，无法选择收货地址", Toast.LENGTH_SHORT)
+						.show();
+			}
+			break;
 		default:
 			break;
 		}
@@ -155,9 +185,20 @@ public class BalanceActivity extends Activity implements OnClickListener {
 			if (statusCode == 200 & result == 1) {
 				Toast.makeText(getApplicationContext(), "添加购物车成功",
 						Toast.LENGTH_SHORT).show();
+				isSuccess = true;
+				savaData();
+				Log.i("response", response + "");
+
 				try {
-					String id = response.getString("id");
+					String id = "";
+					String data = response.getString("data");
+					id = new JSONObject(data).getString("id");
+					Log.i("mid", id + data);
 					toAboutOrder(id);
+
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -170,8 +211,33 @@ public class BalanceActivity extends Activity implements OnClickListener {
 	};
 
 	protected void toAboutOrder(String id) {
-		it = new Intent(getApplicationContext(), AboutOrderActivity.class);
+		it = new Intent(BalanceActivity.this, AboutOrderActivity.class);
 		it.putExtra("id", id);
 		startActivity(it);
+	}
+
+	protected void savaData() {
+		DataTools.saveDaTa(this, "receiver_id", null);
+		DataTools.saveDaTa(this, "shiping_method", null);
+		DataTools.saveDaTa(this, "ads_name", null);
+		DataTools.saveDaTa(this, "ads_phone", null);
+		DataTools.saveDaTa(this, "ads_ads", null);
+	}
+
+	@Override
+	protected void onResume() {
+		String phone = DataTools.readData(this, "ads_phone");
+		String name = DataTools.readData(this, "ads_name");
+		String ads_ads = DataTools.readData(this, "ads_ads");
+		if (phone != null) {
+			Log.i("phone", phone);
+			tv_phone.setText(phone);
+			tv_name.setText(name);
+			tv_add.setText(ads_ads);
+			inc_add.setVisibility(View.VISIBLE);
+		} else {
+			inc_add.setVisibility(View.INVISIBLE);
+		}
+		super.onResume();
 	}
 }

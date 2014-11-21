@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <GridLayout
+        android:id="@+id/gridLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:columnCount="1" >
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_height="fill_parent"
+            android:layout_column="0"
+            android:layout_gravity="right|top"
+            android:layout_row="0"
+            android:background="@null"
+            android:text="完成"
+            android:textColor="#FF8800" />
+
+        <LinearLayout
+            android:layout_height="fill_parent"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:src="@drawable/icon_back" />
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:text="返回"
+                android:textColor="#FF8800" />
+        </LinearLayout>
+    </GridLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="vertical" >
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:columnCount="1" >
+
+                <TextView
+                    android:layout_height="fill_parent"
+                    android:layout_column="0"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_row="0"
+                    android:gravity="center"
+                    android:text="收货人" />
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_column="0"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:ems="6" >
+
+                    <requestFocus />
+                </EditText>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:columnCount="1" >
+
+                <TextView
+                    android:layout_height="fill_parent"
+                    android:layout_column="0"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_row="0"
+                    android:gravity="center"
+                    android:text="手机号" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_column="0"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0"
+                    android:ems="11" >
+
+                    <requestFocus />
+                </EditText>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:columnCount="1" >
+
+                <TextView
+                    android:layout_height="fill_parent"
+                    android:layout_column="0"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_row="0"
+                    android:gravity="center"
+                    android:text="收货地址" />
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:columnCount="1" >
+
+                <TextView
+                    android:layout_height="fill_parent"
+                    android:layout_column="0"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_row="0"
+                    android:gravity="center"
+                    android:text="山东省临沂市" />
+
+                <Spinner
+                    android:id="@+id/sp_address"
+                    android:layout_column="0"
+                    android:layout_gravity="right|top"
+                    android:layout_row="0" >
+                </Spinner>
+            </GridLayout>
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ems="10" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -191,6 +191,7 @@ public class My_Orders extends Activity {
 						Toast.LENGTH_SHORT).show();
 				data = null;
 				getData();
+				loadingPDialog.dismiss();
 			} else {
 				Toast.makeText(getApplicationContext(), "扣费失败，请检查您的余额",
 						Toast.LENGTH_SHORT).show();

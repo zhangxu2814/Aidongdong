@@ -25,8 +25,8 @@ public class HomeColumnar extends View {
 
 	private List<Score> score;
 	private float tb;
-	private float interval_left_right;
-	private Paint paint_date, paint_rectf_gray, paint_rectf_blue;
+	private float interval_left_right;// 左右间距
+	private Paint paint_date, paint_rectf_gray, paint_rectf_blue, paint_num;
 
 	private int fineLineColor = 0x5faaaaaa; // 灰色
 	private int blueLineColor = 0xff00ffff; // 蓝色
@@ -42,13 +42,19 @@ public class HomeColumnar extends View {
 		this.score = score;
 		Resources res = getResources();
 		tb = res.getDimension(R.dimen.historyscore_tb);
-		interval_left_right = tb * 5.0f;
-		
+		interval_left_right = tb * 6.0f;
+
 		paint_date = new Paint();
 		paint_date.setStrokeWidth(tb * 0.1f);
 		paint_date.setTextSize(tb * 1.2f);
 		paint_date.setColor(fineLineColor);
 		paint_date.setTextAlign(Align.CENTER);
+
+		paint_num = new Paint();
+		paint_num.setStrokeWidth(tb * 0.1f);
+		paint_num.setTextSize(tb * 1.2f);
+		// paint_num.setColor(fineLineColor);
+		paint_num.setTextAlign(Align.CENTER);
 
 		paint_rectf_gray = new Paint();
 		paint_rectf_gray.setStrokeWidth(tb * 0.1f);
@@ -72,6 +78,7 @@ public class HomeColumnar extends View {
 			return;
 		drawDate(c);
 		drawRectf(c);
+		drawNum(c);
 	}
 
 	/**
@@ -83,19 +90,18 @@ public class HomeColumnar extends View {
 		for (int i = 0; i < score.size(); i++) {
 
 			RectF f = new RectF();
-			f.set(tb * 0.2f + interval_left_right * i,
-					getHeight() - tb * 21.0f, tb * 3.2f + interval_left_right
+			f.set(tb * 0.3f + interval_left_right * i,
+					getHeight() - tb * 30.0f, tb * 3.2f + interval_left_right
 							* i, getHeight() - tb * 2.0f);
-			Log.i("Main",getHeight()+"" );
-			c.drawRoundRect(f, tb * 0.3f, tb * 0.3f, paint_rectf_gray);
-			
+			Log.i("Main", getHeight() + "");
+			c.drawRoundRect(f, tb * 0.5f, tb * 0.5f, paint_rectf_gray);
 
 			float base = score.get(i).score * (tb * 10.0f / 100);
 			RectF f1 = new RectF();
 			f1.set(tb * 0.2f + interval_left_right * i, getHeight()
 					- (base + tb * 1.5f), tb * 3.2f + interval_left_right * i,
 					getHeight() - tb * 1.5f);
-			c.drawRoundRect(f1, tb * 0.3f, tb * 0.3f, paint_rectf_blue);
+			c.drawRoundRect(f1, tb * 0.5f, tb * 0.5f, paint_rectf_blue);
 		}
 	}
 
@@ -113,5 +119,16 @@ public class HomeColumnar extends View {
 					getHeight(), paint_date);
 
 		}
+	}
+
+	public void drawNum(Canvas c) {
+		for (int i = 0; i < score.size(); i++) {
+			String date = score.get(i).score / 60 + "m" + score.get(i).score
+					% 60 + "s";
+			c.drawText(date, tb * 1.7f + interval_left_right * i, 100f,
+					paint_num);
+
+		}
+
 	}
 }

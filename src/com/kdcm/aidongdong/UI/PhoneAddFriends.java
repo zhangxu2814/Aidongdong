@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
@@ -30,17 +31,21 @@ public class PhoneAddFriends extends BaseActivity {
 
 	private void init() {
 		et_phone = (EditText) findViewById(R.id.et_phone);
-		phone = et_phone.getText().toString();
+
 		URL_addFri = Conf.APP_URL + "addFriend&friend_phone=" + phone;
 		btn_ok = (Button) findViewById(R.id.btn_ok);
 		btn_ok.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				if(phone.length()>3){
+				phone = et_phone.getText().toString();
+				if (phone.length() > 3) {
+					Toast.makeText(getApplicationContext(), "请求已发送！", Toast.LENGTH_SHORT)
+					.show();
 					toDo();
-				}else{
-					System.exit(0);
+				} else {
+					Toast.makeText(getApplicationContext(), "请检查号码输入是否正确",
+							Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -56,11 +61,12 @@ public class PhoneAddFriends extends BaseActivity {
 				saveData();
 
 			}
-		}).start();		
+		}).start();
 	}
 
 	protected void saveData() {
-		HttpUtil.getJsonContent(this,URL_addFri);		
+		HttpUtil.getJsonContent(this, URL_addFri);
+		
 	}
 
 }

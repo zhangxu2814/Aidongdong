@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kdcm.aidongdong.R;
+import com.kdcm.aidongdong.TestAvtivity;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.alipay.Fiap;
@@ -36,6 +37,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public String json;
 	public static String coins = "1";
 	private String login_name = "login_name=";
+	private String password;
 	Person person;
 	String TAG = "LoginActivity";
 	/**
@@ -82,6 +84,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private String jsonstring;
 	private Intent mIntent;
 	private int NET_ERROR = 404;
+	private String balance;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -182,10 +185,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				String data = response.getString("data");
 				JSONObject jsonObj = new JSONObject(data);
 				coins = jsonObj.get("coins").toString();
-				sava();
+				balance = jsonObj.get("balance").toString();
 				login_name += jsonObj.get("username").toString();
+				password = jsonObj.getString("password");
 				Log.i("login_name", login_name);
-
+				sava();
 			} catch (JSONException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -206,8 +210,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Toast.makeText(getApplicationContext(), "登陆成功",
 						Toast.LENGTH_SHORT).show();
 				loadingPDialog.dismiss();
-				Intent intent = new Intent(LoginActivity.this,
-						SportCheckActivity.class);
+				 Intent intent = new Intent(LoginActivity.this,
+				 SportCheckActivity.class);
 				startActivity(intent);
 				LoginActivity.this.finish();
 
@@ -250,6 +254,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	protected void data() {
+		DataTools.saveDaTa(this, "balance", balance);
+		DataTools.saveDaTa(this, "password", password);
 		DataTools.saveDaTa(this, "login_message", json);
 		DataTools.saveDaTa(this, "username", login_name);
 	}

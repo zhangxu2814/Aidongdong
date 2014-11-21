@@ -1,8 +1,177 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-</LinearLayout>
+    <GridLayout
+        android:id="@+id/gridLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:columnCount="1" >
+
+        <LinearLayout
+            android:layout_height="fill_parent"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_back" />
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:text="返回"
+                android:textColor="#FF8800" />
+        </LinearLayout>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/gridLayout1"
+        android:text="订单信息" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:orientation="vertical" >
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="总价" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="￥测试数据" />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="抵扣额" />
+
+            <TextView
+                android:id="@+id/tv_deduction"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="￥10.00" />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:columnCount="1" >
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="left|center_vertical"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="应付款" />
+
+            <TextView
+                android:id="@+id/tv_cash"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:layout_row="0"
+                android:gravity="center"
+                android:text="￥40.00" />
+        </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择支付方式" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_money"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账户余额支付" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="1" >
+
+                <TextView
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_row="1"
+                    android:text="账户余额" />
+
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_row="1"
+                    android:text="￥：100.00" />
+            </GridLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_alipay"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="支付宝快捷支付" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

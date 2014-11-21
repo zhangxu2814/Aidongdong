@@ -148,7 +148,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0" />
+                        android:text="0歩" />
                 </LinearLayout>
 
                 <TextView
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="0cal" />
+                        android:text="0千卡" />
                 </LinearLayout>
 
                 <TextView
@@ -203,14 +203,6 @@
                         android:text="0天" />
                 </LinearLayout>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_consume"
-                android:layout_width="450dp"
-                android:layout_height="180dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@null" />
 
             <TextView
                 android:id="@+id/tv_time"

@@ -101,6 +101,10 @@ public class MyActivity extends Activity implements OnClickListener {
 	 * user id
 	 */
 	private String uID;
+	/**
+	 * 地址管理
+	 */
+	private GridLayout gl_address;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,6 +114,8 @@ public class MyActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		gl_address=(GridLayout)findViewById(R.id.gl_address);
+		gl_address.setOnClickListener(this);
 		gl_aboutuser=(GridLayout)findViewById(R.id.gl_aboutuser);
 		gl_aboutuser.setOnClickListener(this);
 		iv_more=(ImageView)findViewById(R.id.iv_more);
@@ -179,6 +185,9 @@ public class MyActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.gl_address:
+			ActivityTools.mIntent(this, MyAddressActivity.class);
+			break;
 		case R.id.tv_community:
 			it = new Intent(this, GivedCoinsActivity.class);
 			startActivity(it);

@@ -3,6 +3,10 @@ package com.kdcm.aidongdong.UI;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,6 +19,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,6 +43,8 @@ import com.kdcm.aidongdong.UI.Money.DropBallActivity;
 import com.kdcm.aidongdong.tools.ActivityTools;
 import com.kdcm.aidongdong.tools.CloseActivityClass;
 import com.kdcm.aidongdong.tools.DataTools;
+import com.kdcm.aidongdong.web.HttpUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.umeng.scrshot.UMScrShotController.OnScreenshotListener;
 import com.umeng.scrshot.adapter.UMAppAdapter;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -63,11 +70,6 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	private int star_time = 0;
 	private ImageView mImageView = null;
 	private TextView tv_coins;
-	/**
-	 * 消耗按钮
-	 */
-	private Button btn_consume;
-
 	/**
 	 * 重置按钮
 	 */
@@ -153,12 +155,13 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	 * 更多
 	 */
 	private ImageView iv_more;
-	private int time_h = 0;
 	private int time_m = 0;
 	private ProgressDialog loadingPDialog = null;
 	private Handler mHandler;
 	String isMoney = "null";
 	private LinearLayout ll_ad;
+	private TextView tv_day;
+	private int total_count=0;
 
 	@Override
 	public void onClick(View v) {
@@ -168,7 +171,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 			it = new Intent(this, AD_Activity.class);
 			startActivity(it);
 			break;
-		case R.id.btn_consume:
+		case R.id.iv_consume:
 			int_consume = Conf.count * 5 <= 280 ? Conf.count * 5 : 280;
 			if (int_consume != 0) {
 				task_consume = new TimerTask() {
@@ -184,8 +187,6 @@ public class SportCheckActivity extends Activity implements SensorListener,
 								if (int_consume <= 0) {
 									task_consume.cancel();
 									Conf.count = 0;
-									btn_consume
-											.setOnClickListener(SportCheckActivity.this);
 								}
 							}
 
@@ -216,6 +217,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 			break;
 		case R.id.iv_chart:
 			it = new Intent(this, StatisticsActivity.class);
+			it.putExtra("total_count", total_count+"");
 			startActivity(it);
 			break;
 		case R.id.iv_user:
@@ -230,7 +232,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 			ActivityTools.mIntent(this, MoreActivity.class);
 			break;
 		}
-		tt_num.setText(String.valueOf(Conf.count));
+		tt_num.setText(String.valueOf(Conf.count) + "歩");
 		if (msg.length() > 1) {
 			Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 		}
@@ -252,7 +254,8 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
+		PowerManager.WakeLock wl = pm.newWakeLock(
+				PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
 		wl.acquire();
 		wl.release();
 		CloseActivityClass.activityList.add(this);
@@ -265,13 +268,16 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	private void init() {
+		tv_day=(TextView)findViewById(R.id.tv_day);
+		HttpUtils.getMonthMoveDays(res_getMMD, 31);
 		RotateAnimation animation = new RotateAnimation(0, 360,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
 		animation.setDuration(1000);
 		animation.setRepeatCount(Animation.INFINITE);
 		iv_consume = (ImageView) findViewById(R.id.iv_consume);
-		iv_more=(ImageView)findViewById(R.id.iv_more);
+		iv_consume.setOnClickListener(this);
+		iv_more = (ImageView) findViewById(R.id.iv_more);
 		iv_more.setOnClickListener(this);
 		// iv_consume.startAnimation(animation);
 		tv_coins = (TextView) findViewById(R.id.tv_coins);
@@ -288,8 +294,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		iv_share = (ImageView) findViewById(R.id.iv_share);
 		iv_share.setOnClickListener(this);
 		tt_time = (TextView) findViewById(R.id.tv_time);
-		btn_consume = (Button) findViewById(R.id.btn_consume);
-		btn_consume.setOnClickListener(this);
+
 		iv_contact = (ImageView) findViewById(R.id.iv_contact);
 		iv_contact.setOnClickListener(this);
 		btn_Reset = (Button) findViewById(R.id.btnReset);
@@ -316,20 +321,12 @@ public class SportCheckActivity extends Activity implements SensorListener,
 							count = Conf.count;
 
 							star_time = end_time;
-							tt_time.setText(time_h + "h" + time_m + "m"
-									+ int_time + "s");
 							int_time++;
-							if (int_time == 60) {
-								int_time = 0;
+							if (int_time % 60 == 0) {
 								time_m++;
-								{
-									if (time_m == 60) {
-										time_m = 0;
-										time_h++;
-									}
-								}
 							}
 						} else {
+							tt_time.setText(time_m + "m" + int_time % 60 + "s");
 							end_time++;
 						}
 					}
@@ -399,7 +396,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 
 	public void updateData() {
 		tt_num = (TextView) findViewById(R.id.tt_num);
-		tt_num.setText(String.valueOf(Conf.count));
+		tt_num.setText(String.valueOf(Conf.count) + "歩");
 		arcProgressbar.setProgress(Conf.count * 5);
 		int_consume = Conf.count * 5;
 	}
@@ -497,15 +494,15 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	@Override
 	protected void onResume() {
 		String coins = DataTools.readData(this, "coins");
+		tt_num.setText(Conf.count + "歩");
 		tv_coins.setText(coins);
-		Log.i("coins", LoginActivity.coins);
 		String str_time = DataTools.readData(this, "time_sport");
 		if (str_time != null) {
 			tt_time.setText(str_time);
 			int_time = Integer.valueOf(str_time);
+			tt_time.setText((int) (int_time / 60) + "m" + int_time % 60 + "s");
 
 		}
-		Log.i("mType", "返回" + str_time);
 		DataTools.readData(this, "time_sport");
 		super.onResume();
 
@@ -513,7 +510,6 @@ public class SportCheckActivity extends Activity implements SensorListener,
 
 	@Override
 	protected void onPause() {
-		Log.i("mType", "暂停");
 		DataTools.saveDaTa(this, "time_sport", int_time + "");
 		super.onPause();
 	}
@@ -524,6 +520,33 @@ public class SportCheckActivity extends Activity implements SensorListener,
 		public void onComplete(Bitmap bmp) {
 			if (bmp != null && mImageView != null) {
 				mImageView.setImageBitmap(bmp);
+			}
+		}
+	};
+	JsonHttpResponseHandler res_getMMD = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+				total_count=Integer.valueOf(response.getString("total_count"));
+				tv_day.setText(total_count+"天");
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				Toast.makeText(getApplicationContext(), "添加购物车成功",
+						Toast.LENGTH_SHORT).show();
+				
+			} else {
+				Toast.makeText(getApplicationContext(), "请到检查库存是否充足",
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
