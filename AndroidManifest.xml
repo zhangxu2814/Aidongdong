@@ -331,6 +331,15 @@
         <!-- 众筹列表，给我钱 -->
         <activity android:name="com.kdcm.aidongdong.UI.GiveMoneyAvtivity" >
         </activity>
+        <!-- 众筹 -->
+        <activity android:name="com.kdcm.aidongdong.UI.CoinsTabActivity" >
+        </activity>
+        <!-- 赠送列表 -->
+        <activity android:name="com.kdcm.aidongdong.UI.GivedCoinActivity" >
+        </activity>
+        <!-- 接收到的金币列表 -->
+        <activity android:name="com.kdcm.aidongdong.UI.getRecievedCoinsActivity" >
+        </activity>
     </application>
 
 </manifest>

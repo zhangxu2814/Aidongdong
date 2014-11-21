@@ -250,7 +250,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 		AsyncHttpClient request = HttpUtils.getClient();
 		PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
 		request.setCookieStore(myCookieStore);
-		HttpUtils.getFriends(res_friends);
+		HttpUtils.getFriendDurations(res_friends);
 		super.onResume();
 	}
 
@@ -319,7 +319,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 				Toast.makeText(getApplicationContext(), "删除好友成功",
 						Toast.LENGTH_SHORT).show();
 				data=null;
-				HttpUtils.getFriends(res_friends);
+				HttpUtils.getFriendDurations(res_friends);
 			} else {
 				Toast.makeText(getApplicationContext(), "失败+result",
 						Toast.LENGTH_SHORT).show();

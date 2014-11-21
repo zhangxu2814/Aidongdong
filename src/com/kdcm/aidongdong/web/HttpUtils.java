@@ -83,7 +83,7 @@ public class HttpUtils {
 	 * @param res
 	 */
 	@SuppressLint("SimpleDateFormat")
-	public static void getFriends(AsyncHttpResponseHandler res) {
+	public static void getFriendDurations(AsyncHttpResponseHandler res) {
 		String startTime;
 		Date time = new Date();
 		startTime = (new SimpleDateFormat("yyyy-MM-dd")).format(time);
@@ -243,5 +243,38 @@ public class HttpUtils {
 		}
 		client.post(url, res);
 		Log.i("url", url);
+	}
+
+	/**
+	 * 获取好友资料
+	 * 
+	 * @param res
+	 */
+	public static void getFriends(AsyncHttpResponseHandler res) {
+		String url = base_url + "m=user&a=getFriends";
+		client.post(url, res);
+	}
+
+	/**
+	 * 赠送金币接口
+	 * 
+	 * @param res
+	 * @param id
+	 * @param coins
+	 */
+	public static void giveCoins(AsyncHttpResponseHandler res, String id,
+			String coins) {
+		String url = base_url + "m=user&a=giveCoins&friend_id=" + id
+				+ "&coins=" + coins;
+		client.post(url, res);
+	}
+
+	/**
+	 * 查询送出的金币
+	 * @param res
+	 */
+	public static void getGivedCoins(AsyncHttpResponseHandler res) {
+		String url = base_url + "m=user&a=getGivedCoins";
+		client.post(url, res);
 	}
 }

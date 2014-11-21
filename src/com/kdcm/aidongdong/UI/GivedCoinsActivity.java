@@ -1,5 +1,6 @@
 package com.kdcm.aidongdong.UI;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +33,11 @@ public class GivedCoinsActivity extends Activity {
 	GivedCoinsAdapter mAdapter_zengsong, mAdapter_jieshou;
 	private ViewFlow viewFlow;
 	private ListView lv_zengsong, lv_jieshou;
-	private List<Map<String, Object>> data = null;
-	private List<Map<String, Object>> data_zengsong = null,
-			data_jieshou;
+	private List<Map<String, Object>> data_zengsong = new ArrayList<Map<String, Object>>(),
+			data_jieshou = new ArrayList<Map<String, Object>>();;
 	private String URL_Givedcoins;
 	private String jsonstring;
+	JSONArray array_zongsog = null;
 	/**
 	 * 子线程负责联网
 	 */
@@ -45,10 +46,10 @@ public class GivedCoinsActivity extends Activity {
 
 		public void handleMessage(Message msg) {
 			if (msg.what == 0x123) {
-
-				// 使用adapter显示服务器响应
 				mAdapter_jieshou.notifyDataSetChanged();
-
+				
+			}if(msg.what==0x321){
+				mAdapter_zengsong.notifyDataSetChanged();
 			}
 		}
 	};
@@ -58,45 +59,6 @@ public class GivedCoinsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_givedcoins);
 		init();
-		showData();
-	}
-
-	private void showData() {
-		if (data == null) {
-
-			try {
-				getData();
-				Thread.sleep(100);
-				showData();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			mAdapter_zengsong = new GivedCoinsAdapter(this, data);
-			lv_zengsong.setAdapter(mAdapter_zengsong);
-			lv_jieshou.setAdapter(mAdapter_zengsong);
-
-		}
-	}
-
-	private void getData() {
-		mThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				saveData();
-			}
-		});
-
-		mThread.start();
-	}
-
-	protected void saveData() {
-		jsonstring = HttpUtil.getJsonContent(this, URL_Givedcoins);
-		data = JsonTools.getGivedcoins(jsonstring);
-		Log.i("kdcm", data + "");
-
 	}
 
 	private void init() {
@@ -108,7 +70,11 @@ public class GivedCoinsActivity extends Activity {
 		viewFlow.setFlowIndicator(indicator);
 		lv_zengsong = (ListView) findViewById(R.id.lv_zengsong);
 		lv_jieshou = (ListView) findViewById(R.id.lv_jieshou);
-		URL_Givedcoins = Conf.APP_URL + "getGivedCoins";
+		mAdapter_jieshou = new GivedCoinsAdapter(this, data_jieshou);
+		mAdapter_zengsong = new GivedCoinsAdapter(this, data_zengsong);
+		lv_zengsong.setAdapter(mAdapter_zengsong);
+		lv_jieshou.setAdapter(mAdapter_jieshou);
+		HttpUtils.getGivedCoins(res_give);
 		HttpUtils.getReceivedCoins(res_rec);
 	}
 
@@ -130,21 +96,74 @@ public class GivedCoinsActivity extends Activity {
 			}
 			if (statusCode == 200 & result == 1) {
 				JSONArray array = null;
+				Toast.makeText(getApplicationContext(), "接受成功，正在解析", Toast.LENGTH_SHORT).show();
+				Log.i("response", response + "");
+				try {
+					array_zongsog=response.getJSONArray("list");
+					toZengsong(array_zongsog);
+//					array = response.getJSONArray("list");
+//					for (int i = array.length() - 1; i >= 0; i--) {
+//						// for (int i = 0; i < array.length(); i++) {
+//						Map<String, Object> listItem = new HashMap<String, Object>();
+//						listItem.put("nickname", array.getJSONObject(i)
+//								.getString("nickname").toString());
+//						listItem.put("paid_time", array.getJSONObject(i)
+//								.getString("paid_time").toString());
+//						listItem.put("coins_paid", array.getJSONObject(i)
+//								.getString("coins_paid").toString());
+//						data_jieshou.add(listItem);
+//					}
+//					Message msg = new Message();
+//					msg.what = 0x321;
+//
+//					handler.sendMessage(msg);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else {
+				Toast.makeText(getApplicationContext(), "扣费失败，请检查您的余额",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
+	JsonHttpResponseHandler res_give = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				JSONArray array = null;
+				Log.i("response", response + "");
 				try {
 					array = response.getJSONArray("list");
-					for (int i = 0; i < array.length(); i++) {
+					for (int i = array.length() - 1; i >= 0; i--) {
+						// for (int i = 0; i < array.length(); i++) {
 						Map<String, Object> listItem = new HashMap<String, Object>();
 						listItem.put("nickname", array.getJSONObject(i)
 								.getString("nickname").toString());
-						listItem.put("phone", array.getJSONObject(i)
-								.getString("phone").toString());
-						listItem.put("coins_paid", array.getJSONObject(i)
-								.getString("coins_paid").toString());
 						listItem.put("paid_time", array.getJSONObject(i)
-								.getString("paid_time").toString());
-						data_jieshou.add(listItem);
-						Log.i("data_jieshou", data_jieshou+"");
+								.getString("received_time").toString());
+						listItem.put("coins_paid", array.getJSONObject(i)
+								.getString("coins_received").toString());
+						data_zengsong.add(listItem);
 					}
+					Message msg = new Message();
+					msg.what = 0x123;
+
+					handler.sendMessage(msg);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -157,4 +176,29 @@ public class GivedCoinsActivity extends Activity {
 
 		}
 	};
+
+	protected void toZengsong(JSONArray array_zongsog2) {
+		Log.i("zengsong", "Start");
+		for (int i = array_zongsog2.length() - 1; i >= 0; i--) {
+			// for (int i = 0; i < array.length(); i++) {
+			Map<String, Object> listItem = new HashMap<String, Object>();
+			try {
+				listItem.put("nickname", array_zongsog2.getJSONObject(i)
+						.getString("nickname").toString());
+				listItem.put("paid_time", array_zongsog2.getJSONObject(i)
+						.getString("paid_time").toString());
+				listItem.put("coins_paid", array_zongsog2.getJSONObject(i)
+						.getString("coins_paid").toString());
+				data_jieshou.add(listItem);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		Message msg = new Message();
+		msg.what = 0x321;
+		Log.i("zengsong", "end");
+		handler.sendMessage(msg);		
+	}
 }

@@ -46,6 +46,7 @@ public class AboutUserActivity extends Activity {
 	private TextView tv_age;
 	private TextView tv_sex, tv_taddress;
 	private Button btn_submit;
+	private Button btn_back;
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			tv_phone.setText(phone);
@@ -72,13 +73,21 @@ public class AboutUserActivity extends Activity {
 	}
 
 	private void init() {
+		btn_back = (Button) findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				System.exit(0);
+			}
+		});
 		btn_submit = (Button) findViewById(R.id.btn_submit);
 		btn_submit.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				it = new Intent(getApplicationContext(), ChangeActivity.class);
-//				it.putExtra("uID", uID);
+				// it.putExtra("uID", uID);
 				it.putExtra("phone", phone);
 				startActivity(it);
 

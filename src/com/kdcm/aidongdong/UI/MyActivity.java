@@ -189,7 +189,7 @@ public class MyActivity extends Activity implements OnClickListener {
 			ActivityTools.mIntent(this, MyAddressActivity.class);
 			break;
 		case R.id.tv_community:
-			it = new Intent(this, GivedCoinsActivity.class);
+			it = new Intent(this, CoinsTabActivity.class);
 			startActivity(it);
 			break;
 		case R.id.btn_change:

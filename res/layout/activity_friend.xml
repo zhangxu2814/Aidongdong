@@ -18,7 +18,7 @@
             android:layout_weight="6"
             android:text="  新的朋友"
             android:textColor="#FF9A28"
-            android:textSize="13pt" />
+            android:textSize="10pt" />
 
         <TextView
             android:layout_width="wrap_content"
