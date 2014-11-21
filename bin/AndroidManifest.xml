@@ -298,6 +298,7 @@
         </activity>
         <activity android:name="com.kdcm.aidongdong.UI.GoodsReviewActivity" >
         </activity>
+        <!-- 购物车 -->
         <activity android:name="com.kdcm.aidongdong.UI.SPCarActivity" >
         </activity>
         <activity
@@ -312,6 +313,7 @@
         <activity android:name="com.kdcm.aidongdong.UI.MoreActivity" />
         <activity android:name="com.kdcm.aidongdong.UI.Orders_Goods" >
         </activity>
+        <!-- 添加到订单 -->
         <activity android:name="com.kdcm.aidongdong.UI.BalanceActivity" >
         </activity>
         <!-- 用户详情 -->
@@ -320,9 +322,15 @@
         <!-- 我的收获地址 -->
         <activity android:name="com.kdcm.aidongdong.UI.MyAddressActivity" >
         </activity>
-        <activity android:name="com.kdcm.aidongdong.UI.Activity_addReceiver"></activity>
+        <!-- 添加收货地址 -->
+        <activity android:name="com.kdcm.aidongdong.UI.Activity_addReceiver" >
+        </activity>
         <!-- 订单详情 -->
-        <activity android:name="com.kdcm.aidongdong.UI.AboutOrderActivity"></activity>
+        <activity android:name="com.kdcm.aidongdong.UI.AboutOrderActivity" >
+        </activity>
+        <!-- 众筹列表，给我钱 -->
+        <activity android:name="com.kdcm.aidongdong.UI.GiveMoneyAvtivity" >
+        </activity>
     </application>
 
 </manifest>

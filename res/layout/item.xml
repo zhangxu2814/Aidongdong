@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/tv_nickname"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="50"
             android:gravity="center|left"
             android:text="您暂时没有好友" />
@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/tv_duration"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="50"
             android:gravity="center|left"
             android:text="运动时间" />
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_weight="50"
-        android:gravity="center|left"
+        android:gravity="center"
         android:text="100" />
 
     <TextView

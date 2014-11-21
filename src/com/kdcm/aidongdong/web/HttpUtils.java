@@ -147,33 +147,101 @@ public class HttpUtils {
 				+ "&reciver=" + receiver + "&address=" + address;
 		client.post(url, res);
 	}
+
 	/**
 	 * 测试
+	 * 
 	 * @param res
 	 */
-	public static void test(AsyncHttpResponseHandler res){
-		String url="http://www.haoapp123.com/app/localuser/aidongdong/api.php?m=user&a=addOrder&shopping_ids=30";
+	public static void test(AsyncHttpResponseHandler res) {
+		String url = "http://www.haoapp123.com/app/localuser/aidongdong/api.php?m=user&a=addOrder&shopping_ids=30";
 		client.post(url, res);
 	}
+
 	/**
 	 * 获取订单详情
+	 * 
 	 * @param res
 	 * @param id
 	 */
-	public static void getOrders(AsyncHttpResponseHandler res,String id){
-		String url = base_url+"m=user&a=getOrders&order_id="+id;
+	public static void getOrders(AsyncHttpResponseHandler res, String id) {
+		String url = base_url + "m=user&a=getOrders&order_id=" + id;
 		client.post(url, res);
 	}
+
 	/**
 	 * 查询运动天数
+	 * 
 	 * @param res
 	 */
-	public static void getMonthMoveDays(AsyncHttpResponseHandler res,int day){
+	public static void getMonthMoveDays(AsyncHttpResponseHandler res, int day) {
 		String startTime;
 		Calendar calendar = Calendar.getInstance(); // 得到日历
 		calendar.add(Calendar.DAY_OF_MONTH, -day);
-		startTime = (new SimpleDateFormat("yyyy-MM-dd")).format(calendar.getTime());
-		String url = base_url+"m=user&a=getMonthMoveDays&start_time="+startTime;
+		startTime = (new SimpleDateFormat("yyyy-MM-dd")).format(calendar
+				.getTime());
+		String url = base_url + "m=user&a=getMonthMoveDays&start_time="
+				+ startTime;
 		client.post(url, res);
+	}
+
+	/**
+	 * 删除好友
+	 * 
+	 * @param res
+	 * @param id
+	 */
+	public static void delFriend(AsyncHttpResponseHandler res, String id) {
+		String url = base_url + "m=user&a=delFriend&friend_id=" + id;
+		client.post(url, res);
+	}
+
+	/**
+	 * 获取好友请求
+	 * 
+	 * @param res
+	 */
+	public static void getMyAccepts(AsyncHttpResponseHandler res) {
+		String url = base_url + "m=user&a=getMyAccepts";
+		client.post(url, res);
+	}
+
+	/**
+	 * 拒绝或添加好友
+	 * 
+	 * @param res
+	 * @param type
+	 *            0：拒绝 1：添加
+	 * @param id
+	 */
+	public static void acceptreject(AsyncHttpResponseHandler res, int type,
+			String id) {
+		String url = null;
+		if (type == 0) {// 拒绝
+			url = base_url + "m=user&a=rejectFriend&friend_id=" + id;
+		} else if (type == 1) {
+			url = base_url + "m=user&a=acceptFriend&friend_id=" + id;
+		}
+		client.post(url, res);
+	}
+
+	/**
+	 * 添加好友 id和phone 只用一个就成
+	 * 
+	 * @param res
+	 * @param friend_id
+	 * @param friend_phone
+	 */
+	public static void addFriend(AsyncHttpResponseHandler res,
+			String friend_id, String friend_phone) {
+		String url = null;
+		if (friend_phone == null) {
+			url = base_url + "m=user&a=addFriend&friend_id=" + friend_id;
+		}
+		if (friend_id == null) {
+			url = base_url + "m=user&a=addFriend&friend_phone=" + friend_phone;
+		}
+		client.post(url, res);
+		Log.i("url", url);
 	}
 }

@@ -38,7 +38,7 @@ public class MyAddressActivity extends Activity {
 	String receiver_id;
 	private Button btn_submit;
 	private Intent it;
-	private String come;
+	private String come="myads";
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0x123) {
@@ -56,7 +56,7 @@ public class MyAddressActivity extends Activity {
 
 	private void init() {
 		it = getIntent();
-		come = it.getStringExtra("come");
+		come = it.getStringExtra("come")+"";
 		btn_submit = (Button) findViewById(R.id.btn_submit);
 		btn_submit.setOnClickListener(new OnClickListener() {
 
@@ -80,7 +80,9 @@ public class MyAddressActivity extends Activity {
 			@Override
 			public void onDismiss(int dismissPosition) {
 				receiver_id = listItems.get(dismissPosition).get("id")
-						.toString();
+						.toString()+"";
+				listItems.remove(dismissPosition);
+				simpleAdapter.notifyDataSetChanged();
 				HttpUtils.delReceiver(res_del, receiver_id);
 			}
 		});
@@ -90,9 +92,13 @@ public class MyAddressActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (come.equals("balance")) {
-					MyAddressActivity.this.finish();
-					saveData(position);
+				try {
+					if (come.equals("balance")) {
+						MyAddressActivity.this.finish();
+						saveData(position);
+					}
+				} catch (Error e) {
+
 				}
 				Toast.makeText(MyAddressActivity.this,
 						listItems.get(position) + "", Toast.LENGTH_SHORT)
@@ -110,7 +116,8 @@ public class MyAddressActivity extends Activity {
 				listItems.get(position).get("receiver").toString());
 		DataTools.saveDaTa(this, "ads_phone",
 				listItems.get(position).get("phone").toString());
-		DataTools.saveDaTa(this, "ads_ads", listItems.get(position).get("address").toString());
+		DataTools.saveDaTa(this, "ads_ads",
+				listItems.get(position).get("address").toString());
 	}
 
 	JsonHttpResponseHandler res_rec = new JsonHttpResponseHandler() {
@@ -128,6 +135,7 @@ public class MyAddressActivity extends Activity {
 				e.printStackTrace();
 			}
 			if (statusCode == 200 & result == 1) {
+				listItems.clear();
 				try {
 					JSONArray array = response.getJSONArray("list");
 					for (int i = 0; i < array.length(); i++) {
@@ -171,8 +179,7 @@ public class MyAddressActivity extends Activity {
 				e.printStackTrace();
 			}
 			if (statusCode == 200 & result == 1) {
-				// //
-				listItems.clear();
+				
 				HttpUtils.getReceivers(res_rec);
 			} else {
 				Toast.makeText(getApplicationContext(), "请到检查是否长时间未登录",

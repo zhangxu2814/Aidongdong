@@ -135,7 +135,6 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 			s.date = startTime;
 			for (int p = 0; p < listItems.size(); p++) {
 				if (startTime.equals(listItems.get(p).get("date").toString())) {
-					Log.i("listItems", "数据相等");
 					s.score = Integer.valueOf(listItems.get(p).get("duration")
 							.toString());
 				} else {

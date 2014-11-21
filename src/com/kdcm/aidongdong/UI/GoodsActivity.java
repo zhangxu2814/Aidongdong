@@ -97,7 +97,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	}
 
 	private void initViewPager() {
-		tv_deduction=(TextView)findViewById(R.id.tv_deduction);
+		tv_deduction = (TextView) findViewById(R.id.tv_deduction);
 		btn_SPcart = (Button) findViewById(R.id.btn_SPcart);
 		btn_SPcart.setOnClickListener(this);
 		tv_sold_num = (TextView) findViewById(R.id.tv_sold_num);
@@ -175,7 +175,9 @@ public class GoodsActivity extends Activity implements OnClickListener {
 		String roll_pics = it.getStringExtra("roll_pics");
 		String max_deduction = it.getStringExtra("max_deduction");
 		Log.i("max_deduction", max_deduction);
-		tv_deduction.setText("可抵扣额: "+max_deduction);
+		tv_deduction.setText("可抵扣额: "
+				+ String.format("%.2f", Double.valueOf(max_deduction)
+						.doubleValue()));
 		String name = it.getStringExtra("name");
 		String price = it.getStringExtra("price");
 		String sold_num = it.getStringExtra("sold_num");
@@ -206,7 +208,8 @@ public class GoodsActivity extends Activity implements OnClickListener {
 			group_color.addView(btn_color[i]);
 		}
 		group_color.onRef();
-		tv_price.setText("价格：" + price);
+		tv_price.setText("价格："
+				+ String.format("%.2f", Double.valueOf(price).doubleValue()));
 		tv_sold_num.setText("销量：" + sold_num);
 		tv_name.setText(name);
 		String[] URL = new String[3];

@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
@@ -25,12 +29,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.Conf;
 import com.kdcm.aidongdong.tools.HttpUtil;
 import com.kdcm.aidongdong.tools.JsonTools;
 import com.kdcm.aidongdong.tools.MyAdapter;
+import com.kdcm.aidongdong.web.HttpUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class RadarActivity extends Activity implements Runnable {
 	protected static final int SCAN_LODING = 1;
@@ -55,10 +60,10 @@ public class RadarActivity extends Activity implements Runnable {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg != null) {
-				tv_count.setText(data.size() + "");
+				tv_count.setText("人数:" + data.size());
 				if (dataSize != data.size()) {
 					showFriends();
-					
+
 					dataSize = data.size();
 				}
 			} else {
@@ -73,8 +78,16 @@ public class RadarActivity extends Activity implements Runnable {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_radar);
 		init();
-		Media();
-		
+		// Media();
+		listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int i,
+					long arg3) {
+				String id = data.get(i).get("id").toString();
+				HttpUtils.addFriend(res_add, id, null);
+			}
+		});
 
 	}
 
@@ -133,7 +146,7 @@ public class RadarActivity extends Activity implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 		listview = (ListView) findViewById(R.id.listView1);
-		
+
 	}
 
 	@Override
@@ -160,18 +173,48 @@ public class RadarActivity extends Activity implements Runnable {
 	}
 
 	private void toDo() {
-		URLpath = Conf.APP_URL
-				+ "scan&longitude=118.350838&latitude=35.06763";
-		String jsonstring = HttpUtil.getJsonContent(this,URLpath);
-		Log.i("lihuanwang", "run" + jsonstring);
+		URLpath = Conf.APP_URL + "scan&longitude=118.350838&latitude=35.06763";
+		String jsonstring = HttpUtil.getJsonContent(this, URLpath);
 		data = JsonTools.getScan(jsonstring);
-
 		if (data != null) {
 			Message msg = Message.obtain();
 			msg.obj = data;
 			handler.sendMessage(msg);
 		} else {
 			handler.sendMessage(null);
-		}		
+		}
 	}
+
+	JsonHttpResponseHandler res_add = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				Toast.makeText(getApplicationContext(), "已发出好友邀请，请耐心等待",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				String message=null;
+				 try {
+					message=response.getString("message");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Toast.makeText(getApplicationContext(), result+message,
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
 }

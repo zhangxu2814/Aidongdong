@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:background="#f8f8f8" 
+        android:background="#f8f8f8"
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
@@ -26,7 +26,8 @@
             android:layout_weight="11"
             android:gravity="center"
             android:text="好友"
-            android:textSize="12pt" />
+            android:textSize="12pt"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_add"
@@ -65,9 +66,9 @@
 
     <ImageView
         android:id="@+id/iv_friendcom"
-        android:layout_below="@+id/ll_title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
+        android:layout_below="@+id/ll_title"
         android:src="@drawable/icon_friendcommunity" />
 
     <include
@@ -88,7 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/vw1"
         android:layout_below="@+id/iv_friendcom" >
-
     </ListView>
 
 </RelativeLayout>

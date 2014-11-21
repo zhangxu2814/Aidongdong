@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +24,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.smssdk.gui.ContactsPage;
-
 import com.kdcm.aidongdong.R;
 import com.kdcm.aidongdong.Date.BaseActivity;
 import com.kdcm.aidongdong.Date.Conf;
@@ -102,11 +103,11 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 		} else {
 			// Toast.makeText(getApplicationContext(), "" + data,
 			// Toast.LENGTH_SHORT).show();
-//			MyAdapter my = new MyAdapter(this, data, msg);
-//			my.setBtn_name("删除");
-//			my.setIsGone(View.VISIBLE);
-//			my.setURL(Conf.APP_URL + "delFriend&friend_id=");
-//			listview.setAdapter(my);
+			// MyAdapter my = new MyAdapter(this, data, msg);
+			// my.setBtn_name("删除");
+			// my.setIsGone(View.VISIBLE);
+			// my.setURL(Conf.APP_URL + "delFriend&friend_id=");
+			// listview.setAdapter(my);
 		}
 	}
 
@@ -131,7 +132,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void init() {
-		iv_more=(ImageView)findViewById(R.id.iv_more);
+		iv_more = (ImageView) findViewById(R.id.iv_more);
 		iv_more.setOnClickListener(this);
 		tv_add = (TextView) findViewById(R.id.tv_add);
 		tv_add.setOnClickListener(this);
@@ -147,6 +148,16 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 		badge.setText("1");
 		badge.show();
 		listview = (ListView) findViewById(R.id.lv_f);
+		listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int i,
+					long arg3) {
+				String id = data.get(i).get("id").toString();
+				Log.i("friend", data.get(i).get("id").toString());
+				HttpUtils.delFriend(res_del, id);
+			}
+		});
 		btn_2 = (Button) findViewById(R.id.btn_2);
 		btn_2.setOnClickListener(this);
 		btn_3 = (Button) findViewById(R.id.btn_3);
@@ -169,7 +180,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.btn_3:
 			ContactsPage contactsPage = new ContactsPage();
-//			contactsPage.setUsername(Conf.username);
+			// contactsPage.setUsername(Conf.username);
 			contactsPage.show(this);
 			break;
 		case R.id.iv_user:
@@ -216,7 +227,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onClick(View arg0) {
 				ContactsPage contactsPage = new ContactsPage();
-//				contactsPage.setUsername(Conf.username);
+				// contactsPage.setUsername(Conf.username);
 				contactsPage.show(FriendActivity.this);
 				dlg_add.dismiss();
 			}
@@ -287,4 +298,32 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 		my.setURL(Conf.APP_URL + "delFriend&friend_id=");
 		listview.setAdapter(my);
 	}
+
+	JsonHttpResponseHandler res_del = new JsonHttpResponseHandler() {
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			int result = 0;
+			try {
+				result = Integer.valueOf(response.getString("result"));
+
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (statusCode == 200 & result == 1) {
+				Toast.makeText(getApplicationContext(), "删除好友成功",
+						Toast.LENGTH_SHORT).show();
+				data=null;
+				HttpUtils.getFriends(res_friends);
+			} else {
+				Toast.makeText(getApplicationContext(), "失败+result",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
 }

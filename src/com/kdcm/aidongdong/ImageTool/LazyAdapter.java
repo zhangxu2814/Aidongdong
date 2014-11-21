@@ -53,7 +53,7 @@ public class LazyAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
- 
+
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
@@ -66,19 +66,23 @@ public class LazyAdapter extends BaseAdapter {
 		mItem.tv_money = (TextView) vi.findViewById(R.id.tv_money);
 		mItem.iv_ad = (ImageView) vi.findViewById(R.id.iv_ad);
 		mItem.tv_title.setText(list.get(position).get("name").toString());
-		mItem.tv_money
-				.setText("￥" + list.get(position).get("price").toString());
+		mItem.tv_money.setText("￥"
+				+ String.format(
+						"%.2f",
+						Double.valueOf(
+								list.get(position).get("price").toString())
+								.doubleValue()));
 		mItem.tv_num.setText("已售"
 				+ list.get(position).get("sold_num").toString());
 		String roll_pics = list.get(position).get("roll_pics").toString();
 
 		try {
 			JSONArray pics_Array = new JSONArray(roll_pics);
-			for (int i = pics_Array.length()-1; i >=0 ; i--) {
+			for (int i = pics_Array.length() - 1; i >= 0; i--) {
 				JSONObject item = pics_Array.getJSONObject(i);
 				URL = "http://www.haoapp123.com/app/localuser/aidongdong/"
 						+ item.get("pic");
-				
+
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -90,11 +94,11 @@ public class LazyAdapter extends BaseAdapter {
 		return vi;
 
 	}
+
 	public String getmID(int position) {
 		return list.get(position).get("id").toString();
 	}
 
-	
 	class Item {
 		TextView tv_title;
 		TextView tv_num;
