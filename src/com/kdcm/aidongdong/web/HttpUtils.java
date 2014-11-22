@@ -271,10 +271,22 @@ public class HttpUtils {
 
 	/**
 	 * 查询送出的金币
+	 * 
 	 * @param res
 	 */
 	public static void getGivedCoins(AsyncHttpResponseHandler res) {
 		String url = base_url + "m=user&a=getGivedCoins";
+		client.post(url, res);
+	}
+
+	/**
+	 * 确认收货
+	 * 
+	 * @param res
+	 * @param id
+	 */
+	public static void confirmReceipt(AsyncHttpResponseHandler res, String id) {
+		String url = base_url + "m=user&a=confirmReceipt&order_id=" + id;
 		client.post(url, res);
 	}
 }

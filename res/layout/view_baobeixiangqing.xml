@@ -1,155 +1,172 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="5"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/view_pager_content"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:scaleType="fitXY" />
-
-        <LinearLayout
-            android:id="@+id/viewGroup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view_pager_content"
-            android:layout_marginTop="-10dp"
-            android:gravity="center"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </RelativeLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/view_pager_content"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:gravity="bottom"
-                android:text="苹果"
-                android:textSize="10pt" />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:scaleType="fitXY" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp" >
-
-            <TextView
-                android:id="@+id/tv_price"
+            <LinearLayout
+                android:id="@+id/viewGroup"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_pager_content"
+                android:layout_marginTop="-10dp"
                 android:gravity="center"
-                android:text="价格" />
-
-            <TextView
-                android:id="@+id/tv_sold_num"
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="销量" />
-        </LinearLayout>
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="30dp" >
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/tv_deduction"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                 android:gravity="center"
-                android:text="可抵扣额" />
-             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical" >
 
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:text="苹果"
+                    android:textSize="10pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp" >
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="价格" />
+
+                <TextView
+                    android:id="@+id/tv_sold_num"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="销量" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp" >
+
+                <TextView
+                    android:id="@+id/tv_deduction"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="可抵扣额" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="颜色" />
+
+                <com.kdcm.aidongdong.RadioGroupTool.SegmentedRadioGroup
+                    android:id="@+id/segment_color"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:layout_weight="1"
+                    android:checkedButton="@+id/button_one"
+                    android:gravity="top|center"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="大小" />
+
+                <com.kdcm.aidongdong.RadioGroupTool.SegmentedRadioGroup
+                    android:id="@+id/segment_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:layout_weight="1"
+                    android:checkedButton="@+id/button_one"
+                    android:gravity="top|center"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" >
+
+                <Button
+                    android:id="@+id/btn_SPcart"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="18dp"
+                    android:background="#FF8800"
+                    android:text="加入购物车"
+                    android:textColor="#fff" />
+            </RelativeLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="颜色" />
-
-            <com.kdcm.aidongdong.RadioGroupTool.SegmentedRadioGroup
-                android:id="@+id/segment_color"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:layout_weight="1"
-                android:checkedButton="@+id/button_one"
-                android:gravity="top|center"
-                android:orientation="horizontal" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="大小" />
-
-            <com.kdcm.aidongdong.RadioGroupTool.SegmentedRadioGroup
-                android:id="@+id/segment_size"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:layout_weight="1"
-                android:checkedButton="@+id/button_one"
-                android:gravity="top|center"
-                android:orientation="horizontal" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent" >
-
-            <Button
-                android:id="@+id/btn_SPcart"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="18dp"
-                android:text="购物车"
-                android:textColor="#fff"
-                android:background="#FF8800" />
-        </RelativeLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="57.33333333333333dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" >
+
+        <ImageView
+            android:id="@+id/iv_spcar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_spcar" />
+    </RelativeLayout>
+
+</RelativeLayout>

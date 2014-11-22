@@ -82,6 +82,7 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	private Thread Goods_Thread;
 	private String URL_AddSPCar;
 	private ProgressDialog loadingPDialog = null;
+	private ImageView iv_spcar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,8 @@ public class GoodsActivity extends Activity implements OnClickListener {
 	}
 
 	private void initViewPager() {
+		iv_spcar = (ImageView) findViewById(R.id.iv_spcar);
+		iv_spcar.setOnClickListener(this);
 		tv_deduction = (TextView) findViewById(R.id.tv_deduction);
 		btn_SPcart = (Button) findViewById(R.id.btn_SPcart);
 		btn_SPcart.setOnClickListener(this);
@@ -353,7 +356,10 @@ public class GoodsActivity extends Activity implements OnClickListener {
 						Toast.LENGTH_SHORT).show();
 			}
 			break;
-
+		case R.id.iv_spcar:
+			it = new Intent(this, SPCarActivity.class);
+			startActivity(it);
+			break;
 		default:
 			break;
 		}

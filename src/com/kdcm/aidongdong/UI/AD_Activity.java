@@ -50,12 +50,15 @@ public class AD_Activity extends Activity implements OnClickListener {
 	private ImageView iv_map;
 	private ImageView iv_qyjs;
 	Intent it;
+	private ImageView iv_spcar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ad);
+		iv_spcar=(ImageView)findViewById(R.id.iv_spcar);
+		iv_spcar.setOnClickListener(this);
 		iv_map = (ImageView) findViewById(R.id.iv_map);
 		iv_map.setOnClickListener(this);
 		iv_qyjs = (ImageView) findViewById(R.id.iv_qyjs);
@@ -144,6 +147,10 @@ public class AD_Activity extends Activity implements OnClickListener {
 		case R.id.iv_qyjs:
 			it=new Intent(this, CompanyActivity.class);
 			startActivity(it);
+		case R.id.iv_spcar:
+			it=new Intent(this, SPCarActivity.class);
+			startActivity(it);
+			break;
 		default:
 			break;
 		}

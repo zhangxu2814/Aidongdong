@@ -76,6 +76,7 @@ public class My_Orders extends Activity {
 		loadingPDialog = new ProgressDialog(this);
 		loadingPDialog.setMessage("正在加载....");
 		loadingPDialog.setCancelable(false);
+		loadingPDialog.show();
 		it = getIntent();
 		status = it.getStringExtra("status");
 		lv_order = (ListView) findViewById(R.id.lv_order);
@@ -92,14 +93,26 @@ public class My_Orders extends Activity {
 				double cash = Double.valueOf(data.get(i).get("need_cash")
 						.toString());
 				if (status.equals("1")) {
-					toPay(cash, id);
+					toIntent("1", id);
+					// toPay(cash, id);
 				} else if (status.equals("4")) {
-					toOrderGoods(shopping_carts);
+					toIntent("4", id);
+				}else if(status.equals("2")){
+					toIntent("2", id);
+				}else if(status.equals("3")){
+					toIntent("3", id);
 				}
 			}
 		});
 		URL_Orders = Conf.APP_URL + "getOrders";
 		getData();
+	}
+
+	protected void toIntent(String string, String mid) {
+		it = new Intent(this, OrderDetailsActivity.class);
+		it.putExtra("status", string);
+		it.putExtra("id", mid);
+		startActivity(it);
 	}
 
 	protected void toOrderGoods(String shopping_carts) {
@@ -165,6 +178,7 @@ public class My_Orders extends Activity {
 	protected void onResume() {
 		data = null;
 		getData();
+		loadingPDialog.show();
 		Message msg = new Message();
 		mHandler.sendMessage(msg);
 		super.onResume();

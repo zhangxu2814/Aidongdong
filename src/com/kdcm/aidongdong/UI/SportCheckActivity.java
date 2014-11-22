@@ -162,6 +162,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	private LinearLayout ll_ad;
 	private TextView tv_day;
 	private int total_count=0;
+	private TextView tv_cal;
 
 	@Override
 	public void onClick(View v) {
@@ -268,6 +269,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	}
 
 	private void init() {
+		tv_cal=(TextView)findViewById(R.id.tv_cal);
 		tv_day=(TextView)findViewById(R.id.tv_day);
 		HttpUtils.getMonthMoveDays(res_getMMD, 31);
 		RotateAnimation animation = new RotateAnimation(0, 360,
@@ -319,13 +321,15 @@ public class SportCheckActivity extends Activity implements SensorListener,
 						}
 						if (count != Conf.count) {
 							count = Conf.count;
-
+							tv_cal.setText(time_m+"千卡");
+							tt_time.setText(time_m + "m" + int_time % 60 + "s");
 							star_time = end_time;
 							int_time++;
 							if (int_time % 60 == 0) {
 								time_m++;
 							}
 						} else {
+							tv_cal.setText(time_m+"千卡");
 							tt_time.setText(time_m + "m" + int_time % 60 + "s");
 							end_time++;
 						}

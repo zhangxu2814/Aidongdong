@@ -340,6 +340,8 @@
         <!-- 接收到的金币列表 -->
         <activity android:name="com.kdcm.aidongdong.UI.getRecievedCoinsActivity" >
         </activity>
+        <!-- 订单详情 -->
+        <activity android:name="com.kdcm.aidongdong.UI.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>
