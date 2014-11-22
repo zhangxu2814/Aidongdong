@@ -57,7 +57,7 @@ public class AD_Activity extends Activity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ad);
-		iv_spcar=(ImageView)findViewById(R.id.iv_spcar);
+		iv_spcar = (ImageView) findViewById(R.id.iv_spcar);
 		iv_spcar.setOnClickListener(this);
 		iv_map = (ImageView) findViewById(R.id.iv_map);
 		iv_map.setOnClickListener(this);
@@ -139,18 +139,20 @@ public class AD_Activity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Log.i("btnid", v.getId() + "");
 		switch (v.getId()) {
 		case R.id.iv_map:
 			it = new Intent(this, MapActivity.class);
 			startActivity(it);
 			break;
 		case R.id.iv_qyjs:
-			it=new Intent(this, CompanyActivity.class);
+			it = new Intent(this, CompanyActivity.class);
 			startActivity(it);
 		case R.id.iv_spcar:
-			it=new Intent(this, SPCarActivity.class);
+			it = new Intent(this, SPCarActivity.class);
 			startActivity(it);
 			break;
+			
 		default:
 			break;
 		}

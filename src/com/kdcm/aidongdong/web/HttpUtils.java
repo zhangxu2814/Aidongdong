@@ -144,7 +144,7 @@ public class HttpUtils {
 			String receiver, String address) {
 
 		String url = base_url + "m=user&a=addReceiver" + "&phone=" + phone
-				+ "&reciver=" + receiver + "&address=" + address;
+				+ "&receiver=" + receiver + "&address=" + address;
 		client.post(url, res);
 	}
 

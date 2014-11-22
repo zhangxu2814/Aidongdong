@@ -99,6 +99,7 @@ public class OrderDetailsActivity extends Activity implements OnClickListener {
 		ll_back = (LinearLayout) findViewById(R.id.ll_back);
 		ll_back.setOnClickListener(this);
 		HttpUtils.getOrders(res_order, id);
+
 	}
 
 	protected void addProductComment(final String product_id) {
@@ -114,7 +115,7 @@ public class OrderDetailsActivity extends Activity implements OnClickListener {
 			public void onClick(DialogInterface dialog, int which) {
 				String desc = et_user.getText().toString();
 				if (desc.length() > 0) {
-					Log.i("show", product_id+desc);
+					Log.i("show", product_id + desc);
 					HttpUtils.addProductComment(res_addP, product_id, desc);
 				} else {
 					Toast.makeText(getApplicationContext(), "输入内容为空",
@@ -140,7 +141,7 @@ public class OrderDetailsActivity extends Activity implements OnClickListener {
 			this.finish();
 			break;
 		case R.id.btn_sub:
-			if (status.equals("2")) {
+			if (status.equals("1")) {
 				it = new Intent(this, AboutOrderActivity.class);
 				it.putExtra("id", id);
 				startActivity(it);

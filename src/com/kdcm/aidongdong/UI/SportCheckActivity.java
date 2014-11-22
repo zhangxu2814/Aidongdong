@@ -44,7 +44,9 @@ import com.kdcm.aidongdong.tools.ActivityTools;
 import com.kdcm.aidongdong.tools.CloseActivityClass;
 import com.kdcm.aidongdong.tools.DataTools;
 import com.kdcm.aidongdong.web.HttpUtils;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.umeng.scrshot.UMScrShotController.OnScreenshotListener;
 import com.umeng.scrshot.adapter.UMAppAdapter;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -109,7 +111,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	/**
 	 * 能量环消耗线程用
 	 */
-	private int int_consume = Conf.count * 5;// 暂时用
+	private int int_consume = Conf.count;// 暂时用*5
 	/**
 	 * 弧形
 	 */
@@ -173,7 +175,7 @@ public class SportCheckActivity extends Activity implements SensorListener,
 			startActivity(it);
 			break;
 		case R.id.iv_consume:
-			int_consume = Conf.count * 5 <= 280 ? Conf.count * 5 : 280;
+			int_consume = Conf.count <= 280 ? Conf.count  : 280;
 			if (int_consume != 0) {
 				task_consume = new TimerTask() {
 
@@ -401,8 +403,8 @@ public class SportCheckActivity extends Activity implements SensorListener,
 	public void updateData() {
 		tt_num = (TextView) findViewById(R.id.tt_num);
 		tt_num.setText(String.valueOf(Conf.count) + "歩");
-		arcProgressbar.setProgress(Conf.count * 5);
-		int_consume = Conf.count * 5;
+		arcProgressbar.setProgress(Conf.count);
+		int_consume = Conf.count ;
 	}
 
 	private void ShowShare() {
@@ -497,6 +499,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 
 	@Override
 	protected void onResume() {
+		AsyncHttpClient request = HttpUtils.getClient();
+		PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+		request.setCookieStore(myCookieStore);
 		String coins = DataTools.readData(this, "coins");
 		tt_num.setText(Conf.count + "歩");
 		tv_coins.setText(coins);
@@ -545,11 +550,9 @@ public class SportCheckActivity extends Activity implements SensorListener,
 				e.printStackTrace();
 			}
 			if (statusCode == 200 & result == 1) {
-				Toast.makeText(getApplicationContext(), "添加购物车成功",
-						Toast.LENGTH_SHORT).show();
 				
 			} else {
-				Toast.makeText(getApplicationContext(), "请到检查库存是否充足",
+				Toast.makeText(getApplicationContext(), "请到检查网络状态",
 						Toast.LENGTH_SHORT).show();
 			}
 		}

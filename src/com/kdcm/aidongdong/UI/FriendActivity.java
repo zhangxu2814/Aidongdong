@@ -81,6 +81,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	 * 添加好友的dialog
 	 */
 	AlertDialog dlg_add;
+	private Button btn_newfriend, btn_add;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -132,6 +133,10 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void init() {
+		btn_newfriend=(Button)findViewById(R.id.btn_newfriend);
+		btn_newfriend.setOnClickListener(this);
+		btn_add=(Button)findViewById(R.id.btn_add);
+		btn_add.setOnClickListener(this);
 		iv_more = (ImageView) findViewById(R.id.iv_more);
 		iv_more.setOnClickListener(this);
 		tv_add = (TextView) findViewById(R.id.tv_add);
@@ -191,11 +196,11 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			it = new Intent(this, SportCheckActivity.class);
 			startActivity(it);
 			break;
-		case R.id.tv_MyRequests:
+		case R.id.btn_newfriend:
 			it = new Intent(this, MyRequestsActivity.class);
 			startActivity(it);
 			break;
-		case R.id.tv_add:
+		case R.id.btn_add:
 			toAddFriends();
 			break;
 		case R.id.iv_more:
@@ -318,7 +323,7 @@ public class FriendActivity extends BaseActivity implements OnClickListener {
 			if (statusCode == 200 & result == 1) {
 				Toast.makeText(getApplicationContext(), "删除好友成功",
 						Toast.LENGTH_SHORT).show();
-				data=null;
+				data = null;
 				HttpUtils.getFriendDurations(res_friends);
 			} else {
 				Toast.makeText(getApplicationContext(), "失败+result",

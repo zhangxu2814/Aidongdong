@@ -70,6 +70,12 @@
                 android:text="￥测试数据" />
         </GridLayout>
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#adadad" 
+            />
+
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -92,6 +98,11 @@
                 android:gravity="center"
                 android:text="￥10.00" />
         </GridLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#adadad" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -117,9 +128,19 @@
         </GridLayout>
 
         <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#adadad" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请选择支付方式" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#adadad" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -160,6 +181,11 @@
                 android:layout_height="10dp" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#adadad" />
+
         <LinearLayout
             android:id="@+id/ll_alipay"
             android:layout_width="match_parent"
@@ -172,6 +198,11 @@
                 android:gravity="center"
                 android:text="支付宝快捷支付" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#adadad" />
     </LinearLayout>
 
 </RelativeLayout>

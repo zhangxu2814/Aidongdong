@@ -48,7 +48,7 @@
         android:layout_height="1dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/gridLayout1"
-        android:background="#FF8800" />
+        android:background="#ADADAD" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -90,7 +90,7 @@
                 android:layout_height="fill_parent"
                 android:layout_column="0"
                 android:layout_gravity="left|center_vertical"
-                android:layout_row="0"
+                android:layout_row="1"
                 android:text="余额：" />
 
             <TextView
@@ -98,9 +98,14 @@
                 android:layout_height="fill_parent"
                 android:layout_column="0"
                 android:layout_gravity="right|top"
-                android:layout_row="0"
+                android:layout_row="1"
                 android:text="123.00" />
         </GridLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ADADAD" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -123,7 +128,10 @@
                 android:layout_row="0"
                 android:text="150" />
         </GridLayout>
-
+ <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ADADAD" />
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,7 +153,10 @@
                 android:layout_row="0"
                 android:text="小逗x" />
         </GridLayout>
-
+ <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ADADAD" />
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,7 +178,10 @@
                 android:layout_row="0"
                 android:text="妖" />
         </GridLayout>
-
+ <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ADADAD" />
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,7 +203,10 @@
                 android:layout_row="0"
                 android:text="0" />
         </GridLayout>
-
+ <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ADADAD" />
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -203,6 +220,10 @@
                 android:layout_row="0"
                 android:text="日常锻炼地点：" />
         </GridLayout>
+         <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ADADAD" />
     </LinearLayout>
 
     <TextView
